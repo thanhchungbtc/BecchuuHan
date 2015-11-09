@@ -95,7 +95,7 @@ public class AccountDetailsForm extends JDialog {
 	private void loadGroupCombobox() {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		for (Bukken group: groups) {
-			model.addElement(group.name);
+			model.addElement(group.getName());
 		}
 		cbGroup.setModel(model);
 		

@@ -10,10 +10,12 @@ import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
 import com.btc.repositoty.BukkenRepository;
+import com.btc.supports.BukkenType;
+import com.btc.supports.Helpers;
 
 public class BukkenTableModel extends AbstractTableModel {
 	
-	private static String[] COLUMN_NAMES = {"�H���ԍ�", "�{�喼"};
+	private static String[] COLUMN_NAMES = {"納期", "工事番号", "施主名", "タイプ"};
 	private List<Bukken> data;
 	private BukkenRepository repositoty;	
 	
@@ -22,40 +24,34 @@ public class BukkenTableModel extends AbstractTableModel {
 		this.data = repositoty.getList();
 	}
 	
-	public Bukken getGroupAtIndex(int row) {
-		if (row < 0 || row >= data.size())
-			return null;
-		return this.data.get(row);
-	}
-	
-	public Bukken insertGroup(Bukken group) {
+	public Bukken insertBukken(Bukken bukken) {
 		try {			
-			group = repositoty.insert(group);
+			bukken = repositoty.insert(bukken);
+			data = repositoty.getList();
 			
-			// DialogHelpers.showAlert("Congratulations!", "Success");
-            fireTableRowsInserted(data.size(), data.size());
+            fireTableRowsInserted(data.size() - 1, data.size() - 1);
             
-			return group;
+			return bukken;
 		} catch (SQLException e) {			
 			DialogHelpers.showError("Error occured", e);
 		}	
 		return null;
 	}
 	
-	public void deleteGroup(Bukken group) {
-		try {			
-			int row = data.indexOf(group);
-			if (row == -1) return;
-			if (DialogHelpers.showConfirmMessage("Delete group", 
-					"Do you want to delete this group\n id: " + String.valueOf(group.id) + "\nname: " + group.name, 1 ) == JOptionPane.YES_OPTION);
-			{
-				repositoty.delete(group);
-				fireTableRowsDeleted(row, row);
-			}			
-		} catch (Exception exception) {
-			DialogHelpers.showError("Error occured", exception);
-		}		
-	}
+//	public void deleteGroup(Bukken group) {
+//		try {			
+//			int row = data.indexOf(group);
+//			if (row == -1) return;
+//			if (DialogHelpers.showConfirmMessage("Delete group", 
+//					"Do you want to delete this group\n id: " + String.valueOf(group.id) + "\nname: " + group.name, 1 ) == JOptionPane.YES_OPTION);
+//			{
+//				repositoty.delete(group);
+//				fireTableRowsDeleted(row, row);
+//			}			
+//		} catch (Exception exception) {
+//			DialogHelpers.showError("Error occured", exception);
+//		}		
+//	}
 	
 	@Override
 	public String getColumnName(int column) {		
@@ -77,9 +73,13 @@ public class BukkenTableModel extends AbstractTableModel {
 		Bukken bukken = data.get(row);
 		switch (col) {
 		case 0:
-			return bukken.id;			
+			return Helpers.stringFromDate(bukken.getNouki());
 		case 1:
-			return bukken.name;						
+			return bukken.getId();			
+		case 2:
+			return bukken.getName();
+		case 3:
+			return BukkenType.getType(bukken.getType());
 		default:
 			return "Error";
 		}		

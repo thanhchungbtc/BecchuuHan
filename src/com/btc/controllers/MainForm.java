@@ -6,14 +6,18 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
@@ -21,6 +25,7 @@ import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
 import com.btc.viewModel.BecchuuTableModel;
 import com.btc.viewModel.BukkenTableModel;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -43,29 +48,36 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.UIManager;
+import javax.swing.JTextField;
+import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
-public class MainForm extends JFrame {
+public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 
 	private JPanel contentPane;
 	private JTable bukkenTable;
 	private JTable becchuuTable;
 	private JLabel lblWelcome;
 
-	private BecchuuRepository becchuuRepository;
 	private BukkenRepository bukkenRepository;
-
-	private DefaultTableModel accountTableModel;
-
+	private JTextField txtBukkenSearch;
+	TableRowSorter<TableModel> rowSorter;
+	private JComboBox cbType;
 	
 	private void createAndSetupGUI(){
-		System.out.println("error");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnFile = new JMenu("\u30D5\u30A1\u30A4\u30EB");
+		JMenu mnFile = new JMenu("ファイル");
 		menuBar.add(mnFile);
 
 		JMenuItem mntmExit = new JMenuItem("\u7D42\u4E86");
@@ -84,12 +96,11 @@ public class MainForm extends JFrame {
 		JSplitPane mainSplitPane = new JSplitPane();
 		mainSplitPane.setContinuousLayout(true);
 		mainSplitPane.setDividerSize(2);
-		mainSplitPane.setDividerLocation(250);
+		mainSplitPane.setDividerLocation(350);
 
 		contentPane.add(mainSplitPane, BorderLayout.CENTER);
 
 		JPanel leftPanel = new JPanel();
-		leftPanel.setBackground(new Color(255, 255, 255));
 		mainSplitPane.setLeftComponent(leftPanel);
 
 		bukkenTable = new JTable();
@@ -104,23 +115,43 @@ public class MainForm extends JFrame {
 
 		JPanel leftButtonPanel = new JPanel();
 		leftPanel.add(leftButtonPanel, BorderLayout.SOUTH);
-		leftButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
-
-		JButton btnAddGroup = new JButton();
-		btnAddGroup.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				BukkenDetailsForm form = new BukkenDetailsForm();
-				form.setVisible(true);
+		leftButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
+		
+				JButton btnAddGroup = new JButton();
+				leftButtonPanel.add(btnAddGroup);
+				btnAddGroup.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent event) {
+						btnAddBukkenActionPerformed(event);
+					}
+				});
+				
+					btnAddGroup.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_plus.png")));
+					
+							JButton btnDeleteGroup = new JButton("");
+							leftButtonPanel.add(btnDeleteGroup);
+							btnDeleteGroup.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_trash.png")));
+		
+		JPanel searchBukkenPanel = new JPanel();
+		leftPanel.add(searchBukkenPanel, BorderLayout.NORTH);
+		
+		txtBukkenSearch = new JTextField();
+		txtBukkenSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				txtBukkenSearchKeyReleased(e);
 			}
 		});
-	
-		btnAddGroup.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_plus.png")));
-		leftButtonPanel.add(btnAddGroup);
-
-		JButton btnDeleteGroup = new JButton("");
-		btnDeleteGroup.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_trash.png")));
+		searchBukkenPanel.setLayout(new BorderLayout(0, 0));
+		searchBukkenPanel.add(txtBukkenSearch);
+		txtBukkenSearch.setColumns(10);
 		
-		leftButtonPanel.add(btnDeleteGroup);
+		cbType = new JComboBox();
+		cbType.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				cbTypeitemStateChanged(e);
+			}
+		});
+		searchBukkenPanel.add(cbType, BorderLayout.EAST);
 
 
 		JPanel rightPanel = new JPanel();
@@ -141,15 +172,11 @@ public class MainForm extends JFrame {
 
 		JPanel rightButtonPanel = new JPanel();
 		rightPanel.add(rightButtonPanel, BorderLayout.SOUTH);
-		rightButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
-
-		JButton btnAddAccount = new JButton("Add");
-	
-		rightButtonPanel.add(btnAddAccount);
-
-		JButton btnDeleteAccount = new JButton("Delete");
+		rightButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
 		
-		rightButtonPanel.add(btnDeleteAccount);
+		JButton btnDeleteBecchuu = new JButton("");
+		btnDeleteBecchuu.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_trash.png")));
+		rightButtonPanel.add(btnDeleteBecchuu);
 
 		JPanel statusPanel = new JPanel();
 		statusPanel.setBorder(null);
@@ -162,25 +189,79 @@ public class MainForm extends JFrame {
 	}
 
 	private void initializeData() {
-		becchuuRepository = new BecchuuRepository(0);
 		bukkenRepository = new BukkenRepository();
 	}
 
 	private void setupTable() {
-
-		initializeData();
-		bukkenTable.setModel(new BukkenTableModel(this.bukkenRepository));
+	
+		BukkenTableModel bukkenTableModel = new BukkenTableModel(this.bukkenRepository);
+		//TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(bukkenTableModel);
+		//bukkenTable.setRowSorter(sorter);
+		//bukkenTable.setAutoCreateRowSorter(true);
+		//sorter.setRowFilter(RowFilter.regexFilter("1"));
+		bukkenTable.setModel(bukkenTableModel);
+		rowSorter = new TableRowSorter<TableModel>(bukkenTable.getModel());
+		bukkenTable.setRowSorter(rowSorter);
 		bukkenTable.setRowHeight(25);
 	
 		becchuuTable.setRowHeight(25);	
-
-
 	}
 
-
-	// handle events
+	private void loadShouhinTypeCombobox() {
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("全て");
+		model.addElement("XEVO");
+		model.addElement("Σ");
+		cbType.setModel(model);
+		cbType.setSelectedIndex(0);
+	}
 	
-	// end handle events
+	// handle events--------------------------------------------------------------------------------------
+	private void btnAddBukkenActionPerformed(ActionEvent event) {
+		BukkenDetailsForm form = new BukkenDetailsForm(null);
+		form.delegate = this;
+		form.setLocationRelativeTo(this);
+		form.setVisible(true);
+	}
+	
+	// begin: search on bukkenTable
+	RowFilter typeFilter;
+	RowFilter textFilter;	
+	LinkedList<RowFilter<TableModel, Object>> rowFilters = new LinkedList<>();
+	
+	private void filterBukkenTable() {
+		rowFilters.clear();
+		if (textFilter != null) {
+			rowFilters.add(textFilter);
+		}
+		if (typeFilter != null) {
+			rowFilters.add(typeFilter);
+		}
+		rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
+	}
+	
+	private void txtBukkenSearchKeyReleased(KeyEvent event) {		 
+		if (txtBukkenSearch.getText().trim().length() == 0) {
+			textFilter = null;
+		} else {
+			textFilter = RowFilter.regexFilter("(?i)" + txtBukkenSearch.getText());
+		}
+		filterBukkenTable();		
+	}
+	
+	private void cbTypeitemStateChanged(ItemEvent event) {
+		if (cbType.getSelectedIndex() == 0) {
+			// rowSorter.setRowFilter(RowFilter.regexFilter(""));
+			typeFilter = null;
+		} else {
+			// rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + cbType.getSelectedItem().toString()));
+			typeFilter = RowFilter.regexFilter("(?i)" + cbType.getSelectedItem().toString());
+		}
+		filterBukkenTable();
+	}
+	// end: search on bukkenTable
+	
+	// end handle events------------------------------------------------------------------------------------
 
 	/**
 	 * Launch the application.
@@ -224,9 +305,23 @@ public class MainForm extends JFrame {
 
 		initializeData();
 		createAndSetupGUI();
+		loadShouhinTypeCombobox();
 		setupTable();
-
+		
+		
 		pack();
 	}
-
+	
+	// BEGIN implements BukkenDetailFormsDelegate--------------------------------------------
+	@Override
+	public void submitData(Bukken bukken, boolean insert) {
+		BukkenTableModel bukkenTableModel = (BukkenTableModel)bukkenTable.getModel();
+		if (insert) {
+			bukkenTableModel.insertBukken(bukken);			
+		} else {
+			
+		}
+		
+	}
+	// END implements BukkenDetailFormsDelegate--------------------------------------------
 }

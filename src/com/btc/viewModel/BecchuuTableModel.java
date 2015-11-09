@@ -50,18 +50,18 @@ public class BecchuuTableModel extends AbstractTableModel{
 	}
 
 	public void deleteAccount(Becchuu account) {
-		try {			
-			int row = accounts.indexOf(account);
-			if (row == -1) return;
-			if (DialogHelpers.showConfirmMessage("Delete Account", 
-					"Do you want to delete this account\n id: " + String.valueOf(account.userName) + "\nname: " + account.title, 1 ) == JOptionPane.YES_OPTION);
-			{
-				repositoty.delete(account);
-				fireTableRowsDeleted(row, row);
-			}			
-		} catch (Exception exception) {
-			DialogHelpers.showError("Error occured", exception);
-		}		
+//		try {			
+//			int row = accounts.indexOf(account);
+//			if (row == -1) return;
+//			if (DialogHelpers.showConfirmMessage("Delete Account", 
+//					"Do you want to delete this account\n id: " + String.valueOf(account.userName) + "\nname: " + account.title, 1 ) == JOptionPane.YES_OPTION);
+//			{
+//				repositoty.delete(account);
+//				fireTableRowsDeleted(row, row);
+//			}			
+//		} catch (Exception exception) {
+//			DialogHelpers.showError("Error occured", exception);
+//		}		
 	}
 
 	public void removeRow(int row) {

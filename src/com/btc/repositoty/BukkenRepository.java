@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import com.btc.DAL.ConnectionUtils;
 import com.btc.model.Bukken;
+import com.btc.supports.Helpers;
 
 public class BukkenRepository {
 
@@ -26,8 +27,15 @@ public class BukkenRepository {
 			           String id = rs.getString(1);
 			           String name = rs.getString(2);
 			           Bukken bukken = new Bukken();
-			           bukken.id = id;
-			           bukken.name = name;			           
+			           bukken.setId(id);
+			           bukken.setName(name);	
+			           
+			           bukken.setDepsf(rs.getString(3));
+			           bukken.setShiten(rs.getString(4));
+			           bukken.setType(rs.getInt(5));
+			           
+			           bukken.setNouki(Helpers.dateFromString(rs.getString(6)));
+			           
 			           data.add(bukken);
 			         }
 				} catch (ClassNotFoundException e) {
@@ -44,46 +52,48 @@ public class BukkenRepository {
 		return this.data;
 	}
 	
-	public Bukken insert(Bukken accountType) throws SQLException {
-		 String sql = "INSERT INTO AccountType (name) VALUES(?)";
+	public Bukken insert(Bukken bukken) throws SQLException {
+		 String sql = "INSERT INTO Bukken (id, name, depsf, shiten, type) VALUES(?, ?, ?, ?, ?)";
 	        try {
 	          connection = ConnectionUtils.getConnection();
 	        } catch (ClassNotFoundException ex) {
 	          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
 	        }
 	        
-		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-		    statement.setString(1, accountType.name);
+		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);
+		    statement.setString(1, bukken.getId());
+		    statement.setString(2, bukken.getName());
+		    statement.setString(3, bukken.getDepsf());
+		    statement.setString(4, bukken.getShiten());
+		    statement.setInt(5, bukken.getType());
+		    
 		    statement.executeUpdate();
-		    ResultSet key = statement.getGeneratedKeys();
-		    int id = 0;
-		    while (key.next()) {
-		    	id = key.getInt(1);
-		    }
 		    statement.close();
 		    statement = null;
-		    data.add(accountType);
+		    
 		    connection.close();
-		    return accountType;
+		    connection = null;
+		    data.add(bukken);
+		    return bukken;
 	}
 	
-	public boolean delete(Bukken group) throws SQLException {
-		if(group == null) {
-			return false;
-		}	
-		String sql = "DELETE FROM AccountType WHERE id = " + group.id + "";		
-        try {
-          connection = ConnectionUtils.getConnection();
-        } catch (ClassNotFoundException ex) {
-          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-		Statement st = connection.createStatement();
-		data.remove(group);
-        boolean result = st.execute(sql);
-        connection.close();
-	    return result;
-	  }
-	
+//	public boolean delete(Bukken group) throws SQLException {
+//		if(group == null) {
+//			return false;
+//		}	
+//		String sql = "DELETE FROM AccountType WHERE id = " + group.id + "";		
+//        try {
+//          connection = ConnectionUtils.getConnection();
+//        } catch (ClassNotFoundException ex) {
+//          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//		Statement st = connection.createStatement();
+//		data.remove(group);
+//        boolean result = st.execute(sql);
+//        connection.close();
+//	    return result;
+//	  }
+//	
 	
 	
 }

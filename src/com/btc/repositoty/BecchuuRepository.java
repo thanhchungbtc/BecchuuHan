@@ -108,21 +108,21 @@ public class BecchuuRepository {
 	}
 	
 	
-	public boolean delete(Becchuu account) throws SQLException {
-		if(account == null) {
-			return false;
-		}	
-		String sql = "DELETE FROM Account WHERE account_type = " + account.group.id + " AND userName = '" + account.userName + "'";	
-		System.out.println(sql);
-        try {
-          connection = ConnectionUtils.getConnection();
-        } catch (ClassNotFoundException ex) {
-          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-		Statement st = connection.createStatement();
-		accounts.remove(account);
-        boolean result = st.execute(sql);
-        connection.close();
-	    return result;
-	  }
+//	public boolean delete(Becchuu account) throws SQLException {
+//		if(account == null) {
+//			return false;
+//		}	
+//		String sql = "DELETE FROM Account WHERE account_type = " + account.group.id + " AND userName = '" + account.userName + "'";	
+//		System.out.println(sql);
+//        try {
+//          connection = ConnectionUtils.getConnection();
+//        } catch (ClassNotFoundException ex) {
+//          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//		Statement st = connection.createStatement();
+//		accounts.remove(account);
+//        boolean result = st.execute(sql);
+//        connection.close();
+//	    return result;
+//	  }
 }

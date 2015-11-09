@@ -10,7 +10,8 @@ public class SqliteConnectionUtils {
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
 		 String hostName = "";
 		 
-	      String dbName = "//Vn130708//ï íçî«//database//Bukken.db";
+	      // String dbName = "//Vn130708//ÔøΩ íÔøΩÔøΩÔøΩ//database//Bukken.db";
+		 String dbName = "data//Bukken.db";
 	      String userName = "";
 	      String password = "";
 	 
