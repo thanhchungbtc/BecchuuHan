@@ -1,10 +1,20 @@
 package com.btc.viewModel;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.*;
 
+import javax.swing.AbstractCellEditor;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
@@ -15,7 +25,7 @@ import com.btc.supports.Helpers;
 
 public class BukkenTableModel extends AbstractTableModel {
 	
-	private static String[] COLUMN_NAMES = {"納期", "工事番号", "施主名", "タイプ"};
+	private static String[] COLUMN_NAMES = {"納期", "工事番号", "施主名", "タイプ", "システムへ"};
 	private List<Bukken> data;
 	private BukkenRepository repositoty;	
 	
@@ -24,21 +34,35 @@ public class BukkenTableModel extends AbstractTableModel {
 		this.data = repositoty.getList();
 	}
 	
+	
+	
 	public Bukken insertBukken(Bukken bukken) {
 		try {			
 			bukken = repositoty.insert(bukken);
-			data = repositoty.getList();
+		
 			
             fireTableRowsInserted(data.size() - 1, data.size() - 1);
             
 			return bukken;
 		} catch (SQLException e) {			
-			DialogHelpers.showError("Error occured", e);
+			DialogHelpers.showError("エラー", "工事番号は既に存在しています！");
 		}	
 		return null;
 	}
 	
-//	public void deleteGroup(Bukken group) {
+	public Bukken updateBukken(Bukken bukken, int rowIndex) {
+		try {			
+			bukken = repositoty.update(bukken);	
+			fireTableRowsUpdated(rowIndex, rowIndex);
+            
+			return bukken;
+		} catch (SQLException e) {			
+			DialogHelpers.showError("エラー", "今物件編集ができない！");
+		}	
+		return null;
+	}
+	
+//	public void deleteBukken(Bukken group) {
 //		try {			
 //			int row = data.indexOf(group);
 //			if (row == -1) return;
@@ -80,6 +104,8 @@ public class BukkenTableModel extends AbstractTableModel {
 			return bukken.getName();
 		case 3:
 			return BukkenType.getType(bukken.getType());
+		case 4:
+			return "<html><FONT color=\"#000099\"><u>別注ＤＢへ</u></html> ";
 		default:
 			return "Error";
 		}		
@@ -97,5 +123,4 @@ public class BukkenTableModel extends AbstractTableModel {
 		}
 	}
 
-	
 }

@@ -2,6 +2,7 @@ package com.btc.controllers;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -12,8 +13,11 @@ import java.awt.SystemColor;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -22,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +34,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -42,6 +49,7 @@ import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.supports.BukkenType;
 import com.btc.supports.DateLabelFormatter;
+import com.btc.supports.Helpers;
 
 import javax.swing.JFormattedTextField;
 
@@ -54,12 +62,19 @@ public class BukkenDetailsForm extends JDialog {
 	private JLabel lblNewLabel;
 	
 	public BukkenDetailsFormDelegate delegate;
-	public BecchuuRepository repositoty;
 	public Bukken bukkenToSubmit;
 	private JTextField txtDEPSF;
 	private JTextField txtShiten;
 	private JDatePickerImpl dpkNouki;
 	private boolean insertMode;
+	
+	private boolean validDataBeforeSubmit() {
+		if (txtID.getText().trim().equals("")) {
+			DialogHelpers.showAlert("通知", "工事番号入力する必要があります！");
+			return false;
+		}
+		return true;
+	}
 	
 	private void loadShouhinTypeCombobox() {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
@@ -69,14 +84,32 @@ public class BukkenDetailsForm extends JDialog {
 		cbType.setSelectedIndex(0);
 	}
 	
+	private void populateDataToFields() {
+		if (insertMode) return;
+		txtID.setText(bukkenToSubmit.getId());
+		txtID.setEnabled(false);
+		txtName.setText(bukkenToSubmit.getName());
+		cbType.setSelectedIndex(bukkenToSubmit.getType());
+		txtDEPSF.setText(bukkenToSubmit.getDepsf());
+		txtShiten.setText(bukkenToSubmit.getShiten());
+		
+		Date date = bukkenToSubmit.getNouki();	
+		if (date != null) {
+			dpkNouki.getModel().setDate(date.getYear() + 1900, date.getMonth(), date.getDate());
+			dpkNouki.getModel().setSelected(true);
+		}		
+	}
+	
 	// BEGIN handle Events
 	private void btnOKActionPerformed(ActionEvent event) {
-		bukkenToSubmit.setId(txtID.getText());
-		bukkenToSubmit.setName(txtName.getText());
+		if (!validDataBeforeSubmit()) return;
+		
+		bukkenToSubmit.setId(txtID.getText().trim());
+		bukkenToSubmit.setName(txtName.getText().trim());
 		bukkenToSubmit.setType(cbType.getSelectedIndex());
-		bukkenToSubmit.setDepsf(txtDEPSF.getText());
-		bukkenToSubmit.setShiten(txtShiten.getText());
-		DateFormat dFormat = new SimpleDateFormat("yyyy/MM/dd");
+		bukkenToSubmit.setDepsf(txtDEPSF.getText().trim());
+		bukkenToSubmit.setShiten(txtShiten.getText().trim());
+		
 		bukkenToSubmit.setNouki((Date)dpkNouki.getModel().getValue());
 		
 		delegate.submitData(bukkenToSubmit, this.insertMode);
@@ -90,6 +123,7 @@ public class BukkenDetailsForm extends JDialog {
 	 * Create the frame.
 	 */
 	public BukkenDetailsForm(Bukken bukken) {
+		setTitle("物件追加、修正");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		
@@ -105,9 +139,18 @@ public class BukkenDetailsForm extends JDialog {
 		else { 
 			bukkenToSubmit = bukken;
 			insertMode = false;
+			populateDataToFields();
 		}
 	}
 
+	public void showDialog(BukkenDetailsFormDelegate delegate) {
+		this.delegate = delegate;		
+		this.getRootPane().registerKeyboardAction(e -> {
+		    this.dispose();
+		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		this.setVisible(true);
+	}
+	
 	private void createAndSetupGUI() {
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
@@ -137,7 +180,7 @@ public class BukkenDetailsForm extends JDialog {
 		gbl_mainPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		mainPanel.setLayout(gbl_mainPanel);
 		
-		JLabel lblNewLabel_1 = new JLabel("\u5546\u54C1\u30BF\u30A4\u30D7");
+		JLabel lblNewLabel_1 = new JLabel("商品タイプ：");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
@@ -223,7 +266,7 @@ public class BukkenDetailsForm extends JDialog {
 		mainPanel.add(txtShiten, gbc_txtShiten);
 		txtShiten.setColumns(10);
 		
-		JLabel lblUrl = new JLabel("\u7D0D\u671F");
+		JLabel lblUrl = new JLabel("納期：");
 		GridBagConstraints gbc_lblUrl = new GridBagConstraints();
 		gbc_lblUrl.anchor = GridBagConstraints.WEST;
 		gbc_lblUrl.insets = new Insets(0, 0, 0, 5);

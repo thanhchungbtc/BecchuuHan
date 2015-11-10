@@ -22,18 +22,17 @@ public class BukkenRepository {
 		data = new LinkedList<Bukken>();		    
 		     try {
 		         try {
-		        	 ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Bukken");		         
+		        	 ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Bukken ORDER BY nouki DESC");		         
 			         while (rs.next()) {
 			           String id = rs.getString(1);
 			           String name = rs.getString(2);
+			           
 			           Bukken bukken = new Bukken();
 			           bukken.setId(id);
-			           bukken.setName(name);	
-			           
+			           bukken.setName(name);				           
 			           bukken.setDepsf(rs.getString(3));
-			           bukken.setShiten(rs.getString(4));
-			           bukken.setType(rs.getInt(5));
-			           
+			           bukken.setShiten(rs.getString(5));
+			           bukken.setType(rs.getInt(4));			           
 			           bukken.setNouki(Helpers.dateFromString(rs.getString(6)));
 			           
 			           data.add(bukken);
@@ -52,8 +51,17 @@ public class BukkenRepository {
 		return this.data;
 	}
 	
+	public Bukken getBukkenWithID(String id) {
+		 for (Bukken bukken: data) {
+			 if (bukken.getId().equals(id)) {
+				 return bukken;
+			 }
+		 }
+		 return null;
+	}
+	
 	public Bukken insert(Bukken bukken) throws SQLException {
-		 String sql = "INSERT INTO Bukken (id, name, depsf, shiten, type) VALUES(?, ?, ?, ?, ?)";
+		 String sql = "INSERT INTO Bukken (id, name, depsf, shiten, type, nouki) VALUES(?, ?, ?, ?, ?, ?)";
 	        try {
 	          connection = ConnectionUtils.getConnection();
 	        } catch (ClassNotFoundException ex) {
@@ -66,6 +74,7 @@ public class BukkenRepository {
 		    statement.setString(3, bukken.getDepsf());
 		    statement.setString(4, bukken.getShiten());
 		    statement.setInt(5, bukken.getType());
+		    statement.setString(6, Helpers.stringFromDate(bukken.getNouki()));
 		    
 		    statement.executeUpdate();
 		    statement.close();
@@ -74,6 +83,35 @@ public class BukkenRepository {
 		    connection.close();
 		    connection = null;
 		    data.add(bukken);
+		    return bukken;
+	}
+	
+	public Bukken update(Bukken bukken) throws SQLException {
+		 String sql = "UPDATE Bukken SET id = ?, name = ?, depsf = ?, shiten = ?, type = ?, nouki = ? "
+		 		+ " WHERE id = ?";
+	        try {
+	        	connection = ConnectionUtils.getConnection();
+	        } catch (ClassNotFoundException ex) {
+	        	System.out.println("Could not connect to database");
+	        	Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	        
+		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);
+		    statement.setString(1, bukken.getId());
+		    statement.setString(2, bukken.getName());
+		    statement.setString(3, bukken.getDepsf());
+		    statement.setString(4, bukken.getShiten());
+		    statement.setInt(5, bukken.getType());
+		    statement.setString(6, Helpers.stringFromDate(bukken.getNouki()));
+		    
+		    statement.setString(7, bukken.getId());
+		    statement.executeUpdate();
+		    statement.close();
+		    statement = null;
+		    
+		    connection.close();
+		    connection = null;
+		    
 		    return bukken;
 	}
 	

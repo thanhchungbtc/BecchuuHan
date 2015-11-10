@@ -5,7 +5,11 @@ public class BukkenType {
 	public final static int SHIGUMA = 1;
 	public final static String[] Type = {"XEVO", "Σ" };
 	public final static String getType(int id) {
-		if (id < 0 || id > BukkenType.Type.length - 1) throw new IndexOutOfBoundsException();
+		if (id < 0 || id > BukkenType.Type.length - 1) 
+		{
+			System.out.println(id);
+			throw new IndexOutOfBoundsException();			
+		}
 		return BukkenType.Type[id];
 	}
 }
