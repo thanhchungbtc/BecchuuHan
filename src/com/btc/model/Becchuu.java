@@ -2,6 +2,7 @@ package com.btc.model;
 
 import java.util.Date;
 
+import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
 
 public class Becchuu {
@@ -31,7 +32,11 @@ public class Becchuu {
 	public Employee sakuseiSha;
 	public Employee kenshuuSha;
 	public BecchuuType becchuuType;
+	public Bukken bukken;
 	
+	public Bukken getBukken() {
+		return bukken;
+	}
 	public String getBecchuuKigou() {
 		return becchuuKigou;
 	}
@@ -115,6 +120,7 @@ public class Becchuu {
 	}
 	public void setKoujibangou(String koujibangou) {
 		this.koujibangou = koujibangou;
+		
 	}
 	public String getSakuseiShaID() {
 		return sakuseiShaID;
