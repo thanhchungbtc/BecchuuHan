@@ -335,8 +335,8 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate, Becch
 	}
 
 	private void initializeData() {
-		bukkenRepository = new BukkenRepository();
-		becchuuRepository = new BecchuuRepository();
+		bukkenRepository = BukkenRepository.Instance();
+		becchuuRepository = BecchuuRepository.Instance();
 	}
 
 	private void setupTable() {

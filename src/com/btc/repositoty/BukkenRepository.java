@@ -18,11 +18,16 @@ public class BukkenRepository {
 
 	private List<Bukken> data;
 	private Connection connection;
+	private static BukkenRepository _instance;
 	
-	public BukkenRepository() {
-		   
+	private BukkenRepository() {
+		  
 	}
-	
+
+	public static BukkenRepository Instance() {
+		if (_instance == null) _instance = new BukkenRepository();
+		return _instance;
+	}
 	public List<Bukken> getList() {
 		if (data != null) data.clear();
 		data = new LinkedList<Bukken>();		    
@@ -63,30 +68,40 @@ public class BukkenRepository {
 		 return null;
 	}
 	
-	public static Bukken contains(String koujibangou) {
-		ResultSet rs = null;
-		try {
-
-			rs = ConnectionUtils.executeQuery ("SELECT `id`, `name`, `type` FROM Bukken WHERE id = '" + koujibangou + "'");		         
-			
-			if (rs.next()){
-				
-				Bukken bukken = new Bukken();
-				bukken.setId(koujibangou);
-				bukken.setName(rs.getString(2));
-				bukken.setType(rs.getInt(3));
-				rs.close();
+//	public Bukken contains(String koujibangou) {
+//		ResultSet rs = null;
+//		try {
+//
+//			rs = ConnectionUtils.executeQuery ("SELECT `id`, `name`, `type` FROM Bukken WHERE id = '" + koujibangou + "'");		         
+//			
+//			if (rs.next()){
+//				
+//				Bukken bukken = new Bukken();
+//				bukken.setId(koujibangou);
+//				bukken.setName(rs.getString(2));
+//				bukken.setType(rs.getInt(3));
+//				rs.close();
+//				return bukken;
+//			}
+//		}
+//		catch (ClassNotFoundException e) {
+//			e.printStackTrace();			
+//		}
+//		catch(SQLException e){
+//			System.out.println("SQL exception occured" + e);
+//		}    
+//		
+//		 return null;
+//	}
+	
+	public Bukken contains(String koujibangou) {
+		List<Bukken> data = getList();
+		for (Bukken bukken: data) {
+			if (bukken.getId().equals(koujibangou)) {
 				return bukken;
 			}
 		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();			
-		}
-		catch(SQLException e){
-			System.out.println("SQL exception occured" + e);
-		}    
-		
-		 return null;
+		return null;
 	}
 	
 	public Bukken insert(Bukken bukken) throws SQLException {

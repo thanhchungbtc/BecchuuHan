@@ -112,8 +112,9 @@ public class BecchuuIraiForm extends JFrame {
 		
 		DialogHelpers.showAlert("成功", "別注依頼を送信しました！");
 		try {
-			BecchuuRepository.insert(becchuu);
-			
+			BecchuuRepository.Instance().insert(becchuu);
+			DialogHelpers.showAlert("成功", "別注依頼を送信しました！");
+			this.dispose();
 		} catch (SQLException e) {
 			DialogHelpers.showError("エラー", "依頼失敗しました！");
 			e.printStackTrace();
@@ -303,7 +304,7 @@ public class BecchuuIraiForm extends JFrame {
 					txtBukkenJouhou.setText("");
 					return;
 				}
-				bukken = BukkenRepository.contains(txtKoujibangou.getText().trim());
+				bukken = BukkenRepository.Instance().contains(txtKoujibangou.getText().trim());
 				
 				if (bukken != null){					
 					txtBukkenJouhou.setText(bukken.getName());

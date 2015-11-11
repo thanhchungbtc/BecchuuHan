@@ -52,6 +52,8 @@ import com.btc.supports.DateLabelFormatter;
 import com.btc.supports.Helpers;
 
 import javax.swing.JFormattedTextField;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class BukkenDetailsForm extends JDialog {
 
@@ -85,7 +87,22 @@ public class BukkenDetailsForm extends JDialog {
 	}
 	
 	private void populateDataToFields() {
-		if (insertMode) return;
+		
+		if (insertMode) {	
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());						
+			// XEVO
+			if (cbType.getSelectedIndex() == 0) {	
+				calendar.add(Calendar.DATE, 2);
+			//　Σ
+			} else if (cbType.getSelectedIndex() == 1){
+				calendar.add(Calendar.DATE, 3);
+			}
+			
+			dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.DATE));	
+			dpkNouki.getModel().setSelected(true);
+			return;
+		}
 		txtID.setText(bukkenToSubmit.getId());
 		txtID.setEnabled(false);
 		txtName.setText(bukkenToSubmit.getName());
@@ -138,9 +155,9 @@ public class BukkenDetailsForm extends JDialog {
 		}
 		else { 
 			bukkenToSubmit = bukken;
-			insertMode = false;
-			populateDataToFields();
+			insertMode = false;			
 		}
+		populateDataToFields();
 	}
 
 	public void showDialog(BukkenDetailsFormDelegate delegate) {
@@ -189,6 +206,23 @@ public class BukkenDetailsForm extends JDialog {
 		mainPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		cbType = new JComboBox();
+		cbType.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(new Date());			
+				
+				// XEVO
+				if (cbType.getSelectedIndex() == 0) {	
+					calendar.add(Calendar.DATE, 2);
+				//　Σ
+				} else if (cbType.getSelectedIndex() == 1){
+					calendar.add(Calendar.DATE, 3);
+				}
+				
+				dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.DATE));	
+				dpkNouki.getModel().setSelected(true);
+			}
+		});
 		GridBagConstraints gbc_cbType = new GridBagConstraints();
 		gbc_cbType.insets = new Insets(0, 0, 5, 0);
 		gbc_cbType.fill = GridBagConstraints.HORIZONTAL;

@@ -2,6 +2,7 @@ package com.btc.controllers.BecchuuKanriForm;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+<<<<<<< HEAD
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -281,11 +282,25 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 	private JCheckBox chkKenshuZumi;
 	private JCheckBox chkUploadZumi;
 	
+=======
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+public class BecchuuKanriForm extends JFrame {
+
+	private JPanel contentPane;
+
+>>>>>>> 1. Nouki is now automically recognized when add new Bukken. \n2. Change Repository to singleton (just for test purpose). \n3. Add BecchuuKanriForm
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		Config.setLookAndField();
+=======
+>>>>>>> 1. Nouki is now automically recognized when add new Bukken. \n2. Change Repository to singleton (just for test purpose). \n3. Add BecchuuKanriForm
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -298,10 +313,25 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 		});
 	}
 
+<<<<<<< HEAD
 
 	@Override
 	public void submitData(Becchuu becchuu) {
 		// TODO Auto-generated method stub
 		
 	}
+=======
+	/**
+	 * Create the frame.
+	 */
+	public BecchuuKanriForm() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+	}
+
+>>>>>>> 1. Nouki is now automically recognized when add new Bukken. \n2. Change Repository to singleton (just for test purpose). \n3. Add BecchuuKanriForm
 }

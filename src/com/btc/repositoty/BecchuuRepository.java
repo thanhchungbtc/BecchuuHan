@@ -19,10 +19,15 @@ public class BecchuuRepository {
 	private List<Becchuu> data;
 	private Connection connection;
 
+	private static BecchuuRepository _instance;
+
+	private BecchuuRepository() {
+
+	}
 	
-
-	public BecchuuRepository() {
-
+	public static BecchuuRepository Instance() {
+		if (_instance == null) _instance = new BecchuuRepository();
+		return _instance;
 	}
 
 	public List<Becchuu> getList() {
@@ -66,7 +71,7 @@ public class BecchuuRepository {
 		return data;
 	}
 
-	public static void insert(Becchuu becchuu) throws SQLException {
+	public void insert(Becchuu becchuu) throws SQLException {
 		String sql = "INSERT INTO Becchuu ("
 				+ "becchuu_kigou, becchuu_parameter, becchuu_naiyou,"
 				+ " motozu_kigou, motozu_parameter,"
