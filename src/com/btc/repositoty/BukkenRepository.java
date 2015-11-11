@@ -1,5 +1,6 @@
 package com.btc.repositoty;
 
+import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +59,30 @@ public class BukkenRepository {
 			 }
 		 }
 		 return null;
+	}
+	
+	public static boolean contains(String koujibangou) {
+		ResultSet rs = null;
+		try {
+
+			rs = ConnectionUtils.executeQuery ("SELECT count(*) FROM Bukken WHERE id = '" + koujibangou + "'");		         
+			
+			if (rs.getInt(1) > 0){
+				
+				rs.getStatement().close();
+				rs.close();
+				rs = null;
+				return true;
+			}
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();			
+		}
+		catch(SQLException e){
+			System.out.println("SQL exception occured" + e);
+		}    
+		
+		 return false;
 	}
 	
 	public Bukken insert(Bukken bukken) throws SQLException {
