@@ -28,6 +28,11 @@ public class BecchuuTableModel extends AbstractTableModel{
 		this.repository = repository;
 		this.data = repository.getList();
 	}
+	public void refresh() {
+		
+		this.data = repository.getList();
+		fireTableDataChanged();
+	}
 //	
 //	
 //	
@@ -89,29 +94,33 @@ public class BecchuuTableModel extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		Becchuu becchuu = data.get(row);
-		switch (col) {
-		case 0: // 別注記号
-			return becchuu.getBecchuuKigou();
-		case 1: //　別注タイプ
-			return becchuu.getBecchuuType().getName();
-		case 2: //　依頼日
-			return Helpers.stringFromDate(becchuu.getIraibi());
-		case 3: //　作成者
-			return becchuu.getSakuseiSha().getName();
-		case 4: //　別注枚数
-			return becchuu.getBecchuuMaisu();
-		case 5: //　作成状況
-			return CommonRepository.getBecchuuStatus(becchuu.getSakuseiStatus());
-		case 6: // 研修状況
-			return CommonRepository.getBecchuuStatus(becchuu.getKenshuuStatus());
-		case 7: //　別注DBアップ状況
-			return CommonRepository.getBecchuuStatus(becchuu.getUploadStatus());  
-		default:
-			return "Error";
-		}		
+		try {
+			Becchuu becchuu = data.get(row);
+			switch (col) {
+			case 0: // 別注記号
+				return becchuu.getBecchuuKigou();
+			case 1: //　別注タイプ
+				return becchuu.getBecchuuType().getName();
+			case 2: //　依頼日
+				return Helpers.stringFromDate(becchuu.getIraibi());
+			case 3: //　作成者
+				return becchuu.getSakuseiSha().getName();
+			case 4: //　別注枚数
+				return becchuu.getBecchuuMaisu();
+			case 5: //　作成状況
+				return CommonRepository.getBecchuuStatus(becchuu.getSakuseiStatus());
+			case 6: // 研修状況
+				return CommonRepository.getBecchuuStatus(becchuu.getKenshuuStatus());
+			case 7: //　別注DBアップ状況
+				return CommonRepository.getBecchuuStatus(becchuu.getUploadStatus());  
+			default:
+				return "Error";
+			}
+		}catch (Exception e) {
+			return "";
+		}
 	}
-	
+
 	public void clearAll() {
 		try {
 		for (int i = 0; i < data.size(); i++) {

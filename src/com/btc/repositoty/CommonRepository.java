@@ -16,7 +16,7 @@ public class CommonRepository {
 	private static List<Employee> _employees;
 	private static List<Employee> _becchuuHandEmployees;
 	
-	private static String[] _status = {"依頼中", "作成済み", "別注不要", "" };
+	private static String[] _status = {"", "依頼中", "作成済み", "別注不要"};
 	
 	public static List<BecchuuType> getBecchuuTypes() {
 		if (_becchuuTypes != null) return _becchuuTypes;

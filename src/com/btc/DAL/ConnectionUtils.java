@@ -9,10 +9,12 @@ import org.sqlite.SQLiteConnection;
 
 public class ConnectionUtils {
 
-	
+	private static Connection _connection;
 	
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
-		return SqliteConnectionUtils.getConnection();
+		if (_connection == null || _connection.isClosed())
+			_connection = SqliteConnectionUtils.getConnection();
+		return _connection;
 	}
 	
 	public static ResultSet executeQuery(String sql) throws ClassNotFoundException, SQLException {

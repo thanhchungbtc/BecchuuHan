@@ -26,7 +26,8 @@ public class BecchuuRepository {
 	}
 
 	public List<Becchuu> getList() {
-		if(data != null) return data;
+		if(data != null) data.clear();
+		
 		data = new ArrayList<Becchuu>();
 		try {
 			ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Becchuu");		         

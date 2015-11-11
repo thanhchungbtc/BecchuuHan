@@ -27,18 +27,22 @@ public class BukkenTableModel extends AbstractTableModel {
 	
 	private static String[] COLUMN_NAMES = {"納期", "工事番号", "施主名", "タイプ", "システムへ"};
 	private List<Bukken> data;
-	private BukkenRepository repositoty;	
+	private BukkenRepository repository;	
 	
 	public BukkenTableModel(BukkenRepository repository) {
-		this.repositoty = repository;
-		this.data = repositoty.getList();
+		this.repository = repository;
+		this.data = repository.getList();
 	}
 	
-	
+	public void refresh() {
+		
+		this.data = repository.getList();
+		fireTableDataChanged();
+	}
 	
 	public Bukken insertBukken(Bukken bukken) {
 		try {			
-			bukken = repositoty.insert(bukken);
+			bukken = repository.insert(bukken);
 		
 			
             fireTableRowsInserted(data.size() - 1, data.size() - 1);
@@ -52,7 +56,7 @@ public class BukkenTableModel extends AbstractTableModel {
 	
 	public Bukken updateBukken(Bukken bukken, int rowIndex) {
 		try {			
-			bukken = repositoty.update(bukken);	
+			bukken = repository.update(bukken);	
 			fireTableRowsUpdated(rowIndex, rowIndex);
             
 			return bukken;

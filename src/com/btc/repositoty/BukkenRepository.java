@@ -20,35 +20,37 @@ public class BukkenRepository {
 	private Connection connection;
 	
 	public BukkenRepository() {
-		data = new LinkedList<Bukken>();		    
-		     try {
-		         try {
-		        	 ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Bukken ORDER BY nouki DESC");		         
-			         while (rs.next()) {
-			           String id = rs.getString(1);
-			           String name = rs.getString(2);
-			           
-			           Bukken bukken = new Bukken();
-			           bukken.setId(id);
-			           bukken.setName(name);				           
-			           bukken.setDepsf(rs.getString(3));
-			           bukken.setShiten(rs.getString(5));
-			           bukken.setType(rs.getInt(4));			           
-			           bukken.setNouki(Helpers.dateFromString(rs.getString(6)));
-			           
-			           data.add(bukken);
-			         }
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} 
-		         
-		      }
-		      catch(SQLException e){
-		         System.out.println("SQL exception occured" + e);
-		      }    
+		   
 	}
 	
 	public List<Bukken> getList() {
+		if (data != null) data.clear();
+		data = new LinkedList<Bukken>();		    
+		try {
+			try {
+				ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Bukken ORDER BY nouki DESC");		         
+				while (rs.next()) {
+					String id = rs.getString(1);
+					String name = rs.getString(2);
+
+					Bukken bukken = new Bukken();
+					bukken.setId(id);
+					bukken.setName(name);				           
+					bukken.setDepsf(rs.getString(3));
+					bukken.setShiten(rs.getString(5));
+					bukken.setType(rs.getInt(4));			           
+					bukken.setNouki(Helpers.dateFromString(rs.getString(6)));
+
+					data.add(bukken);
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
+
+		}
+		catch(SQLException e){
+			System.out.println("SQL exception occured" + e);
+		} 
 		return this.data;
 	}
 	
@@ -61,18 +63,20 @@ public class BukkenRepository {
 		 return null;
 	}
 	
-	public static boolean contains(String koujibangou) {
+	public static Bukken contains(String koujibangou) {
 		ResultSet rs = null;
 		try {
 
-			rs = ConnectionUtils.executeQuery ("SELECT count(*) FROM Bukken WHERE id = '" + koujibangou + "'");		         
+			rs = ConnectionUtils.executeQuery ("SELECT `id`, `name`, `type` FROM Bukken WHERE id = '" + koujibangou + "'");		         
 			
-			if (rs.getInt(1) > 0){
+			if (rs.next()){
 				
-				rs.getStatement().close();
+				Bukken bukken = new Bukken();
+				bukken.setId(koujibangou);
+				bukken.setName(rs.getString(2));
+				bukken.setType(rs.getInt(3));
 				rs.close();
-				rs = null;
-				return true;
+				return bukken;
 			}
 		}
 		catch (ClassNotFoundException e) {
@@ -82,7 +86,7 @@ public class BukkenRepository {
 			System.out.println("SQL exception occured" + e);
 		}    
 		
-		 return false;
+		 return null;
 	}
 	
 	public Bukken insert(Bukken bukken) throws SQLException {

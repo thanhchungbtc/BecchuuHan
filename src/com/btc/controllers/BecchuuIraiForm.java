@@ -2,6 +2,7 @@ package com.btc.controllers;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -21,8 +22,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -30,6 +35,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import com.btc.DAL.ConnectionUtils;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
@@ -38,6 +44,7 @@ import com.btc.supports.DateLabelFormatter;
 import com.btc.supports.Helpers;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Toolkit;
 
 public class BecchuuIraiForm extends JFrame {
 
@@ -56,14 +63,34 @@ public class BecchuuIraiForm extends JFrame {
 	private JTextField txtKoujibangou;
 	private JTextArea txtBukkenJouhou;
 
-	private boolean bukkenExists = false;
+	// bukken must set before irai
+	private Bukken bukken; 
 	private boolean validDataBeforeSubmit() {
-		if (txtKoujibangou.getText().trim().equals("")) {
-			DialogHelpers.showAlert("通知", "工事番号入力する必要があります！");
+		if (txtBecchuuKigou.getText().trim().equals("")) {
+			DialogHelpers.showAlert("通知", "別注記号入力する必要があります！");
+			txtBecchuuKigou.requestFocus();
 			return false;
 		}
-		if (!bukkenExists) {
+		if (txtKoujibangou.getText().trim().equals("")) {
+			DialogHelpers.showAlert("通知", "工事番号入力する必要があります！");
+			txtKoujibangou.requestFocus();
+			return false;
+		}
+		if (txtBecchuuNaiyou.getText().trim().equals("")) {
+			DialogHelpers.showAlert("通知", "別注内容入力する必要があります！");
+			txtBecchuuNaiyou.requestFocus();
+			return false;
+		}
+		if (txtIraiSha.getText().trim().equals("")) {
+			DialogHelpers.showAlert("通知", "依頼者入力する必要があります！");
+			txtIraiSha.requestFocus();
+			return false;
+		}
+		if (bukken == null) {
 			DialogHelpers.showAlert("通知", "存在しない工事番号です！");
+			txtKoujibangou.requestFocus();
+			txtKoujibangou.setSelectionStart(0);
+			txtKoujibangou.setSelectionEnd(txtKoujibangou.getText().length());
 			return false;
 		}
 		return true;
@@ -74,17 +101,19 @@ public class BecchuuIraiForm extends JFrame {
 		if (!validDataBeforeSubmit()) return;
 
 		Becchuu becchuu = new Becchuu();		
-		
-		becchuu.setBecchuuParameter(txtBecchuuParameter.getText());
-		becchuu.setBecchuuNaiyou(txtBecchuuNaiyou.getText());
-		becchuu.setMotozuKigou(txtMotozuKigou.getText());
-		becchuu.setMotozuParameter(txtMotozuParameter.getText());
-		becchuu.setKoujibangou(txtKoujibangou.getText());
-		becchuu.setIraiShaID(txtIraiSha.getText());
+		becchuu.setBecchuuKigou(txtBecchuuKigou.getText().trim());
+		becchuu.setBecchuuParameter(txtBecchuuParameter.getText().trim());
+		becchuu.setBecchuuNaiyou(txtBecchuuNaiyou.getText().trim());
+		becchuu.setMotozuKigou(txtMotozuKigou.getText().trim());
+		becchuu.setMotozuParameter(txtMotozuParameter.getText().trim());
+		becchuu.setKoujibangou(txtKoujibangou.getText().trim());
+		becchuu.setIraiShaID(txtIraiSha.getText().trim());
 		becchuu.setIraibi(new Date());
 		
+		DialogHelpers.showAlert("成功", "別注依頼を送信しました！");
 		try {
 			BecchuuRepository.insert(becchuu);
+			
 		} catch (SQLException e) {
 			DialogHelpers.showError("エラー", "依頼失敗しました！");
 			e.printStackTrace();
@@ -99,11 +128,27 @@ public class BecchuuIraiForm extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					BecchuuIraiForm frame = new BecchuuIraiForm();
 					frame.setVisible(true);
+					ConnectionUtils.getConnection().close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -140,7 +185,7 @@ public class BecchuuIraiForm extends JFrame {
 		gbl_becchuuPanel.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		becchuuPanel.setLayout(gbl_becchuuPanel);
 
-		JLabel lblNewLabel_1 = new JLabel("別注記号：");
+		JLabel lblNewLabel_1 = new JLabel("別注記号（＊）：");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
@@ -164,35 +209,43 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_lblNewLabel_2.gridx = 0;
 		gbc_lblNewLabel_2.gridy = 1;
 		becchuuPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_1.gridx = 1;
+		gbc_scrollPane_1.gridy = 1;
+		becchuuPanel.add(scrollPane_1, gbc_scrollPane_1);
 
+		
 		txtBecchuuParameter = new JTextArea();
+		scrollPane_1.setViewportView(txtBecchuuParameter);
+		
 		txtBecchuuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
 		txtBecchuuParameter.setLineWrap(true);
-		txtBecchuuParameter.setRows(5);
-		GridBagConstraints gbc_txtBecchuuParameter = new GridBagConstraints();
-		gbc_txtBecchuuParameter.insets = new Insets(0, 0, 5, 0);
-		gbc_txtBecchuuParameter.fill = GridBagConstraints.BOTH;
-		gbc_txtBecchuuParameter.gridx = 1;
-		gbc_txtBecchuuParameter.gridy = 1;
-		becchuuPanel.add(txtBecchuuParameter, gbc_txtBecchuuParameter);
+		txtBecchuuParameter.setRows(4);
 
-		JLabel lblUserName = new JLabel("別注内容：");
+		JLabel lblUserName = new JLabel("別注内容（＊）：");
 		GridBagConstraints gbc_lblUserName = new GridBagConstraints();
 		gbc_lblUserName.anchor = GridBagConstraints.WEST;
 		gbc_lblUserName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUserName.gridx = 0;
 		gbc_lblUserName.gridy = 2;
 		becchuuPanel.add(lblUserName, gbc_lblUserName);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 2;
+		becchuuPanel.add(scrollPane, gbc_scrollPane);
 
 		txtBecchuuNaiyou = new JTextArea();
+		scrollPane.setViewportView(txtBecchuuNaiyou);
 		txtBecchuuNaiyou.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-		txtBecchuuNaiyou.setRows(5);
-		GridBagConstraints gbc_txtBecchuuNaiyou = new GridBagConstraints();
-		gbc_txtBecchuuNaiyou.insets = new Insets(0, 0, 5, 0);
-		gbc_txtBecchuuNaiyou.fill = GridBagConstraints.BOTH;
-		gbc_txtBecchuuNaiyou.gridx = 1;
-		gbc_txtBecchuuNaiyou.gridy = 2;
-		becchuuPanel.add(txtBecchuuNaiyou, gbc_txtBecchuuNaiyou);
+		txtBecchuuNaiyou.setRows(4);
 
 		JLabel lblPassword = new JLabel("元図記号：");
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
@@ -219,18 +272,21 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_lblRepeat.gridx = 0;
 		gbc_lblRepeat.gridy = 4;
 		becchuuPanel.add(lblRepeat, gbc_lblRepeat);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
+		gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_2.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_2.gridx = 1;
+		gbc_scrollPane_2.gridy = 4;
+		becchuuPanel.add(scrollPane_2, gbc_scrollPane_2);
 
 		txtMotozuParameter = new JTextArea();
+		scrollPane_2.setViewportView(txtMotozuParameter);
 		txtMotozuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-		txtMotozuParameter.setRows(5);
-		GridBagConstraints gbc_txtMotozuParameter = new GridBagConstraints();
-		gbc_txtMotozuParameter.insets = new Insets(0, 0, 5, 0);
-		gbc_txtMotozuParameter.fill = GridBagConstraints.BOTH;
-		gbc_txtMotozuParameter.gridx = 1;
-		gbc_txtMotozuParameter.gridy = 4;
-		becchuuPanel.add(txtMotozuParameter, gbc_txtMotozuParameter);
+		txtMotozuParameter.setRows(4);
 
-		JLabel lblNewLabel_3 = new JLabel("工事番号：");
+		JLabel lblNewLabel_3 = new JLabel("工事番号（＊）：");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
@@ -242,10 +298,18 @@ public class BecchuuIraiForm extends JFrame {
 		txtKoujibangou.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if (txtKoujibangou.getText().trim().equals("")) return;
-				if (BukkenRepository.contains(txtKoujibangou.getText())) {
-					bukkenExists = true;
-				} else bukkenExists = false;
+				if (txtKoujibangou.getText().trim().equals("")) { 
+					bukken = null;
+					txtBukkenJouhou.setText("");
+					return;
+				}
+				bukken = BukkenRepository.contains(txtKoujibangou.getText().trim());
+				
+				if (bukken != null){					
+					txtBukkenJouhou.setText(bukken.getName());
+				} else {
+					txtBukkenJouhou.setText("");
+				}
 			}
 		});
 		GridBagConstraints gbc_txtKoujibangou = new GridBagConstraints();
@@ -256,7 +320,7 @@ public class BecchuuIraiForm extends JFrame {
 		becchuuPanel.add(txtKoujibangou, gbc_txtKoujibangou);
 		txtKoujibangou.setColumns(10);
 
-		JLabel lblNewLabel_4 = new JLabel("依頼者：");
+		JLabel lblNewLabel_4 = new JLabel("依頼者（＊）：");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
@@ -282,9 +346,10 @@ public class BecchuuIraiForm extends JFrame {
 		becchuuPanel.add(lblNewLabel_5, gbc_lblNewLabel_5);
 
 		txtBukkenJouhou = new JTextArea();
+		txtBukkenJouhou.setEditable(false);
 		txtBukkenJouhou.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		txtBukkenJouhou.setLineWrap(true);
-		txtBukkenJouhou.setRows(3);
+		txtBukkenJouhou.setRows(2);
 		GridBagConstraints gbc_txtBukkenJouhou = new GridBagConstraints();
 		gbc_txtBukkenJouhou.insets = new Insets(0, 0, 5, 0);
 		gbc_txtBukkenJouhou.fill = GridBagConstraints.BOTH;
@@ -339,10 +404,11 @@ public class BecchuuIraiForm extends JFrame {
 	 * Create the frame.
 	 */
 	public BecchuuIraiForm() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BecchuuIraiForm.class.getResource("/resources/icon/icon_irai.jpg")));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("別注依頼");	
 
-		createAndSetupGUI();
+		createAndSetupGUI(); 
 
 		txtIraibi.setText(Helpers.stringFromDate(new Date()));
 		

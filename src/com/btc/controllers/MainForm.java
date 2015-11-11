@@ -49,6 +49,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Desktop.Action;
 
@@ -106,6 +107,24 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate, Becch
 
 		JMenu mnFile = new JMenu("ファイル");
 		menuBar.add(mnFile);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("更新");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				((BecchuuTableModel)becchuuTable.getModel()).refresh();
+				((BukkenTableModel)bukkenTable.getModel()).refresh();
+			}
+		});
+		
+		JMenuItem menuItem = new JMenuItem("別注依頼ツール");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BecchuuIraiForm becchuuIraiForm = new BecchuuIraiForm();
+				becchuuIraiForm.setVisible(true);
+			}
+		});
+		mnFile.add(menuItem);
+		mnFile.add(mntmNewMenuItem);
 
 		JMenuItem mntmExit = new JMenuItem("\u7D42\u4E86");
 		mnFile.add(mntmExit);
@@ -515,25 +534,32 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate, Becch
 		});
 	}
 
+	private void loadFromDataBase() {
+		initializeData();
+		setupTable();
+	}
 	/**
 	 * Create the frame.
 	 */
 	public MainForm() {
+		
 		setTitle("別注管理  ― ハノイ支店");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocation(100, 100);
 		
-
-		initializeData();
+		setMinimumSize(new Dimension(1000, 700));
+		//setExtendedState(JFrame.MAXIMIZED_BOTH); ; 
+		
+		
 		createAndSetupGUI();
+		loadFromDataBase();
 		loadShouhinTypeCombobox();
 		loadBecchuuTypeCombobox();
 		loadBecchuuEmployeesCombobox();
-		setupTable();
 		
 		
-		pack();
-		setBounds(100, 100, 1280, 800);
+		
+		//pack();
+		//setBounds(100, 100, 1280, 800);
 	}
 	
 	// BEGIN implements BukkenDetailFormsDelegate--------------------------------------------
