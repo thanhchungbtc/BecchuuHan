@@ -16,6 +16,8 @@ public class CommonRepository {
 	private static List<Employee> _employees;
 	private static List<Employee> _becchuuHandEmployees;
 	
+	private static String[] _status = {"依頼中", "作成済み", "別注不要", "" };
+	
 	public static List<BecchuuType> getBecchuuTypes() {
 		if (_becchuuTypes != null) return _becchuuTypes;
 		
@@ -41,6 +43,16 @@ public class CommonRepository {
 			System.out.println("SQL exception occured" + e);
 		}
 		return _becchuuTypes;
+	}
+	
+	public static BecchuuType getBecchuuTypeByID(int id) {
+		List<BecchuuType> becchuuTypes = getBecchuuTypes();
+		for (BecchuuType becchuuType: becchuuTypes) {
+			if (becchuuType.getId() == id) {
+				return becchuuType;
+			}
+		}
+		return null;
 	}
 	
 	public static List<Employee> getEmployees() {
@@ -75,5 +87,19 @@ public class CommonRepository {
 			}
 		}
 		return results;
+	}
+	
+	public static Employee getBecchuuEmployeeByID(String employeeID) {
+		List<Employee> employees = CommonRepository.getBecchuuHandEmployees();
+		for (Employee employee: employees) {
+			if (employee.getId().equals(employeeID)) {
+				return employee;
+			}
+		}
+		return null;
+	}
+	
+	public static String getBecchuuStatus(int statusID) {
+		return _status[statusID];
 	}
 }

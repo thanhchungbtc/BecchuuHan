@@ -85,7 +85,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseMotionAdapter;
 
-public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
+public class MainForm extends JFrame implements BukkenDetailsFormDelegate, BecchuuDetailsDelegate {
 
 	private JPanel contentPane;
 	private JTable bukkenTable;
@@ -93,6 +93,8 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 	private JLabel lblWelcome;
 
 	private BukkenRepository bukkenRepository;
+	private BecchuuRepository becchuuRepository;
+	
 	private JTextField txtBukkenSearch;
 	TableRowSorter<TableModel> rowSorter;
 	private JComboBox cbType;
@@ -120,7 +122,7 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 		JSplitPane mainSplitPane = new JSplitPane();
 		mainSplitPane.setContinuousLayout(true);
 		mainSplitPane.setDividerSize(2);
-		mainSplitPane.setDividerLocation(350);
+		mainSplitPane.setDividerLocation(400);
 
 		contentPane.add(mainSplitPane, BorderLayout.CENTER);
 
@@ -288,6 +290,16 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 		rightPanel.add(rightButtonPanel, BorderLayout.SOUTH);
 		rightButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
 		
+		JButton btnAddBecchuu = new JButton();
+		btnAddBecchuu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnAddBecchuuMouseClicked(e);
+			}
+		});
+		btnAddBecchuu.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_plus.png")));
+		rightButtonPanel.add(btnAddBecchuu);
+		
 		JButton btnDeleteBecchuu = new JButton("");
 		btnDeleteBecchuu.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_trash.png")));
 		rightButtonPanel.add(btnDeleteBecchuu);
@@ -304,6 +316,7 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 
 	private void initializeData() {
 		bukkenRepository = new BukkenRepository();
+		becchuuRepository = new BecchuuRepository();
 	}
 
 	private void setupTable() {
@@ -336,7 +349,7 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 		});
 		
 		becchuuTable.setRowHeight(25);	
-		BecchuuTableModel becchuuTableModel = new BecchuuTableModel();
+		BecchuuTableModel becchuuTableModel = new BecchuuTableModel(this.becchuuRepository);
 		becchuuTable.setModel(becchuuTableModel);
 	}
 
@@ -381,6 +394,12 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 		form.showDialog(this);
 	}
 		
+	private void btnAddBecchuuMouseClicked(MouseEvent event){
+		BecchuuDetailsForm form = new BecchuuDetailsForm();
+		form.setLocationRelativeTo(this);
+		form.showDialog(this);
+	}
+	
 	private void bukkenTableClicked(MouseEvent event)  {
 		if (bukkenTable.getSelectedRow() == -1) return;
 		int col = bukkenTable.getSelectedColumn();
@@ -528,4 +547,10 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate {
 		
 	}
 	// END implements BukkenDetailFormsDelegate--------------------------------------------
+
+	@Override
+	public void submitData(Becchuu becchuu, boolean insert) {
+		// TODO Auto-generated method stub
+		
+	}
 }

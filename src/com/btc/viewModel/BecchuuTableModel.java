@@ -13,18 +13,21 @@ import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
+import com.btc.repositoty.CommonRepository;
 import com.btc.supports.BukkenType;
 import com.btc.supports.Helpers;
 
 public class BecchuuTableModel extends AbstractTableModel{
 	private static String[] COLUMN_NAMES = {"別注記号","分類", "依頼日", "作成者", "別注枚数", "作成状況", "検収状況", "別注ＤＢアップ"};
 	private List<Becchuu> data = new ArrayList<>();
-	private BecchuuTableModel repositoty;	
-//	
-//	public BecchuuTableModel(BecchuuTableModel repository) {
-//		this.repositoty = repository;
-//		this.data = repositoty.getList();
-//	}
+	private BecchuuRepository repository;	
+	
+	
+
+	public BecchuuTableModel(BecchuuRepository repository) {
+		this.repository = repository;
+		this.data = repository.getList();
+	}
 //	
 //	
 //	
@@ -86,20 +89,27 @@ public class BecchuuTableModel extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int row, int col) {
-//		Becchuu becchuu = data.get(row);
-//		switch (col) {
-//		case 0:
-//			return Helpers.stringFromDate(becchuu.getNouki());
-//		case 1:
-//			return becchuu.getId();			
-//		case 2:
-//			return becchuu.getName();
-//		case 3:
-//			return BukkenType.getType(becchuu.getType());
-//		default:
-//			return "Error";
-//		}		
-		return "nothing";
+		Becchuu becchuu = data.get(row);
+		switch (col) {
+		case 0: // 別注記号
+			return becchuu.getBecchuuKigou();
+		case 1: //　別注タイプ
+			return becchuu.getBecchuuType().getName();
+		case 2: //　依頼日
+			return Helpers.stringFromDate(becchuu.getIraibi());
+		case 3: //　作成者
+			return becchuu.getSakuseiSha().getName();
+		case 4: //　別注枚数
+			return becchuu.getBecchuuMaisu();
+		case 5: //　作成状況
+			return CommonRepository.getBecchuuStatus(becchuu.getSakuseiStatus());
+		case 6: // 研修状況
+			return CommonRepository.getBecchuuStatus(becchuu.getKenshuuStatus());
+		case 7: //　別注DBアップ状況
+			return CommonRepository.getBecchuuStatus(becchuu.getUploadStatus());  
+		default:
+			return "Error";
+		}		
 	}
 	
 	public void clearAll() {

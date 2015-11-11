@@ -18,6 +18,7 @@ public class ConnectionUtils {
 	public static ResultSet executeQuery(String sql) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionUtils.getConnection();
 		Statement stmt = conn.createStatement();
+		
         return  stmt.executeQuery (sql);	         
 	}
 	

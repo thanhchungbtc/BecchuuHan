@@ -8,16 +8,16 @@ import org.sqlite.SQLiteConfig;
 
 public class SqliteConnectionUtils {
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
-		 String hostName = "";
-		 
-	       String dbName = "//Vn130708//別注班//database//Bukken.db";
-		 //String dbName = "data//Bukken.db";
-	      String userName = "";
-	      String password = "";
-	 
-	      return getConnectionWith(hostName, dbName, userName, password);
+		String hostName = "";
+
+		//	       String dbName = "//Vn130708//別注班//database//Bukken.db";
+		String dbName = "data//Bukken.db";
+		String userName = "";
+		String password = "";
+
+		return getConnectionWith(hostName, dbName, userName, password);
 	}
-	
+
 	public static Connection getConnectionWith(String hostName, String dbName, 
 			String userName, String password) throws SQLException, ClassNotFoundException {
 		Class.forName("org.sqlite.JDBC");
