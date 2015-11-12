@@ -23,7 +23,7 @@ public class SqliteConnectionUtils {
 		Class.forName("org.sqlite.JDBC");
 		String url = "jdbc:sqlite:" + dbName;
 		SQLiteConfig config = new SQLiteConfig();
-		config.enforceForeignKeys(true);
+		//config.enforceForeignKeys(true);
 		Connection connection = DriverManager.getConnection(url, config.toProperties());
 		return connection;
 	}

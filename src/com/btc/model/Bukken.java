@@ -2,16 +2,23 @@ package com.btc.model;
 
 import java.util.Date;
 
-import com.btc.supports.BukkenType;
+import com.btc.repositoty.BukkenRepository;
+import com.btc.repositoty.CommonRepository;
 
 public class Bukken {
 
 	private String id;
 	private String name;
-	private String depsf;
-	private int type; // 0 is XEVO, 1 is Σ
+	private String depsf;	
 	private String shiten;
 	private Date nouki;
+	
+	private int type; // 0 is XEVO, 1 is Σ
+	private String bukkenType;
+	public String getBukkenType() {
+		if (bukkenType == null) bukkenType = BukkenRepository.Instance().geBukkenTypeWithID(type);
+		return bukkenType;
+	}
 	public Bukken() {
 		
 	}

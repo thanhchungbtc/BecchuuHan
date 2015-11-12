@@ -46,8 +46,8 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
+import com.btc.model.BukkenType;
 import com.btc.repositoty.BecchuuRepository;
-import com.btc.supports.BukkenType;
 import com.btc.supports.DateLabelFormatter;
 import com.btc.supports.Helpers;
 
@@ -98,10 +98,11 @@ public class BukkenDetailsForm extends JDialog {
 			} else if (cbType.getSelectedIndex() == 1){
 				calendar.add(Calendar.DATE, 3);
 			}
+			dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
 			
-			dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.DATE));	
 			dpkNouki.getModel().setSelected(true);
 			return;
+		
 		}
 		txtID.setText(bukkenToSubmit.getId());
 		txtID.setEnabled(false);
@@ -209,8 +210,7 @@ public class BukkenDetailsForm extends JDialog {
 		cbType.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(new Date());			
-				
+				calendar.setTime(new Date());						
 				// XEVO
 				if (cbType.getSelectedIndex() == 0) {	
 					calendar.add(Calendar.DATE, 2);
@@ -218,9 +218,10 @@ public class BukkenDetailsForm extends JDialog {
 				} else if (cbType.getSelectedIndex() == 1){
 					calendar.add(Calendar.DATE, 3);
 				}
+				dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
 				
-				dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.DATE));	
 				dpkNouki.getModel().setSelected(true);
+				return;
 			}
 		});
 		GridBagConstraints gbc_cbType = new GridBagConstraints();

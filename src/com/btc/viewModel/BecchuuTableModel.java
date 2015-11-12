@@ -11,10 +11,10 @@ import javax.swing.table.AbstractTableModel;
 import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
+import com.btc.model.BukkenType;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
-import com.btc.supports.BukkenType;
 import com.btc.supports.Helpers;
 
 public class BecchuuTableModel extends AbstractTableModel{
@@ -26,11 +26,11 @@ public class BecchuuTableModel extends AbstractTableModel{
 
 	public BecchuuTableModel(BecchuuRepository repository) {
 		this.repository = repository;
-		this.data = repository.getList();
+		this.data = repository.getListWithRefresh(false);
 	}
 	public void refresh() {
 		
-		this.data = repository.getList();
+		this.data = repository.getListWithRefresh(true);
 		fireTableDataChanged();
 	}
 //	
@@ -108,11 +108,11 @@ public class BecchuuTableModel extends AbstractTableModel{
 			case 4: //　別注枚数
 				return becchuu.getBecchuuMaisu();
 			case 5: //　作成状況
-				return CommonRepository.getBecchuuStatus(becchuu.getSakuseiStatus());
+				return becchuu.getSakuseiStatus();
 			case 6: // 研修状況
-				return CommonRepository.getBecchuuStatus(becchuu.getKenshuuStatus());
+				return becchuu.getKenshuuStatus();
 			case 7: //　別注DBアップ状況
-				return CommonRepository.getBecchuuStatus(becchuu.getUploadStatus());  
+				return becchuu.getUploadStatus();  
 			default:
 				return "Error";
 			}

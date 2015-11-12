@@ -18,10 +18,29 @@ public class Becchuu {
 	private Date sakuseiBi;
 	private int misu;
 	private int becchuuMaisu;
-	private int sakuseiStatus;
-	private int kenshuuStatus;
-	private int uploadStatus;	
+	private int sakuseiStatusID;
+	private int kenshuuStatusID;
+	private int uploadStatusID;	
 	
+	private BecchuuStatus sakuseiStatus;
+	private BecchuuStatus kenshuuStatus;
+	private BecchuuStatus uploadStatus;
+	
+	public BecchuuStatus getSakuseiStatus() {
+		if (sakuseiStatus == null) sakuseiStatus = CommonRepository.getBecchuuStatusWithID(this.sakuseiStatusID);
+		return sakuseiStatus;
+	}
+
+	public BecchuuStatus getKenshuuStatus() {
+		if (kenshuuStatus == null) kenshuuStatus = CommonRepository.getBecchuuStatusWithID(this.kenshuuStatusID);
+		return kenshuuStatus;
+	}
+
+	public BecchuuStatus getUploadStatus() {
+		if (uploadStatus == null) uploadStatus = CommonRepository.getBecchuuStatusWithID(this.uploadStatusID);
+		return uploadStatus;
+	}
+
 	// foreign key
 	private String koujibangou;
 	private String sakuseiShaID;
@@ -29,12 +48,16 @@ public class Becchuu {
 	private int becchuuTypeID;
 	private String iraiShaID;
 	
-	public Employee sakuseiSha;
-	public Employee kenshuuSha;
-	public BecchuuType becchuuType;
-	public Bukken bukken;
+	private Employee sakuseiSha;
+	private Employee kenshuuSha;
+	private BecchuuType becchuuType;
+	private Bukken bukken;
+	
+	public Becchuu() {
+	}
 	
 	public Bukken getBukken() {
+		if (this.bukken == null) this.bukken = BukkenRepository.Instance().getBukkenWithID(this.getKoujibangou());
 		return bukken;
 	}
 	public String getBecchuuKigou() {
@@ -86,70 +109,71 @@ public class Becchuu {
 		this.sakuseiBi = sakuseiBi;
 	}
 	public int getMisu() {
+		//if (misu < 0) return 0; // throw new NumberFormatException("Becchuu Misu not a valid number");
 		return misu;
 	}
 	public void setMisu(int misu) {
 		this.misu = misu;
 	}
 	public int getBecchuuMaisu() {
+		//if (becchuuMaisu < 0) return 0;// throw new NumberFormatException("Becchuu Maisuu not a valid number");
 		return becchuuMaisu;
 	}
 	public void setBecchuuMaisu(int becchuuMaisu) {
 		this.becchuuMaisu = becchuuMaisu;
 	}
-	public int getSakuseiStatus() {
-		return sakuseiStatus;
+	public int getSakuseiStatusID() {
+		return sakuseiStatusID;
 	}
-	public void setSakuseiStatus(int sakuseiStatus) {
-		this.sakuseiStatus = sakuseiStatus;
+	public void setSakuseiStatusID(int sakuseiStatusID) {
+		this.sakuseiStatusID = sakuseiStatusID;		
 	}
-	public int getKenshuuStatus() {
-		return kenshuuStatus;
+	public int getKenshuuStatusID() {
+		return kenshuuStatusID;
 	}
-	public void setKenshuuStatus(int kenshuuStatus) {
-		this.kenshuuStatus = kenshuuStatus;
+	public void setKenshuuStatusID(int kenshuuStatusID) {
+		this.kenshuuStatusID = kenshuuStatusID;
 	}
-	public int getUploadStatus() {
-		return uploadStatus;
+	public int getUploadStatusID() {
+		return uploadStatusID;
 	}
-	public void setUploadStatus(int uploadStatus) {
-		this.uploadStatus = uploadStatus;
+	public void setUploadStatusID(int uploadStatusID) {
+		this.uploadStatusID = uploadStatusID;
 	}
 	public String getKoujibangou() {
 		return koujibangou;
 	}
 	public void setKoujibangou(String koujibangou) {
-		this.koujibangou = koujibangou;
-		
+		this.koujibangou = koujibangou;		
 	}
 	public String getSakuseiShaID() {
 		return sakuseiShaID;
 	}
 	public void setSakuseiShaID(String sakuseiShaID) {
-		this.sakuseiShaID = sakuseiShaID;
-		this.sakuseiSha = CommonRepository.getBecchuuEmployeeByID(sakuseiShaID);
+		this.sakuseiShaID = sakuseiShaID;		
 	}
 	public String getKenshuShaID() {
 		return kenshuShaID;
 	}
 	public void setKenshuShaID(String kenshuShaID) {
-		this.kenshuShaID = kenshuShaID;
-		this.kenshuuSha = CommonRepository.getBecchuuEmployeeByID(kenshuShaID);
+		this.kenshuShaID = kenshuShaID;		
 	}
-	public int getBecchuuTypeID() {
+	public int getBecchuuTypeID() {		
 		return becchuuTypeID;
 	}
 	public void setBecchuuTypeID(int becchuuTypeID) {
-		this.becchuuTypeID = becchuuTypeID;
-		this.becchuuType = CommonRepository.getBecchuuTypeByID(becchuuTypeID);
+		this.becchuuTypeID = becchuuTypeID;		
 	}
 	public Employee getSakuseiSha() {
+		if (this.sakuseiSha == null) this.sakuseiSha = CommonRepository.getBecchuuEmployeeByID(sakuseiShaID);		
 		return sakuseiSha;
 	}
 	public Employee getKenshuuSha() {
+		if (kenshuuSha == null)this.kenshuuSha = CommonRepository.getBecchuuEmployeeByID(kenshuShaID);
 		return kenshuuSha;
 	}
 	public BecchuuType getBecchuuType() {
+		if (this.becchuuType == null) this.becchuuType = CommonRepository.getBecchuuTypeByID(becchuuTypeID);
 		return becchuuType;
 	}
 	public String getIraiShaID() {

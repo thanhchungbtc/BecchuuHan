@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import com.btc.DAL.ConnectionUtils;
 import com.btc.model.Bukken;
+import com.btc.model.BukkenType;
 import com.btc.supports.Helpers;
 
 public class BukkenRepository {
@@ -60,6 +61,7 @@ public class BukkenRepository {
 	}
 	
 	public Bukken getBukkenWithID(String id) {
+		List<Bukken> data = getList();
 		 for (Bukken bukken: data) {
 			 if (bukken.getId().equals(id)) {
 				 return bukken;
@@ -68,32 +70,10 @@ public class BukkenRepository {
 		 return null;
 	}
 	
-//	public Bukken contains(String koujibangou) {
-//		ResultSet rs = null;
-//		try {
-//
-//			rs = ConnectionUtils.executeQuery ("SELECT `id`, `name`, `type` FROM Bukken WHERE id = '" + koujibangou + "'");		         
-//			
-//			if (rs.next()){
-//				
-//				Bukken bukken = new Bukken();
-//				bukken.setId(koujibangou);
-//				bukken.setName(rs.getString(2));
-//				bukken.setType(rs.getInt(3));
-//				rs.close();
-//				return bukken;
-//			}
-//		}
-//		catch (ClassNotFoundException e) {
-//			e.printStackTrace();			
-//		}
-//		catch(SQLException e){
-//			System.out.println("SQL exception occured" + e);
-//		}    
-//		
-//		 return null;
-//	}
-	
+	public String geBukkenTypeWithID(int id) {
+		return BukkenType.getType(id);
+	}
+
 	public Bukken contains(String koujibangou) {
 		List<Bukken> data = getList();
 		for (Bukken bukken: data) {

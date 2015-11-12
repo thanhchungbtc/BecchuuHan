@@ -6,17 +6,28 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.btc.DAL.ConnectionUtils;
+import com.btc.model.BecchuuStatus;
 import com.btc.model.BecchuuType;
 import com.btc.model.Bukken;
+import com.btc.model.BukkenType;
 import com.btc.model.Employee;
 import com.btc.supports.Helpers;
 
 public class CommonRepository {
 	private static List<BecchuuType> _becchuuTypes;
+	private static List<BukkenType> _BukkenTypes;
 	private static List<Employee> _employees;
 	private static List<Employee> _becchuuHandEmployees;
 	
-	private static String[] _status = {"", "依頼中", "作成済み", "別注不要"};
+	private static BecchuuStatus[] _status = {
+												new BecchuuStatus(0, ""),
+												new BecchuuStatus(1, "依頼中"),
+												new BecchuuStatus(2, "処理済み")
+											};
+	
+	public static BecchuuStatus[] getBecchuuStatus() {
+		return _status;
+	}
 	
 	public static List<BecchuuType> getBecchuuTypes() {
 		if (_becchuuTypes != null) return _becchuuTypes;
@@ -99,7 +110,12 @@ public class CommonRepository {
 		return null;
 	}
 	
-	public static String getBecchuuStatus(int statusID) {
-		return _status[statusID];
+	public static BecchuuStatus getBecchuuStatusWithID(int statusID) {
+		for (BecchuuStatus status: _status) {
+			if (status.getId() == statusID) {
+				return status;
+			}
+		}
+		return null;
 	}
 }

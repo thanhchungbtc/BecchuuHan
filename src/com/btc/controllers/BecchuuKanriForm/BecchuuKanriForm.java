@@ -2,7 +2,6 @@ package com.btc.controllers.BecchuuKanriForm;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-<<<<<<< HEAD
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -40,27 +39,33 @@ import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
 import com.btc.supports.Config;
+import com.btc.viewModel.BecchuuTableModel;
+
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
 	private BecchuuRepository becchuuRepository;
+	
 	TableRowSorter<TableModel> rowSorter;
 
+	
 	/**
 	 * Create the frame.
 	 */
 	public BecchuuKanriForm() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 1200, 800);
 		createAndSetUpGUI();
 		initializeData();
 		loadBecchuuEmployeesCombobox();
 		loadBecchuuTypeCombobox();
 		setupTable();
-		pack();
+		// pack();
 	}
 
 
@@ -78,41 +83,41 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 	private void loadBecchuuEmployeesCombobox() {
 		DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());		
 		model.insertElementAt("全て", 0);
-		cbSakuseiSha.setModel(model);
-		
-		cbSakuseiSha.setSelectedIndex(0);
+		cbSakuseiSha.setModel(model);		
 		
 		DefaultComboBoxModel<Object> model2 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
 		model2.insertElementAt("全て", 0);
 		cbKenshuusha.setModel(model2);
-		cbKenshuusha.setSelectedIndex(0);
 		
 	}
 	
 	private void setupTable() {
+		becchuuTable.setRowHeight(25);
 		BecchuuKanriFormTableModel model = new BecchuuKanriFormTableModel(becchuuRepository);
 		becchuuTable.setModel(model);
 		becchuuTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				becchuuTableMouseClicked(e);
+				if (e.getClickCount() == 2) {
+					becchuuTableDoubleClicked(e);
+				}
 			}
 		});
 	
 	}
 	
 	private void initializeData() {
-		becchuuRepository = new BecchuuRepository();
+		becchuuRepository = BecchuuRepository.Instance();
 	}
 	
 	// BEGIN: handle Events;
-	private void becchuuTableMouseClicked(MouseEvent event) {
+	private void becchuuTableDoubleClicked(MouseEvent event) {
 		if (becchuuTable.getSelectedRow() == -1) return;
 		int row = becchuuTable.getSelectedRow();
 		String koujibangou = becchuuTable.getValueAt(row, 2).toString();
 		String becchuuKigou = becchuuTable.getValueAt(row, 0).toString();
-		Becchuu becchuuToEdit = becchuuRepository.getBecchuuByID(becchuuKigou, koujibangou);
-		// if found bukken at selectedRow
+		Becchuu becchuuToEdit = becchuuRepository.getBecchuuByID(koujibangou, becchuuKigou);
+		
 		if (becchuuToEdit != null) {		
 			BecchuuDetailsForm form = new BecchuuDetailsForm(becchuuToEdit);
 			form.setLocationRelativeTo(this);
@@ -246,19 +251,28 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 		maincontent.add(footerButtonPanel, BorderLayout.SOUTH);
 		footerButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
 
-		JButton btnAddBecchuu = new JButton();
-		btnAddBecchuu.addMouseListener(new MouseAdapter() {
+		JButton btnEdit = new JButton();
+		btnEdit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
 			}
 		});
-		btnAddBecchuu.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_plus.png")));
-		footerButtonPanel.add(btnAddBecchuu);
+		btnEdit.setIcon(new ImageIcon(BecchuuKanriForm.class.getResource("/resources/icon/icon-edit.png")));
+		footerButtonPanel.add(btnEdit);
 
 		JButton btnDeleteBecchuu = new JButton("");
 		btnDeleteBecchuu.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_trash.png")));
 		footerButtonPanel.add(btnDeleteBecchuu);
+		
+		JButton btnRefresh = new JButton("");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				((BecchuuKanriFormTableModel)becchuuTable.getModel()).refresh();
+			}
+		});
+		btnRefresh.setIcon(new ImageIcon(BecchuuKanriForm.class.getResource("/resources/icon/icon-refresh.png")));
+		footerButtonPanel.add(btnRefresh);
 
 		JPanel statusPanel = new JPanel();
 		statusPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -282,25 +296,11 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 	private JCheckBox chkKenshuZumi;
 	private JCheckBox chkUploadZumi;
 	
-=======
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-public class BecchuuKanriForm extends JFrame {
-
-	private JPanel contentPane;
-
->>>>>>> 1. Nouki is now automically recognized when add new Bukken. \n2. Change Repository to singleton (just for test purpose). \n3. Add BecchuuKanriForm
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-<<<<<<< HEAD
 		Config.setLookAndField();
-=======
->>>>>>> 1. Nouki is now automically recognized when add new Bukken. \n2. Change Repository to singleton (just for test purpose). \n3. Add BecchuuKanriForm
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -313,25 +313,10 @@ public class BecchuuKanriForm extends JFrame {
 		});
 	}
 
-<<<<<<< HEAD
 
 	@Override
 	public void submitData(Becchuu becchuu) {
 		// TODO Auto-generated method stub
 		
 	}
-=======
-	/**
-	 * Create the frame.
-	 */
-	public BecchuuKanriForm() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-	}
-
->>>>>>> 1. Nouki is now automically recognized when add new Bukken. \n2. Change Repository to singleton (just for test purpose). \n3. Add BecchuuKanriForm
 }

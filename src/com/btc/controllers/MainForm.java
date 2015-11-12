@@ -415,7 +415,7 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate, Becch
 	}
 		
 	private void btnAddBecchuuMouseClicked(MouseEvent event){
-		BecchuuDetailsForm form = new BecchuuDetailsForm();
+		BecchuuDetailsForm form = new BecchuuDetailsForm(new Becchuu());
 		form.setLocationRelativeTo(this);
 		form.showDialog(this);
 	}
@@ -576,7 +576,7 @@ public class MainForm extends JFrame implements BukkenDetailsFormDelegate, Becch
 	// END implements BukkenDetailFormsDelegate--------------------------------------------
 
 	@Override
-	public void submitData(Becchuu becchuu, boolean insert) {
+	public void submitData(Becchuu becchuu) {
 		// TODO Auto-generated method stub
 		
 	}

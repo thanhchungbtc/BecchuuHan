@@ -30,8 +30,21 @@ public class BecchuuRepository {
 		return _instance;
 	}
 
-	public List<Becchuu> getList() {
-		if(data != null) data.clear();
+	public Becchuu getBecchuuByID(String koujibangou, String becchuuKigou) {
+		List<Becchuu> becchuus = getListWithRefresh(false);
+		for (Becchuu becchuu: becchuus) {
+			if (becchuu.getKoujibangou().equals(koujibangou) && becchuu.getBecchuuKigou().equals(becchuuKigou)) {
+				return becchuu;
+			}
+		}
+		return null;
+	}
+		
+	public List<Becchuu> getListWithRefresh(boolean refresh) {
+		if(data != null) {
+			if (refresh) data.clear();
+			else return data;
+		}
 		
 		data = new ArrayList<Becchuu>();
 		try {
@@ -49,12 +62,12 @@ public class BecchuuRepository {
 
 				becchuu.setKoujibangou(rs.getString(8));
 				becchuu.setSakuseiShaID(rs.getString(9));
-				becchuu.setSakuseiShaID(rs.getString(10));
+				becchuu.setKenshuShaID(rs.getString(10));
 				becchuu.setMisu(rs.getInt(11));
 				becchuu.setBecchuuMaisu(rs.getInt(12));
-				becchuu.setSakuseiStatus(rs.getInt(13));
-				becchuu.setKenshuuStatus(rs.getInt(14));
-				becchuu.setUploadStatus(rs.getInt(15));
+				becchuu.setSakuseiStatusID(rs.getInt(13));
+				becchuu.setKenshuuStatusID(rs.getInt(14));
+				becchuu.setUploadStatusID(rs.getInt(15));
 				becchuu.setBecchuuTypeID(rs.getInt(16));
 				becchuu.setIraiShaID(rs.getString(17));
 				becchuu.setBikou(rs.getString(18));
@@ -102,107 +115,53 @@ public class BecchuuRepository {
 		}
 	}
 
-	//	public List<Becchuu> getBecchuusOfBukken(String koujibangou) {
-	//		List<Becchuu> data = new LinkedList<>();
-	//		try {
-	//			ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Becchuu WHERE koujibangou = `" + koujibangou + "`");		         
-	//			while (rs.next()) {
-	//				Becchuu becchuu = new Becchuu();
-	//				becchuu.setBecchuuKigou(rs.getString(1));
-	//				becchuu.setBecchuuParameter(rs.getString(2));
-	//				becchuu.setBecchuuNaiyou(rs.getString(3));
-	//				becchuu.setBecchuuNaiyou(rs.getString(4));
-	//				
-	//				becchuu.setIraibi(Helpers.dateFromString(rs.getString(5)));
-	//				becchuu.setSakuseiBi(Helpers.dateFromString(rs.getString(6)));
-	//				
-	//				becchuu.setKoujibangou(rs.getString(7));
-	//				becchuu.setSakuseiShaID(rs.getString(8));
-	//				becchuu.setSakuseiShaID(rs.getString(9));
-	//				becchuu.setMisu(rs.getInt(10));
-	//				becchuu.setBecchuuMaisu(rs.getInt(11));
-	//				becchuu.setSakuseiStatus(rs.getInt(12));
-	//				becchuu.setKenshuuStatus(rs.getInt(13));
-	//				becchuu.setUploadStatus(rs.getInt(14));
-	//				becchuu.setBecchuuTypeID(rs.getInt(15));
-	//				becchuu.setIraiShaID(rs.getInt(16));
-	//				becchuu.setBikou(rs.getString(17));
-	//				
-	//				data.add(becchuu);
-	//			}
-	//		}
-	//		catch (ClassNotFoundException exception) {
-	//			System.out.println("ClassNotFound exception occured" + exception);
-	//		}
-	//		catch(SQLException e){
-	//			System.out.println("SQL exception occured" + e);
-	//		}    
-	//		return data;
-	//	}
-
-	//	
-	//	public Bukken getBukkenWithID(String id) {
-	//		 for (Bukken bukken: data) {
-	//			 if (bukken.getId().equals(id)) {
-	//				 return bukken;
-	//			 }
-	//		 }
-	//		 return null;
-	//	}
-	//	
-	//	public Bukken insert(Bukken bukken) throws SQLException {
-	//		 String sql = "INSERT INTO Bukken (id, name, depsf, shiten, type, nouki) VALUES(?, ?, ?, ?, ?, ?)";
-	//	        try {
-	//	          connection = ConnectionUtils.getConnection();
-	//	        } catch (ClassNotFoundException ex) {
-	//	          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
-	//	        }
-	//	        
-	//		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);
-	//		    statement.setString(1, bukken.getId());
-	//		    statement.setString(2, bukken.getName());
-	//		    statement.setString(3, bukken.getDepsf());
-	//		    statement.setString(4, bukken.getShiten());
-	//		    statement.setInt(5, bukken.getType());
-	//		    statement.setString(6, Helpers.stringFromDate(bukken.getNouki()));
-	//		    
-	//		    statement.executeUpdate();
-	//		    statement.close();
-	//		    statement = null;
-	//		    
-	//		    connection.close();
-	//		    connection = null;
-	//		    data.add(bukken);
-	//		    return bukken;
-	//	}
-	//	
-	//	public Bukken update(Bukken bukken) throws SQLException {
-	//		 String sql = "UPDATE Bukken SET id = ?, name = ?, depsf = ?, shiten = ?, type = ?, nouki = ? "
-	//		 		+ " WHERE id = ?";
-	//	        try {
-	//	        	connection = ConnectionUtils.getConnection();
-	//	        } catch (ClassNotFoundException ex) {
-	//	        	System.out.println("Could not connect to database");
-	//	        	Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
-	//	        }
-	//	        
-	//		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);
-	//		    statement.setString(1, bukken.getId());
-	//		    statement.setString(2, bukken.getName());
-	//		    statement.setString(3, bukken.getDepsf());
-	//		    statement.setString(4, bukken.getShiten());
-	//		    statement.setInt(5, bukken.getType());
-	//		    statement.setString(6, Helpers.stringFromDate(bukken.getNouki()));
-	//		    
-	//		    statement.setString(7, bukken.getId());
-	//		    statement.executeUpdate();
-	//		    statement.close();
-	//		    statement = null;
-	//		    
-	//		    connection.close();
-	//		    connection = null;
-	//		    
-	//		    return bukken;
-	//	}
+	public Becchuu update(Becchuu becchuu) throws SQLException {		
+		 String sql = "UPDATE Becchuu SET becchuu_parameter = ?, becchuu_naiyou = ?, motozu_kigou = ?, motozu_parameter = ?, "
+		 		+ " sakuseibi = ?, sakusei_sha_id = ?, kenshuu_sha_id = ?, misu = ?, becchuu_maisu = ?, "
+		 		+ " sakusei_status = ?, kenshuu_status = ?, "
+		 		+ "upload_status = ?, becchuu_type_id = ?, irai_sha = ?, notes = ?"
+		 		+ " WHERE becchuu_kigou = ? AND koujibangou = ?";
+	        try {
+	        	connection = ConnectionUtils.getConnection();
+	        } catch (ClassNotFoundException ex) {
+	        	System.out.println("Could not connect to database");
+	        	Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	        
+		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);	
+		    
+		    statement.setString(1, becchuu.getBecchuuParameter());
+		    statement.setString(2, becchuu.getBecchuuNaiyou());
+		    statement.setString(3, becchuu.getMotozuKigou());
+		    statement.setString(4, becchuu.getMotozuParameter());		    
+		    statement.setString(5, Helpers.stringFromDate(becchuu.getSakuseiBi()));
+		    statement.setString(6, becchuu.getSakuseiShaID());
+		    statement.setInt(7, becchuu.getKenshuuStatusID());
+		    statement.setInt(8, becchuu.getMisu());
+		    statement.setInt(9, becchuu.getBecchuuMaisu());
+		    statement.setInt(10, becchuu.getSakuseiStatusID());
+		    statement.setInt(11, becchuu.getKenshuuStatusID());
+		    statement.setInt(12, becchuu.getUploadStatusID());
+		    
+		    
+//		    statement.setInt(13, becchuu.getBecchuuTypeID());
+		    statement.setInt(13, 2);
+		 
+		    
+		    statement.setString(14, becchuu.getIraiShaID());
+		    statement.setString(15, becchuu.getBikou());
+		    statement.setString(16, becchuu.getBecchuuKigou());
+		    statement.setString(17, becchuu.getKoujibangou());
+		    
+		    System.out.println(statement.toString());
+		    statement.executeUpdate();
+		    statement.close();
+		    statement = null;
+		    
+		    connection.close();
+		    connection = null;
+		    
+		    return becchuu;
+	}
 
 }

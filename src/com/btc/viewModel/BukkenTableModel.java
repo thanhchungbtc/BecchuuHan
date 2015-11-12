@@ -19,8 +19,8 @@ import javax.swing.table.TableModel;
 import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
+import com.btc.model.BukkenType;
 import com.btc.repositoty.BukkenRepository;
-import com.btc.supports.BukkenType;
 import com.btc.supports.Helpers;
 
 public class BukkenTableModel extends AbstractTableModel {

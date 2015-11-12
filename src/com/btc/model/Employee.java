@@ -35,4 +35,19 @@ public class Employee {
 	
 	}
 	
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 instanceof Employee) {
+			Employee other = (Employee)arg0;
+			return (this.getId().equals(other.getId()));
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+	
 }
