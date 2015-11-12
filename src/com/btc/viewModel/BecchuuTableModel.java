@@ -106,6 +106,8 @@ public class BecchuuTableModel extends AbstractTableModel{
 			case 3: //　作成者
 				return becchuu.getSakuseiSha().getName();
 			case 4: //　別注枚数
+				int maisuu = becchuu.getBecchuuMaisu();
+				if (maisuu < 0) return "";
 				return becchuu.getBecchuuMaisu();
 			case 5: //　作成状況
 				return becchuu.getSakuseiStatus();

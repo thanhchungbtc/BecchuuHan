@@ -25,6 +25,7 @@ public class CommonRepository {
 												new BecchuuStatus(2, "処理済み")
 											};
 	
+	
 	public static BecchuuStatus[] getBecchuuStatus() {
 		return _status;
 	}
@@ -40,9 +41,7 @@ public class CommonRepository {
 					int id = rs.getInt(1);
 					String name = rs.getString(2);
 
-					BecchuuType becchuuType = new BecchuuType(name);
-					becchuuType.setId(id);	    		           
-
+					BecchuuType becchuuType = new BecchuuType(id, name);
 					_becchuuTypes.add(becchuuType);
 				}
 			} catch (ClassNotFoundException e) {

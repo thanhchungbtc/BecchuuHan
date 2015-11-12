@@ -16,6 +16,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import org.sqlite.SQLiteConfig.SynchronousMode;
+
 import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
@@ -31,20 +33,18 @@ public class BukkenTableModel extends AbstractTableModel {
 	
 	public BukkenTableModel(BukkenRepository repository) {
 		this.repository = repository;
-		this.data = repository.getList();
+		this.data = repository.getListWithRefresh(false);
 	}
 	
 	public void refresh() {
 		
-		this.data = repository.getList();
+		this.data = repository.getListWithRefresh(true);
 		fireTableDataChanged();
 	}
 	
 	public Bukken insertBukken(Bukken bukken) {
 		try {			
 			bukken = repository.insert(bukken);
-		
-			
             fireTableRowsInserted(data.size() - 1, data.size() - 1);
             
 			return bukken;
@@ -126,5 +126,5 @@ public class BukkenTableModel extends AbstractTableModel {
 			
 		}
 	}
-
+	
 }

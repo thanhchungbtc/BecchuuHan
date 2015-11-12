@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.btc.DAL.ConnectionUtils;
+import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
 import com.btc.model.BukkenType;
 import com.btc.supports.Helpers;
@@ -29,9 +30,12 @@ public class BukkenRepository {
 		if (_instance == null) _instance = new BukkenRepository();
 		return _instance;
 	}
-	public List<Bukken> getList() {
-		if (data != null) data.clear();
-		data = new LinkedList<Bukken>();		    
+	public List<Bukken> getListWithRefresh(boolean refresh) {
+		if(data != null) {
+			if (refresh) data.clear();
+			else return data;
+		}
+		data = new ArrayList<Bukken>();
 		try {
 			try {
 				ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Bukken ORDER BY nouki DESC");		         
@@ -61,7 +65,7 @@ public class BukkenRepository {
 	}
 	
 	public Bukken getBukkenWithID(String id) {
-		List<Bukken> data = getList();
+		List<Bukken> data = getListWithRefresh(false);
 		 for (Bukken bukken: data) {
 			 if (bukken.getId().equals(id)) {
 				 return bukken;
@@ -75,7 +79,7 @@ public class BukkenRepository {
 	}
 
 	public Bukken contains(String koujibangou) {
-		List<Bukken> data = getList();
+		List<Bukken> data = getListWithRefresh(false);
 		for (Bukken bukken: data) {
 			if (bukken.getId().equals(koujibangou)) {
 				return bukken;

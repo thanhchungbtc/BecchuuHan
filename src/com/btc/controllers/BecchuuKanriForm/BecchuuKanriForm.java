@@ -31,7 +31,7 @@ import javax.swing.table.TableRowSorter;
 import com.btc.controllers.BecchuuDetailsDelegate;
 import com.btc.controllers.BecchuuDetailsForm;
 import com.btc.controllers.BukkenDetailsForm;
-import com.btc.controllers.MainForm;
+import com.btc.controllers.BukkenKanri;
 import com.btc.model.Becchuu;
 import com.btc.model.BecchuuType;
 import com.btc.model.Bukken;
@@ -39,7 +39,9 @@ import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
 import com.btc.supports.Config;
+import com.btc.supports.Helpers;
 import com.btc.viewModel.BecchuuTableModel;
+import com.btc.viewModel.BukkenTableModel;
 
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
@@ -50,10 +52,9 @@ import java.awt.event.ActionEvent;
 public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
 	private BecchuuRepository becchuuRepository;
-	
+
 	TableRowSorter<TableModel> rowSorter;
 
-	
 	/**
 	 * Create the frame.
 	 */
@@ -79,18 +80,18 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 		cbBecchuuType.setModel(model);
 		cbBecchuuType.setSelectedIndex(0);
 	}
-	
+
 	private void loadBecchuuEmployeesCombobox() {
 		DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());		
 		model.insertElementAt("全て", 0);
 		cbSakuseiSha.setModel(model);		
-		
+
 		DefaultComboBoxModel<Object> model2 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
 		model2.insertElementAt("全て", 0);
 		cbKenshuusha.setModel(model2);
-		
+
 	}
-	
+
 	private void setupTable() {
 		becchuuTable.setRowHeight(25);
 		BecchuuKanriFormTableModel model = new BecchuuKanriFormTableModel(becchuuRepository);
@@ -103,13 +104,13 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 				}
 			}
 		});
-	
+
 	}
-	
+
 	private void initializeData() {
 		becchuuRepository = BecchuuRepository.Instance();
 	}
-	
+
 	// BEGIN: handle Events;
 	private void becchuuTableDoubleClicked(MouseEvent event) {
 		if (becchuuTable.getSelectedRow() == -1) return;
@@ -117,14 +118,15 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 		String koujibangou = becchuuTable.getValueAt(row, 2).toString();
 		String becchuuKigou = becchuuTable.getValueAt(row, 0).toString();
 		Becchuu becchuuToEdit = becchuuRepository.getBecchuuByID(koujibangou, becchuuKigou);
-		
+
 		if (becchuuToEdit != null) {		
 			BecchuuDetailsForm form = new BecchuuDetailsForm(becchuuToEdit);
 			form.setLocationRelativeTo(this);
+			form.delegate = this;
 			form.showDialog(this);
 		}
 	}
-	
+
 	// END: handle Events
 	private void createAndSetUpGUI() {
 		contentPane = new JPanel();
@@ -262,9 +264,9 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 		footerButtonPanel.add(btnEdit);
 
 		JButton btnDeleteBecchuu = new JButton("");
-		btnDeleteBecchuu.setIcon(new ImageIcon(MainForm.class.getResource("/resources/icon/icon_trash.png")));
+		btnDeleteBecchuu.setIcon(new ImageIcon(BukkenKanri.class.getResource("/resources/icon/icon_trash.png")));
 		footerButtonPanel.add(btnDeleteBecchuu);
-		
+
 		JButton btnRefresh = new JButton("");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -283,7 +285,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 		JLabel lblNewLabel_4 = new JLabel("別注枚数：1000 - ミス");
 		statusPanel.add(lblNewLabel_4);
 	}
-	
+
 	private JPanel contentPane;
 	private JTable becchuuTable;
 	private JLabel lblWelcome;
@@ -295,7 +297,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 	private JCheckBox chkSakuseiZumi;
 	private JCheckBox chkKenshuZumi;
 	private JCheckBox chkUploadZumi;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -315,8 +317,15 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
 
 	@Override
-	public void submitData(Becchuu becchuu) {
-		// TODO Auto-generated method stub
-		
+	public void submitData(BecchuuDetailsForm becchuuDetailsForm, Becchuu becchuu) {
+		try{
+			BecchuuKanriFormTableModel becchuuKanriFormTableModel = (BecchuuKanriFormTableModel)becchuuTable.getModel();		
+			if (becchuuKanriFormTableModel.updateBecchuu(becchuu, becchuuTable.getSelectedRow()) != null) {
+				becchuuDetailsForm.dispose();
+			}
+			
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 }

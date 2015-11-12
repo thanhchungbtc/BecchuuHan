@@ -1,11 +1,17 @@
 package com.btc.controllers.BecchuuKanriForm;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.omg.CORBA.IRObject;
+
+import com.Exception.BecchuuExistsException;
+import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
+import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.CommonRepository;
 import com.btc.supports.Helpers;
@@ -25,7 +31,38 @@ public class BecchuuKanriFormTableModel extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
+	public Becchuu insertBecchuu(Becchuu becchuu) {
+		try {			
+			becchuu = repository.insert(becchuu);
+            fireTableRowsInserted(data.size() - 1, data.size() - 1);
+            DialogHelpers.showAlert("成功", "別注図を追加しました！");
+			return becchuu;
+			
+		} 
+		catch (SQLException e) {	
+			DialogHelpers.showError("エラー", "この別注図は既に存在しています！" + e.getMessage());
+		}	
+		return null;
+	}
 	
+	public Becchuu updateBecchuu(Becchuu becchuu, int rowIndex) {
+		System.out.println(becchuu.getBecchuuTypeID());
+		try {			
+			becchuu = repository.update(becchuu);	
+			fireTableRowsUpdated(rowIndex, rowIndex);
+			DialogHelpers.showAlert("成功", "別注図を更新しました！");
+			return becchuu;
+			
+		} 
+		catch (BecchuuExistsException becchuuExistsException) {
+			DialogHelpers.showError("エラー", "この別注図は既に存在しています！");
+		}
+		catch (SQLException e) {			
+			e.printStackTrace();
+			DialogHelpers.showError("エラー", "エラー発生しました！" + e.getMessage());
+		}	
+		return null;
+	}
 	
 	// MARK: - AbstractTableModel Overrides	
 	@Override
@@ -80,6 +117,7 @@ public class BecchuuKanriFormTableModel extends AbstractTableModel {
 				return "Error";
 			}
 		}catch (Exception exception){
+					
 			return "";
 		}
 	}

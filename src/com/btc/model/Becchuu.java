@@ -7,6 +7,16 @@ import com.btc.repositoty.CommonRepository;
 
 public class Becchuu {
 	// primary key
+	private int id;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String becchuuKigou; 
 	
 	private String becchuuParameter;
@@ -18,10 +28,22 @@ public class Becchuu {
 	private Date sakuseiBi;
 	private int misu;
 	private int becchuuMaisu;
+	private String iraiShaID;
+	
+	// foreign key
 	private int sakuseiStatusID;
 	private int kenshuuStatusID;
-	private int uploadStatusID;	
+	private int uploadStatusID;		
+	private int becchuuTypeID;
+	private String koujibangou;
+	private String sakuseiShaID;
+	private String kenshuShaID;
 	
+	// use for foreignkey
+	private Employee sakuseiSha;
+	private Employee kenshuuSha;
+	private BecchuuType becchuuType;
+	private Bukken bukken;	
 	private BecchuuStatus sakuseiStatus;
 	private BecchuuStatus kenshuuStatus;
 	private BecchuuStatus uploadStatus;
@@ -41,17 +63,7 @@ public class Becchuu {
 		return uploadStatus;
 	}
 
-	// foreign key
-	private String koujibangou;
-	private String sakuseiShaID;
-	private String kenshuShaID;
-	private int becchuuTypeID;
-	private String iraiShaID;
 	
-	private Employee sakuseiSha;
-	private Employee kenshuuSha;
-	private BecchuuType becchuuType;
-	private Bukken bukken;
 	
 	public Becchuu() {
 	}
@@ -126,44 +138,53 @@ public class Becchuu {
 		return sakuseiStatusID;
 	}
 	public void setSakuseiStatusID(int sakuseiStatusID) {
+		this.sakuseiStatus = null;
 		this.sakuseiStatusID = sakuseiStatusID;		
 	}
 	public int getKenshuuStatusID() {
 		return kenshuuStatusID;
 	}
 	public void setKenshuuStatusID(int kenshuuStatusID) {
+		this.kenshuuStatus = null;
 		this.kenshuuStatusID = kenshuuStatusID;
 	}
 	public int getUploadStatusID() {
 		return uploadStatusID;
 	}
 	public void setUploadStatusID(int uploadStatusID) {
+		this.uploadStatus = null;
 		this.uploadStatusID = uploadStatusID;
 	}
 	public String getKoujibangou() {
 		return koujibangou;
 	}
 	public void setKoujibangou(String koujibangou) {
+		this.bukken = null;
 		this.koujibangou = koujibangou;		
 	}
 	public String getSakuseiShaID() {
 		return sakuseiShaID;
 	}
 	public void setSakuseiShaID(String sakuseiShaID) {
+		this.sakuseiSha = null;
 		this.sakuseiShaID = sakuseiShaID;		
 	}
 	public String getKenshuShaID() {
 		return kenshuShaID;
 	}
 	public void setKenshuShaID(String kenshuShaID) {
+		this.kenshuuSha = null;
 		this.kenshuShaID = kenshuShaID;		
 	}
 	public int getBecchuuTypeID() {		
 		return becchuuTypeID;
 	}
 	public void setBecchuuTypeID(int becchuuTypeID) {
+		this.becchuuType = null;
 		this.becchuuTypeID = becchuuTypeID;		
 	}
+	
+	
 	public Employee getSakuseiSha() {
 		if (this.sakuseiSha == null) this.sakuseiSha = CommonRepository.getBecchuuEmployeeByID(sakuseiShaID);		
 		return sakuseiSha;

@@ -3,7 +3,8 @@ package com.btc.model;
 public class BecchuuType {
 	private int id;
 	private String name;
-	public BecchuuType(String name) {
+	public BecchuuType(int id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 	public int getId() {
@@ -17,6 +18,11 @@ public class BecchuuType {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getName();
 	}
 	
 }

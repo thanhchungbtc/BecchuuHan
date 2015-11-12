@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.Exception.BecchuuExistsException;
 import com.btc.DAL.ConnectionUtils;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
@@ -51,27 +52,28 @@ public class BecchuuRepository {
 			ResultSet rs = ConnectionUtils.executeQuery ("SELECT * FROM Becchuu");		         
 			while (rs.next()) {
 				Becchuu becchuu = new Becchuu();
-				becchuu.setBecchuuKigou(rs.getString(1));
-				becchuu.setBecchuuParameter(rs.getString(2));
-				becchuu.setBecchuuNaiyou(rs.getString(3));
-				becchuu.setMotozuKigou(rs.getString(4));
-				becchuu.setMotozuParameter(rs.getString(5));
+				int varNumber = 1;	
+				becchuu.setBecchuuKigou(rs.getString(varNumber++));
+				becchuu.setBecchuuParameter(rs.getString(varNumber++));
+				becchuu.setBecchuuNaiyou(rs.getString(varNumber++));
+				becchuu.setMotozuKigou(rs.getString(varNumber++));
+				becchuu.setMotozuParameter(rs.getString(varNumber++));
 
-				becchuu.setIraibi(Helpers.dateFromString(rs.getString(6)));
-				becchuu.setSakuseiBi(Helpers.dateFromString(rs.getString(7)));
+				becchuu.setIraibi(Helpers.dateFromString(rs.getString(varNumber++)));
+				becchuu.setSakuseiBi(Helpers.dateFromString(rs.getString(varNumber++)));
 
-				becchuu.setKoujibangou(rs.getString(8));
-				becchuu.setSakuseiShaID(rs.getString(9));
-				becchuu.setKenshuShaID(rs.getString(10));
-				becchuu.setMisu(rs.getInt(11));
-				becchuu.setBecchuuMaisu(rs.getInt(12));
-				becchuu.setSakuseiStatusID(rs.getInt(13));
-				becchuu.setKenshuuStatusID(rs.getInt(14));
-				becchuu.setUploadStatusID(rs.getInt(15));
-				becchuu.setBecchuuTypeID(rs.getInt(16));
-				becchuu.setIraiShaID(rs.getString(17));
-				becchuu.setBikou(rs.getString(18));
-
+				becchuu.setKoujibangou(rs.getString(varNumber++));
+				becchuu.setSakuseiShaID(rs.getString(varNumber++));
+				becchuu.setKenshuShaID(rs.getString(varNumber++));
+				becchuu.setMisu(rs.getInt(varNumber++));
+				becchuu.setBecchuuMaisu(rs.getInt(varNumber++));
+				becchuu.setSakuseiStatusID(rs.getInt(varNumber++));
+				becchuu.setKenshuuStatusID(rs.getInt(varNumber++));
+				becchuu.setUploadStatusID(rs.getInt(varNumber++));
+				becchuu.setBecchuuTypeID(rs.getInt(varNumber++));
+				becchuu.setIraiShaID(rs.getString(varNumber++));
+				becchuu.setBikou(rs.getString(varNumber++));
+				becchuu.setId(rs.getInt(varNumber++));
 				data.add(becchuu);
 			}
 		}
@@ -84,7 +86,7 @@ public class BecchuuRepository {
 		return data;
 	}
 
-	public void insert(Becchuu becchuu) throws SQLException {
+	public Becchuu insert(Becchuu becchuu) throws SQLException {
 		String sql = "INSERT INTO Becchuu ("
 				+ "becchuu_kigou, becchuu_parameter, becchuu_naiyou,"
 				+ " motozu_kigou, motozu_parameter,"
@@ -108,19 +110,22 @@ public class BecchuuRepository {
 
 			connection.close();
 			connection = null;
-			//data.add(becchuu);
-			//return bukken;
+			data.add(becchuu);
+			return becchuu;
 		} catch (ClassNotFoundException ex) {
 			Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return null;
 	}
 
-	public Becchuu update(Becchuu becchuu) throws SQLException {		
-		 String sql = "UPDATE Becchuu SET becchuu_parameter = ?, becchuu_naiyou = ?, motozu_kigou = ?, motozu_parameter = ?, "
+	public Becchuu update(Becchuu becchuu) throws SQLException, BecchuuExistsException {	
+		if (!checkBeforeUpdate(becchuu)) throw new BecchuuExistsException("This becchuu is already exists!");
+		
+		 String sql = "UPDATE Becchuu SET becchuu_kigou = ?, becchuu_parameter = ?, becchuu_naiyou = ?, motozu_kigou = ?, motozu_parameter = ?, "
 		 		+ " sakuseibi = ?, sakusei_sha_id = ?, kenshuu_sha_id = ?, misu = ?, becchuu_maisu = ?, "
 		 		+ " sakusei_status = ?, kenshuu_status = ?, "
 		 		+ "upload_status = ?, becchuu_type_id = ?, irai_sha = ?, notes = ?"
-		 		+ " WHERE becchuu_kigou = ? AND koujibangou = ?";
+		 		+ " WHERE id = ?";
 	        try {
 	        	connection = ConnectionUtils.getConnection();
 	        } catch (ClassNotFoundException ex) {
@@ -128,30 +133,28 @@ public class BecchuuRepository {
 	        	Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
 	        }
 	        
-		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);	
+		    PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);
+		    int varIndex = 1;
+		    statement.setString(varIndex++, becchuu.getBecchuuKigou());
+		    statement.setString(varIndex++, becchuu.getBecchuuParameter());
+		    statement.setString(varIndex++, becchuu.getBecchuuNaiyou());
+		    statement.setString(varIndex++, becchuu.getMotozuKigou());
+		    statement.setString(varIndex++, becchuu.getMotozuParameter());		    
+		    statement.setString(varIndex++, Helpers.stringFromDate(becchuu.getSakuseiBi()));
+		    statement.setString(varIndex++, becchuu.getSakuseiShaID());
+		    statement.setInt(varIndex++, becchuu.getKenshuuStatusID());
+		    statement.setInt(varIndex++, becchuu.getMisu());
+		    statement.setInt(varIndex++, becchuu.getBecchuuMaisu());
+		    statement.setInt(varIndex++, becchuu.getSakuseiStatusID());
+		    statement.setInt(varIndex++, becchuu.getKenshuuStatusID());
+		    statement.setInt(varIndex++, becchuu.getUploadStatusID());
 		    
-		    statement.setString(1, becchuu.getBecchuuParameter());
-		    statement.setString(2, becchuu.getBecchuuNaiyou());
-		    statement.setString(3, becchuu.getMotozuKigou());
-		    statement.setString(4, becchuu.getMotozuParameter());		    
-		    statement.setString(5, Helpers.stringFromDate(becchuu.getSakuseiBi()));
-		    statement.setString(6, becchuu.getSakuseiShaID());
-		    statement.setInt(7, becchuu.getKenshuuStatusID());
-		    statement.setInt(8, becchuu.getMisu());
-		    statement.setInt(9, becchuu.getBecchuuMaisu());
-		    statement.setInt(10, becchuu.getSakuseiStatusID());
-		    statement.setInt(11, becchuu.getKenshuuStatusID());
-		    statement.setInt(12, becchuu.getUploadStatusID());
+		    statement.setInt(varIndex++, becchuu.getBecchuuTypeID());
+		  
+		    statement.setString(varIndex++, becchuu.getIraiShaID());
+		    statement.setString(varIndex++, becchuu.getBikou());
+		    statement.setInt(varIndex++, becchuu.getId());
 		    
-		    
-//		    statement.setInt(13, becchuu.getBecchuuTypeID());
-		    statement.setInt(13, 2);
-		 
-		    
-		    statement.setString(14, becchuu.getIraiShaID());
-		    statement.setString(15, becchuu.getBikou());
-		    statement.setString(16, becchuu.getBecchuuKigou());
-		    statement.setString(17, becchuu.getKoujibangou());
 		    
 		    System.out.println(statement.toString());
 		    statement.executeUpdate();
@@ -162,6 +165,17 @@ public class BecchuuRepository {
 		    connection = null;
 		    
 		    return becchuu;
+	}
+	
+	private boolean checkBeforeUpdate(Becchuu becchuu) {
+		List<Becchuu> becchuus = this.getListWithRefresh(false);
+		for (Becchuu becchuu2: becchuus) {
+			if (becchuu2.getBecchuuKigou().equals(becchuu.getBecchuuKigou()) && becchuu2.getId() != becchuu.getId()) {
+				return false;
+			}
+		}
+		return true;
+		
 	}
 
 }

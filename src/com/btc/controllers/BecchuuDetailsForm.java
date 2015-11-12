@@ -41,6 +41,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import com.btc.model.Becchuu;
 import com.btc.model.BecchuuStatus;
+import com.btc.model.BecchuuType;
 import com.btc.model.Bukken;
 import com.btc.model.Employee;
 import com.btc.repositoty.BecchuuRepository;
@@ -85,6 +86,7 @@ public class BecchuuDetailsForm extends JDialog {
 	private JSpinner spMisu;
 	private JTextArea txtBikou;
 	private JComboBox cbsakuSeiSha;
+	private JComboBox cbBunrui;
 
 	private void loadBecchuuEmployeesCombobox() {
 		DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());		
@@ -101,6 +103,11 @@ public class BecchuuDetailsForm extends JDialog {
 		
 		DefaultComboBoxModel<BecchuuStatus> model2 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuStatus());	
 		cbKenshuuJoukyou.setModel(model2);
+	}
+	
+	private void loadBunruiCombobox() {
+		DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuTypes().toArray());	
+		cbBunrui.setModel(model);	
 	}
 	
 	private void populateData() {
@@ -146,6 +153,9 @@ public class BecchuuDetailsForm extends JDialog {
 		int maisu = becchuuToEdit.getBecchuuMaisu();
 		spMaisuu.getModel().setValue(maisu < 0 ? 0 : maisu);
 		
+		BecchuuType becchuuType = becchuuToEdit.getBecchuuType();
+		cbBunrui.getModel().setSelectedItem(becchuuType);
+		
 		txtBikou.setText(becchuuToEdit.getBikou());
 	}
 
@@ -174,19 +184,20 @@ public class BecchuuDetailsForm extends JDialog {
 		if (kenshuuStatus != null)
 			becchuuToEdit.setKenshuuStatusID(kenshuuStatus.getId());
 		
+		BecchuuType becchuuType = (BecchuuType)cbBunrui.getModel().getSelectedItem();
+		if (becchuuType != null)
+			becchuuToEdit.setBecchuuTypeID(becchuuType.getId());
+		
 		becchuuToEdit.setSakuseiBi(((Date)dpkSakuseBi.getModel().getValue()));
 		becchuuToEdit.setBecchuuMaisu(Integer.parseInt(spMaisuu.getModel().getValue().toString()));
 		becchuuToEdit.setMisu(Integer.parseInt(spMisu.getModel().getValue().toString()));
 		becchuuToEdit.setBikou(txtBikou.getText().trim());
 		
-		try {
-			BecchuuRepository.Instance().update(becchuuToEdit);
-			DialogHelpers.showAlert("成功", "別注図更新しました！");
-		} catch (SQLException e) {
-			DialogHelpers.showError("エラー", "更新失敗しました！" + e.getMessage());
-			e.printStackTrace();
-		}
-		 this.dispose();
+		// 更新実行
+		
+	
+		this.delegate.submitData(this, becchuuToEdit);
+		
 	}
 
 	// END handle Events
@@ -427,9 +438,9 @@ public class BecchuuDetailsForm extends JDialog {
 		panel.add(bukkenPanel);
 		GridBagLayout gbl_bukkenPanel = new GridBagLayout();
 		gbl_bukkenPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_bukkenPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_bukkenPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_bukkenPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_bukkenPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_bukkenPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		bukkenPanel.setLayout(gbl_bukkenPanel);
 
 		JLabel lblNewLabel_3 = new JLabel("納期：");
@@ -644,20 +655,36 @@ public class BecchuuDetailsForm extends JDialog {
 		gbc_spMisu.gridx = 1;
 		gbc_spMisu.gridy = 12;
 		bukkenPanel.add(spMisu, gbc_spMisu);
+		
+		JLabel lblNewLabel_17 = new JLabel("分類：");
+		GridBagConstraints gbc_lblNewLabel_17 = new GridBagConstraints();
+		gbc_lblNewLabel_17.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_17.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_17.gridx = 0;
+		gbc_lblNewLabel_17.gridy = 13;
+		bukkenPanel.add(lblNewLabel_17, gbc_lblNewLabel_17);
+		
+		cbBunrui = new JComboBox();
+		GridBagConstraints gbc_cbBunrui = new GridBagConstraints();
+		gbc_cbBunrui.insets = new Insets(0, 0, 5, 0);
+		gbc_cbBunrui.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbBunrui.gridx = 1;
+		gbc_cbBunrui.gridy = 13;
+		bukkenPanel.add(cbBunrui, gbc_cbBunrui);
 
 		JLabel lblNewLabel_16 = new JLabel("備考：");
 		GridBagConstraints gbc_lblNewLabel_16 = new GridBagConstraints();
 		gbc_lblNewLabel_16.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_16.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel_16.gridx = 0;
-		gbc_lblNewLabel_16.gridy = 13;
+		gbc_lblNewLabel_16.gridy = 14;
 		bukkenPanel.add(lblNewLabel_16, gbc_lblNewLabel_16);
 
 		JScrollPane scrollPane_3 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_3 = new GridBagConstraints();
 		gbc_scrollPane_3.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_3.gridx = 1;
-		gbc_scrollPane_3.gridy = 13;
+		gbc_scrollPane_3.gridy = 14;
 		bukkenPanel.add(scrollPane_3, gbc_scrollPane_3);
 
 		txtBikou = new JTextArea();
@@ -689,6 +716,7 @@ public class BecchuuDetailsForm extends JDialog {
 		createAndSetupGUI();
 		loadBecchuuEmployeesCombobox();
 		loadStatusCombobox();
+		loadBunruiCombobox();
 		
 		populateData();
 		
