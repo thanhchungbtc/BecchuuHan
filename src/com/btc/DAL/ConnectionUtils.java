@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.sqlite.SQLiteConnection;
-
 public class ConnectionUtils {
 
 	private static Connection _connection;

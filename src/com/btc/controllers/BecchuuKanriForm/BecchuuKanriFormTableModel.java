@@ -1,20 +1,14 @@
 package com.btc.controllers.BecchuuKanriForm;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-
-import org.omg.CORBA.IRObject;
-
 import com.Exception.BecchuuExistsException;
 import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
-import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
-import com.btc.repositoty.CommonRepository;
 import com.btc.supports.Helpers;
+
+import javax.swing.table.AbstractTableModel;
+import java.sql.SQLException;
+import java.util.List;
 
 public class BecchuuKanriFormTableModel extends AbstractTableModel {
 	private static String[] COLUMN_NAMES = {"別注記号", "分類", "工事番号", "施主名", "納期", "作成者", "別注枚数", "作成状況", "ミス件数","研修者", "検収状況", "ＤＢアップ状況"};

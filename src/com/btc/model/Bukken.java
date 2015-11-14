@@ -1,9 +1,8 @@
 package com.btc.model;
 
-import java.util.Date;
-
 import com.btc.repositoty.BukkenRepository;
-import com.btc.repositoty.CommonRepository;
+
+import java.util.Date;
 
 public class Bukken {
 

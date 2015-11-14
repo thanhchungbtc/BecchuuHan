@@ -1,34 +1,11 @@
 package com.btc.controllers;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PrimitiveIterator.OfDouble;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
+import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsDelegate;
+import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsForm;
+import com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm;
 import com.btc.model.Becchuu;
 import com.btc.model.BecchuuType;
 import com.btc.model.Bukken;
-import com.btc.model.Employee;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
@@ -36,57 +13,18 @@ import com.btc.supports.Config;
 import com.btc.viewModel.BecchuuTableModel;
 import com.btc.viewModel.BukkenTableModel;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Desktop.Action;
-
-import javax.swing.JLabel;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-
-import java.awt.GridLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import javax.swing.JCheckBox;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.event.MouseMotionAdapter;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, BecchuuDetailsDelegate {
 
@@ -444,6 +382,7 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 			}
 		}
 	}
+
 	private void bukkenTableDoubleClicked(MouseEvent event) {		
 		if (bukkenTable.getSelectedRow() == -1) return;
 		int row = bukkenTable.getSelectedRow();
@@ -476,8 +415,8 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		}
 		rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
 	}
-	
-	private void txtBukkenSearchKeyReleased(KeyEvent event) {		 
+
+	private void txtBukkenSearchKeyReleased(KeyEvent event) {
 		if (txtBukkenSearch.getText().trim().length() == 0) {
 			textFilter = null;
 		} else {

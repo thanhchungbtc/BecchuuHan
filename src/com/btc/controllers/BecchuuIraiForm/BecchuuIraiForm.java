@@ -1,53 +1,28 @@
-package com.btc.controllers;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Properties;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+package com.btc.controllers.BecchuuIraiForm;
 
 import com.btc.DAL.ConnectionUtils;
+import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsDelegate;
+import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
 import com.btc.supports.Config;
-import com.btc.supports.DateLabelFormatter;
 import com.btc.supports.Helpers;
+import org.jdatepicker.impl.JDatePickerImpl;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.Date;
 
 public class BecchuuIraiForm extends JFrame {
 
@@ -216,9 +191,9 @@ public class BecchuuIraiForm extends JFrame {
 		
 		txtBecchuuParameter = new JTextArea();
 		scrollPane_1.setViewportView(txtBecchuuParameter);
-		
-		txtBecchuuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-		txtBecchuuParameter.setLineWrap(true);
+
+      //txtBecchuuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+      txtBecchuuParameter.setLineWrap(true);
 		txtBecchuuParameter.setRows(4);
 
 		JLabel lblUserName = new JLabel("別注内容（＊）：");
@@ -239,8 +214,8 @@ public class BecchuuIraiForm extends JFrame {
 
 		txtBecchuuNaiyou = new JTextArea();
 		scrollPane.setViewportView(txtBecchuuNaiyou);
-		txtBecchuuNaiyou.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-		txtBecchuuNaiyou.setRows(4);
+      // txtBecchuuNaiyou.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+      txtBecchuuNaiyou.setRows(4);
 
 		JLabel lblPassword = new JLabel("元図記号：");
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
@@ -276,8 +251,8 @@ public class BecchuuIraiForm extends JFrame {
 
 		txtMotozuParameter = new JTextArea();
 		scrollPane_2.setViewportView(txtMotozuParameter);
-		txtMotozuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-		txtMotozuParameter.setRows(4);
+      // txtMotozuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+      txtMotozuParameter.setRows(4);
 
 		JLabel lblNewLabel_3 = new JLabel("工事番号（＊）：");
 		lblNewLabel_3.setForeground(Color.RED);
@@ -392,7 +367,6 @@ public class BecchuuIraiForm extends JFrame {
 	 * Create the frame.
 	 */
 	public BecchuuIraiForm() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BecchuuIraiForm.class.getResource("/resources/icon/icon_irai.jpg")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("別注依頼");	
 

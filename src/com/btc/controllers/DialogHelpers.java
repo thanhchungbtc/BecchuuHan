@@ -1,8 +1,6 @@
 package com.btc.controllers;
 
-import java.awt.TrayIcon.MessageType;
-
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class DialogHelpers {
 	public static void showAlert(String title, Object message) {		

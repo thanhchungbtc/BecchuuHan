@@ -1,21 +1,12 @@
 package com.btc.viewModel;
 
-import java.nio.file.attribute.GroupPrincipal;
-import java.sql.SQLException;
+import com.btc.model.Becchuu;
+import com.btc.repositoty.BecchuuRepository;
+import com.btc.supports.Helpers;
+
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
-
-import com.btc.controllers.DialogHelpers;
-import com.btc.model.Becchuu;
-import com.btc.model.Bukken;
-import com.btc.model.BukkenType;
-import com.btc.repositoty.BecchuuRepository;
-import com.btc.repositoty.BukkenRepository;
-import com.btc.repositoty.CommonRepository;
-import com.btc.supports.Helpers;
 
 public class BecchuuTableModel extends AbstractTableModel{
 	private static String[] COLUMN_NAMES = {"別注記号","分類", "依頼日", "作成者", "別注枚数", "作成状況", "検収状況", "別注ＤＢアップ"};

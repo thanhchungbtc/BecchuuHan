@@ -1,60 +1,25 @@
-package com.btc.controllers;
+package com.btc.controllers.BecchuuDetailsForm;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Properties;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-
+import com.btc.model.*;
+import com.btc.repositoty.CommonRepository;
+import com.btc.supports.DateLabelFormatter;
+import com.btc.supports.Helpers;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import com.btc.model.Becchuu;
-import com.btc.model.BecchuuStatus;
-import com.btc.model.BecchuuType;
-import com.btc.model.Bukken;
-import com.btc.model.Employee;
-import com.btc.repositoty.BecchuuRepository;
-import com.btc.repositoty.CommonRepository;
-import com.btc.supports.Config;
-import com.btc.supports.DateLabelFormatter;
-import com.btc.supports.Helpers;
-
-import java.awt.GridLayout;
-import javax.swing.JTextArea;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
 
 public class BecchuuDetailsForm extends JDialog {
 
@@ -215,12 +180,12 @@ public class BecchuuDetailsForm extends JDialog {
 		headerPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 		FlowLayout flowLayout = (FlowLayout) headerPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEADING);
-		headerPanel.setBackground(Color.BLACK);
+		headerPanel.setBackground(Color.lightGray);
 		contentPane.add(headerPanel, BorderLayout.NORTH);
 
 		lblNewLabel = new JLabel("別注詳細");
 		lblNewLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 18));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		headerPanel.add(lblNewLabel);
 
@@ -580,7 +545,7 @@ public class BecchuuDetailsForm extends JDialog {
 		gbc_lblNewLabel_11.gridy = 8;
 		bukkenPanel.add(lblNewLabel_11, gbc_lblNewLabel_11);
 
-		dpkSakuseBi = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		dpkSakuseBi = new JDatePickerImpl(datePanel, new DateLabelFormatter());		
 		GridBagConstraints gbc_dpkSakuseBi = new GridBagConstraints();
 		gbc_dpkSakuseBi.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dpkSakuseBi.insets = new Insets(0, 0, 5, 0);

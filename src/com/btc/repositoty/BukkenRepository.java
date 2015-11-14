@@ -1,20 +1,18 @@
 package com.btc.repositoty;
 
-import java.security.interfaces.RSAKey;
+import com.btc.DAL.ConnectionUtils;
+import com.btc.model.Bukken;
+import com.btc.model.BukkenType;
+import com.btc.supports.Helpers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.btc.DAL.ConnectionUtils;
-import com.btc.model.Becchuu;
-import com.btc.model.Bukken;
-import com.btc.model.BukkenType;
-import com.btc.supports.Helpers;
 
 public class BukkenRepository {
 

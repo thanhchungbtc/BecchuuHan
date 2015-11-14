@@ -1,20 +1,18 @@
 package com.btc.repositoty;
 
+import com.Exception.BecchuuExistsException;
+import com.btc.DAL.ConnectionUtils;
+import com.btc.model.Becchuu;
+import com.btc.supports.Helpers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.Exception.BecchuuExistsException;
-import com.btc.DAL.ConnectionUtils;
-import com.btc.model.Becchuu;
-import com.btc.model.Bukken;
-import com.btc.supports.Helpers;
 
 public class BecchuuRepository {
 	private List<Becchuu> data;
@@ -142,8 +140,8 @@ public class BecchuuRepository {
 		    statement.setString(varIndex++, becchuu.getMotozuParameter());		    
 		    statement.setString(varIndex++, Helpers.stringFromDate(becchuu.getSakuseiBi()));
 		    statement.setString(varIndex++, becchuu.getSakuseiShaID());
-		    statement.setInt(varIndex++, becchuu.getKenshuuStatusID());
-		    statement.setInt(varIndex++, becchuu.getMisu());
+		statement.setString(varIndex++, becchuu.getKenshuShaID());
+		statement.setInt(varIndex++, becchuu.getMisu());
 		    statement.setInt(varIndex++, becchuu.getBecchuuMaisu());
 		    statement.setInt(varIndex++, becchuu.getSakuseiStatusID());
 		    statement.setInt(varIndex++, becchuu.getKenshuuStatusID());

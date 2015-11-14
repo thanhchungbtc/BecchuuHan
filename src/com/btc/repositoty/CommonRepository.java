@@ -1,17 +1,15 @@
 package com.btc.repositoty;
 
+import com.btc.DAL.ConnectionUtils;
+import com.btc.model.BecchuuStatus;
+import com.btc.model.BecchuuType;
+import com.btc.model.BukkenType;
+import com.btc.model.Employee;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.btc.DAL.ConnectionUtils;
-import com.btc.model.BecchuuStatus;
-import com.btc.model.BecchuuType;
-import com.btc.model.Bukken;
-import com.btc.model.BukkenType;
-import com.btc.model.Employee;
-import com.btc.supports.Helpers;
 
 public class CommonRepository {
 	private static List<BecchuuType> _becchuuTypes;

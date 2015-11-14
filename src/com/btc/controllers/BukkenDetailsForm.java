@@ -1,59 +1,19 @@
 package com.btc.controllers;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.SystemColor;
-import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-
-import org.jdatepicker.impl.DateComponentFormatter;
+import com.btc.model.Bukken;
+import com.btc.supports.DateLabelFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import com.btc.model.Becchuu;
-import com.btc.model.Bukken;
-import com.btc.model.BukkenType;
-import com.btc.repositoty.BecchuuRepository;
-import com.btc.supports.DateLabelFormatter;
-import com.btc.supports.Helpers;
-
-import javax.swing.JFormattedTextField;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
 
 public class BukkenDetailsForm extends JDialog {
 

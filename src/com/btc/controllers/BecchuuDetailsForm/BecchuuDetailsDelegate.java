@@ -1,4 +1,4 @@
-package com.btc.controllers;
+package com.btc.controllers.BecchuuDetailsForm;
 
 import com.btc.model.Becchuu;
 
