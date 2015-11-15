@@ -1,5 +1,6 @@
-package com.btc.controllers;
+package com.btc.controllers.BukkenDetailsForm;
 
+import com.btc.controllers.DialogHelpers;
 import com.btc.model.Bukken;
 import com.btc.supports.DateLabelFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -29,6 +30,7 @@ public class BukkenDetailsForm extends JDialog {
 	private JTextField txtShiten;
 	private JDatePickerImpl dpkNouki;
 	private boolean insertMode;
+	private JTextField txtYobikata;
 	
 	private boolean validDataBeforeSubmit() {
 		if (txtID.getText().trim().equals("")) {
@@ -65,12 +67,11 @@ public class BukkenDetailsForm extends JDialog {
 		
 		}
 		txtID.setText(bukkenToSubmit.getId());
-		txtID.setEnabled(false);
 		txtName.setText(bukkenToSubmit.getName());
 		cbType.setSelectedIndex(bukkenToSubmit.getType());
 		txtDEPSF.setText(bukkenToSubmit.getDepsf());
 		txtShiten.setText(bukkenToSubmit.getShiten());
-		
+		txtYobikata.setText(bukkenToSubmit.getYobikata());
 		Date date = bukkenToSubmit.getNouki();	
 		if (date != null) {
 			dpkNouki.getModel().setDate(date.getYear() + 1900, date.getMonth(), date.getDate());
@@ -89,7 +90,7 @@ public class BukkenDetailsForm extends JDialog {
 		bukkenToSubmit.setShiten(txtShiten.getText().trim());
 		
 		bukkenToSubmit.setNouki((Date)dpkNouki.getModel().getValue());
-		
+		bukkenToSubmit.setYobikata(txtYobikata.getText());
 		delegate.submitData(bukkenToSubmit, this.insertMode);
 		this.dispose();
 	}
@@ -153,9 +154,9 @@ public class BukkenDetailsForm extends JDialog {
 		contentPane.add(mainPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_mainPanel = new GridBagLayout();
 		gbl_mainPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_mainPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_mainPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_mainPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_mainPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_mainPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		mainPanel.setLayout(gbl_mainPanel);
 		
 		JLabel lblNewLabel_1 = new JLabel("商品タイプ：");
@@ -200,6 +201,7 @@ public class BukkenDetailsForm extends JDialog {
 		mainPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		txtID = new JTextField();
+		txtID.setEditable(false);
 		txtID.setColumns(10);
 		GridBagConstraints gbc_txtID = new GridBagConstraints();
 		gbc_txtID.fill = GridBagConstraints.HORIZONTAL;
@@ -225,12 +227,29 @@ public class BukkenDetailsForm extends JDialog {
 		gbc_txtName.gridy = 2;
 		mainPanel.add(txtName, gbc_txtName);
 		
+		JLabel lblNewLabel_3 = new JLabel("呼び方");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_3.gridx = 0;
+		gbc_lblNewLabel_3.gridy = 3;
+		mainPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		
+		txtYobikata = new JTextField();
+		GridBagConstraints gbc_txtYobikata = new GridBagConstraints();
+		gbc_txtYobikata.insets = new Insets(0, 0, 5, 0);
+		gbc_txtYobikata.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtYobikata.gridx = 1;
+		gbc_txtYobikata.gridy = 3;
+		mainPanel.add(txtYobikata, gbc_txtYobikata);
+		txtYobikata.setColumns(10);
+		
 		JLabel lblPassword = new JLabel("DEPSF\uFF1A");
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
 		gbc_lblPassword.anchor = GridBagConstraints.WEST;
 		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPassword.gridx = 0;
-		gbc_lblPassword.gridy = 3;
+		gbc_lblPassword.gridy = 4;
 		mainPanel.add(lblPassword, gbc_lblPassword);
 		
 		txtDEPSF = new JTextField();
@@ -239,7 +258,7 @@ public class BukkenDetailsForm extends JDialog {
 		gbc_txtDEPSF.insets = new Insets(0, 0, 5, 0);
 		gbc_txtDEPSF.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtDEPSF.gridx = 1;
-		gbc_txtDEPSF.gridy = 3;
+		gbc_txtDEPSF.gridy = 4;
 		mainPanel.add(txtDEPSF, gbc_txtDEPSF);
 		txtDEPSF.setColumns(10);
 		
@@ -248,7 +267,7 @@ public class BukkenDetailsForm extends JDialog {
 		gbc_lblRepeat.anchor = GridBagConstraints.WEST;
 		gbc_lblRepeat.insets = new Insets(0, 0, 5, 5);
 		gbc_lblRepeat.gridx = 0;
-		gbc_lblRepeat.gridy = 4;
+		gbc_lblRepeat.gridy = 5;
 		mainPanel.add(lblRepeat, gbc_lblRepeat);
 		
 		txtShiten = new JTextField();
@@ -257,7 +276,7 @@ public class BukkenDetailsForm extends JDialog {
 		gbc_txtShiten.insets = new Insets(0, 0, 5, 0);
 		gbc_txtShiten.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtShiten.gridx = 1;
-		gbc_txtShiten.gridy = 4;
+		gbc_txtShiten.gridy = 5;
 		mainPanel.add(txtShiten, gbc_txtShiten);
 		txtShiten.setColumns(10);
 		
@@ -266,7 +285,7 @@ public class BukkenDetailsForm extends JDialog {
 		gbc_lblUrl.anchor = GridBagConstraints.WEST;
 		gbc_lblUrl.insets = new Insets(0, 0, 0, 5);
 		gbc_lblUrl.gridx = 0;
-		gbc_lblUrl.gridy = 5;
+		gbc_lblUrl.gridy = 6;
 		mainPanel.add(lblUrl, gbc_lblUrl);
 		
 		Properties p = new Properties();
@@ -282,7 +301,7 @@ public class BukkenDetailsForm extends JDialog {
 		GridBagConstraints gbc_dpkNouki = new GridBagConstraints();
 		gbc_dpkNouki.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dpkNouki.gridx = 1;
-		gbc_dpkNouki.gridy = 5;
+		gbc_dpkNouki.gridy = 6;
 		mainPanel.add(dpkNouki, gbc_dpkNouki);
 		
 		JPanel footerPanel = new JPanel();
@@ -309,8 +328,4 @@ public class BukkenDetailsForm extends JDialog {
 		footerPanel.add(btnOK);		
 	}
 
-}
-
-interface BukkenDetailsFormDelegate {
-	public void submitData(Bukken bukken, boolean insert);
 }

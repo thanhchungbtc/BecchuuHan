@@ -1,6 +1,7 @@
 package com.btc.viewModel;
 
 import com.btc.model.Becchuu;
+import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
 import com.btc.supports.Helpers;
 
@@ -11,17 +12,23 @@ import java.util.List;
 public class BecchuuTableModel extends AbstractTableModel{
 	private static String[] COLUMN_NAMES = {"別注記号","分類", "依頼日", "作成者", "別注枚数", "作成状況", "検収状況", "別注ＤＢアップ"};
 	private List<Becchuu> data = new ArrayList<>();
-	private BecchuuRepository repository;	
-	
-	
+	private BecchuuRepository repository;
+	private Bukken bukken;
 
-	public BecchuuTableModel(BecchuuRepository repository) {
-		this.repository = repository;
-		this.data = repository.getListWithRefresh(false);
+   public void setBukken(Bukken bukken) {
+	   if (bukken == null) return;
+      this.bukken = bukken;
+      this.data = bukken.getListBecchuu();
+      fireTableDataChanged();
+      System.out.println(data.size());
+   }
+
+	public BecchuuTableModel() {
+		this.repository = BecchuuRepository.Instance();
+
 	}
 	public void refresh() {
-		
-		this.data = repository.getListWithRefresh(true);
+		setBukken(this.bukken);
 		fireTableDataChanged();
 	}
 //	

@@ -2,6 +2,7 @@ package com.btc.model;
 
 import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
+import com.btc.supports.Config;
 
 import java.util.Date;
 
@@ -26,9 +27,19 @@ public class Becchuu {
 	private String bikou;
 	private Date iraibi;
 	private Date sakuseiBi;
-	private int misu;
+
+   public String getHinCode() {
+      return hinCode;
+   }
+
+   public void setHinCode(String hinCode) {
+      this.hinCode = hinCode;
+   }
+
+   private int misu;
 	private int becchuuMaisu;
 	private String iraiShaID;
+	private String hinCode;
 	
 	// foreign key
 	private int sakuseiStatusID;
@@ -210,5 +221,11 @@ public class Becchuu {
 		return "becchuuKigou: " + becchuuKigou
 				+ "motozuKigou: " + motozuKigou;
 	}
-	
+
+   public String getBecchuuDBURL() {
+      Bukken bukken = this.getBukken();
+      String depsf = bukken.getDepsf().replaceAll("-", "");
+      return "http://sv04plemia.osaka.daiwahouse.co.jp/BzkWeb/search.aspx?zwid=" + depsf + "&hin_cd=" + this
+            .getHinCode();
+   }
 }

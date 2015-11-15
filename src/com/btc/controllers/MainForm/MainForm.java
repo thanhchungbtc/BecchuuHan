@@ -6,6 +6,7 @@ package com.btc.controllers.MainForm;
 
 import com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm;
 import com.btc.controllers.BecchuuKanriForm.BecchuuKanriForm;
+import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
 import com.btc.supports.Config;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyVetoException;
+import java.util.*;
 
 /**
  * @author Thanh Chung
@@ -21,51 +24,79 @@ public class MainForm extends JFrame {
 
    private JInternalFrame becchuuKanriForm;
    private JInternalFrame becchuuIraiForm;
+   private JInternalFrame bukkenKanriForm;
 
-
+   private java.util.List<JInternalFrame> internalFrames = new LinkedList<>();
    public MainForm() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       initComponents();
    }
 
-   private void openNewWindow(JFrame frame, JInternalFrame jInternalFrame) {
-      JInternalFrame[] allInternalFrames = this.desktopPane.getAllFrames();
-      for (JInternalFrame jInternalFrame1 : allInternalFrames) {
-         jInternalFrame1.dispose();
-      }
+   private JInternalFrame createJInternalFrameFromFrame(JFrame frame) {
+      JInternalFrame jInternalFrame = new JInternalFrame(frame.getTitle(), true, true, true, true);
+
       jInternalFrame.setContentPane(frame.getContentPane());
       jInternalFrame.setSize(frame.getSize());
       jInternalFrame.setVisible(true);
 
       jInternalFrame.addInternalFrameListener(new InternalFrameAdapter() {
+
          @Override
          public void internalFrameClosed(InternalFrameEvent e) {
             if (e.getSource() == becchuuIraiForm) {
                becchuuIraiForm = null;
             } else if (e.getSource() == becchuuKanriForm) {
                becchuuKanriForm = null;
+            } else if (e.getSource() == bukkenKanriForm) {
+               bukkenKanriForm = null;
             }
             super.internalFrameClosed(e);
          }
       });
-      this.desktopPane.add(jInternalFrame);
+      return  jInternalFrame;
+   }
 
-      System.out.println(desktopPane.countComponents());
+   private void openNewWinDow(JInternalFrame jInternalFrame) {
+      JInternalFrame[] allInternalFrames = this.desktopPane.getAllFrames();
+      for (JInternalFrame jInternalFrame1 : allInternalFrames) {
+         if (jInternalFrame1 == jInternalFrame) {
+
+            continue;
+         }
+         jInternalFrame1.dispose();
+      }
+
+      if (jInternalFrame != becchuuIraiForm) {
+         try {
+            jInternalFrame.setMaximum(true);
+         } catch (PropertyVetoException e) {
+            e.printStackTrace();
+         }
+      }
    }
 
    private void fileMenuActionPerformed(ActionEvent e) {
       Object source = e.getSource();
 
       if (source == btnBecchuuKanri || source == mnBecchuuKanriForm) {
-         if (becchuuKanriForm != null) return;
-         BecchuuKanriForm kanriForm = new BecchuuKanriForm();
-         becchuuKanriForm = new JInternalFrame(kanriForm.getTitle(), true, true, true, true);
-         openNewWindow(kanriForm, becchuuKanriForm);
+         if (becchuuKanriForm == null) {
+            becchuuKanriForm = createJInternalFrameFromFrame(new BecchuuKanriForm());
+            this.desktopPane.add(becchuuKanriForm);
+         }
+         openNewWinDow(becchuuKanriForm);
+
       } else if (source == btnBecchuuIrai || source == mnBecchuuIrai) {
-         if (becchuuIraiForm != null) return;
-         BecchuuIraiForm iraiForm = new BecchuuIraiForm();
-         becchuuIraiForm = new JInternalFrame(iraiForm.getTitle(), true, true, true, true);
-         openNewWindow(iraiForm, becchuuIraiForm);
+         if (becchuuIraiForm == null) {
+            becchuuIraiForm = createJInternalFrameFromFrame(new BecchuuIraiForm());
+            this.desktopPane.add(becchuuIraiForm);
+         }
+         openNewWinDow(becchuuIraiForm);
+      } else if (source == btnBukkenKanri || source == mnBukkenKanri) {
+         if (bukkenKanriForm == null) {
+            bukkenKanriForm = createJInternalFrameFromFrame(new BukkenKanriForm());
+            this.desktopPane.add(bukkenKanriForm);
+         }
+         openNewWinDow(bukkenKanriForm);
       }
    }
 
@@ -75,6 +106,7 @@ public class MainForm extends JFrame {
       menuBar1 = new JMenuBar();
       menu1 = new JMenu();
       mnBecchuuKanriForm = new JMenuItem();
+      mnBukkenKanri = new JMenuItem();
       mnBecchuuIrai = new JMenuItem();
       menuItem4 = new JMenuItem();
       menuItem1 = new JMenuItem();
@@ -82,6 +114,7 @@ public class MainForm extends JFrame {
       toolBar1 = new JToolBar();
       btnBecchuuKanri = new JButton();
       btnBecchuuIrai = new JButton();
+      btnBukkenKanri = new JButton();
       desktopPane = new JDesktopPane();
 
       //======== this ========
@@ -101,6 +134,11 @@ public class MainForm extends JFrame {
             mnBecchuuKanriForm.setText("\u5225\u6ce8\u7ba1\u7406");
             mnBecchuuKanriForm.addActionListener(e -> fileMenuActionPerformed(e));
             menu1.add(mnBecchuuKanriForm);
+
+            //---- mnBukkenKanri ----
+            mnBukkenKanri.setText("\u7269\u4ef6\u7ba1\u7406");
+            mnBukkenKanri.addActionListener(e -> fileMenuActionPerformed(e));
+            menu1.add(mnBukkenKanri);
 
             //---- mnBecchuuIrai ----
             mnBecchuuIrai.setText("\u5225\u6ce8\u4f9d\u983c");
@@ -145,6 +183,16 @@ public class MainForm extends JFrame {
          btnBecchuuIrai.setFocusPainted(false);
          btnBecchuuIrai.addActionListener(e -> fileMenuActionPerformed(e));
          toolBar1.add(btnBecchuuIrai);
+
+         //---- btnBukkenKanri ----
+         btnBukkenKanri.setIcon(new ImageIcon(getClass().getResource("/resources/icon/toolbars/icon-toolbar-becchuukanri.png")));
+         btnBukkenKanri.setBorderPainted(false);
+         btnBukkenKanri.setFocusPainted(false);
+         btnBukkenKanri.addActionListener(e -> {
+			fileMenuActionPerformed(e);
+			fileMenuActionPerformed(e);
+		});
+         toolBar1.add(btnBukkenKanri);
       }
       contentPane.add(toolBar1, BorderLayout.NORTH);
 
@@ -163,6 +211,7 @@ public class MainForm extends JFrame {
    private JMenuBar menuBar1;
    private JMenu menu1;
    private JMenuItem mnBecchuuKanriForm;
+   private JMenuItem mnBukkenKanri;
    private JMenuItem mnBecchuuIrai;
    private JMenuItem menuItem4;
    private JMenuItem menuItem1;
@@ -170,6 +219,7 @@ public class MainForm extends JFrame {
    private JToolBar toolBar1;
    private JButton btnBecchuuKanri;
    private JButton btnBecchuuIrai;
+   private JButton btnBukkenKanri;
    private JDesktopPane desktopPane;
    // JFormDesigner - End of variables declaration  //GEN-END:variables
 

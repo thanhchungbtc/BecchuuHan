@@ -1,5 +1,6 @@
 package com.btc.supports;
 
+import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
 
 import javax.swing.*;

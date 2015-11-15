@@ -1,8 +1,11 @@
 package com.btc.model;
 
+import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.BukkenRepository;
+import com.btc.supports.Config;
 
 import java.util.Date;
+import java.util.List;
 
 public class Bukken {
 
@@ -10,7 +13,17 @@ public class Bukken {
 	private String name;
 	private String depsf;	
 	private String shiten;
-	private Date nouki;
+
+   public String getYobikata() {
+      return yobikata;
+   }
+
+   public void setYobikata(String yobikata) {
+      this.yobikata = yobikata;
+   }
+
+   private Date nouki;
+   private String yobikata;
 	
 	private int type; // 0 is XEVO, 1 is Σ
 	private String bukkenType;
@@ -64,5 +77,14 @@ public class Bukken {
 	}
 	public void setNouki(Date nouki) {
 		this.nouki = nouki;
+	}
+
+	public String getBecchuuDBURL() {
+		String depsf = this.getDepsf().replaceAll("-", "");
+		String link = "http://sv04plemia.osaka.daiwahouse.co.jp/BzkWeb/search.aspx?zwid=" + depsf + "&user=" + Config.UserID;
+		return link;
+	}
+	public List<Becchuu> getListBecchuu() {
+		return BecchuuRepository.Instance().getBecchuuOfBukken(this.getId());
 	}
 }

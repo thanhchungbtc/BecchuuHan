@@ -12,7 +12,7 @@ import java.util.List;
 
 public class BukkenTableModel extends AbstractTableModel {
 	
-	private static String[] COLUMN_NAMES = {"納期", "工事番号", "施主名", "タイプ", "システムへ"};
+	private static String[] COLUMN_NAMES = {"納期", "工事番号", "施主名", "タイプ", "別注枚数", "システムへ"};
 	private List<Bukken> data;
 	private BukkenRepository repository;	
 	
@@ -93,7 +93,9 @@ public class BukkenTableModel extends AbstractTableModel {
 			return bukken.getName();
 		case 3:
 			return BukkenType.getType(bukken.getType());
-		case 4:
+			case 4:
+				return bukken.getListBecchuu().size();
+		case 5:
 			return "<html><FONT color=\"#000099\"><u>別注ＤＢへ</u></html> ";
 		default:
 			return "Error";

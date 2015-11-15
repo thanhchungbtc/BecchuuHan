@@ -2,6 +2,8 @@ package com.btc.controllers.BecchuuIraiForm;
 
 import com.btc.DAL.ConnectionUtils;
 import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsDelegate;
+import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsForm;
+import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
 import com.btc.controllers.DialogHelpers;
 import com.btc.model.Becchuu;
 import com.btc.model.Bukken;
@@ -11,18 +13,22 @@ import com.btc.supports.Config;
 import com.btc.supports.Helpers;
 import org.jdatepicker.impl.JDatePickerImpl;
 
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.Dialog.ModalExclusionType;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Properties;
+import javax.mail.*;
 
 public class BecchuuIraiForm extends JFrame {
 
@@ -40,9 +46,16 @@ public class BecchuuIraiForm extends JFrame {
 	private JTextField txtKoujibangou;
 	private JLabel txtBukkenJouhou;
 
+	private BukkenKanriForm bukkenKanriForm;
+	private SwingWorker<Boolean, Void> swingWorker;
 	// bukken must set before irai
 	private Bukken bukken; 
 	private JLabel txtIraibi;
+	private JLabel iconLabel;
+	private JButton btnOK;
+	private JButton btnCancel;
+	private JLabel lblSendingMail;
+	private JButton btnKanriGamen;
 	private boolean validDataBeforeSubmit() {
 		if (txtBecchuuKigou.getText().trim().equals("")) {
 			DialogHelpers.showAlert("通知", "別注記号入力する必要があります！");
@@ -88,17 +101,96 @@ public class BecchuuIraiForm extends JFrame {
 		becchuu.setIraiShaID(txtIraiSha.getText().trim());
 		becchuu.setIraibi(new Date());		
 		
+		
 		try {
 			BecchuuRepository.Instance().insert(becchuu);
-			DialogHelpers.showAlert("成功", "別注依頼を送信しました！");
-			this.resetAllField();
+			lblSendingMail.setVisible(true);
+			iconLabel.setVisible(true);
+			getContentPane().setEnabled(false);
+			swingWorker = new SwingWorker<Boolean, Void>() {
+				@Override
+				protected Boolean doInBackground() throws Exception {
+					sendMail();
+					return true;
+				}
+
+				@Override
+				protected void done() {
+					getContentPane().setEnabled(true);
+					iconLabel.setVisible(false);
+					lblSendingMail.setVisible(false);
+					DialogHelpers.showAlert("成功", "別注依頼を送信しました！");
+					resetAllField();
+
+				}
+			};
+			swingWorker.execute();
 		} catch (SQLException e) {
 			DialogHelpers.showError("エラー", "依頼失敗しました！");
 			e.printStackTrace();
 		}
 	}
 
+
+
 	// END handle Events
+
+	private void sendMail() throws MessagingException {
+		//      String toAddress = "kimhongngoc@daiwahouse.vn; phonguyetanh@daiwahouse.vn;buithanhchung@daiwahouse.vn";
+		String toAddress = "thanhchungbtc@gmail.com";
+		String subject = txtKoujibangou.getText() + " - " + txtBukkenJouhou.getText();
+		String message = "別注依頼しました。" +
+				"<br />別注記号：" + txtBecchuuKigou.getText() + "" +
+				"<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
+				"<br />依頼者：" + txtIraiSha.getText() + "" +
+				"<br />依頼日： " + txtIraibi.getText();
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("mail.smtp.host", "smtp.gmail.com");
+		defaultProps.setProperty("mail.smtp.port", "587");
+		defaultProps.setProperty("mail.user", "becchuuhan@gmail.com");
+		defaultProps.setProperty("mail.password", "daiwahouse");
+		defaultProps.setProperty("mail.smtp.starttls.enable", "true");
+		defaultProps.setProperty("mail.smtp.auth", "true");
+
+		Properties configProperties = new Properties(defaultProps);
+
+		final String userName = configProperties.getProperty("mail.user");
+		final String password = configProperties.getProperty("mail.password");
+
+		// creates a new session with an authenticator
+		Authenticator auth = new Authenticator() {
+			public PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(userName, password);
+			}
+		};
+		Session session = Session.getInstance(configProperties, auth);
+
+		// creates a new e-mail message
+		Message msg = new MimeMessage(session);
+
+		msg.setFrom(new InternetAddress(userName));
+		InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
+		msg.setRecipients(Message.RecipientType.TO, toAddresses);
+		msg.setSubject(subject);
+		msg.setSentDate(new Date());
+
+		// creates message part
+		MimeBodyPart messageBodyPart = new MimeBodyPart();
+		messageBodyPart.setContent(message, "text/html; charset=utf-8");
+
+		// creates multi-part
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(messageBodyPart);
+
+		// sets the multi-part as e-mail's content
+		msg.setContent(multipart, "text/html; charset=utf-8");
+
+		// sends the e-mail
+
+		Transport.send(msg);
+
+	}
+
 
 	private void resetAllField() {
 		txtBecchuuKigou.setText("");
@@ -180,7 +272,7 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_lblNewLabel_2.gridx = 0;
 		gbc_lblNewLabel_2.gridy = 1;
 		becchuuPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
@@ -188,12 +280,12 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_scrollPane_1.gridy = 1;
 		becchuuPanel.add(scrollPane_1, gbc_scrollPane_1);
 
-		
+
 		txtBecchuuParameter = new JTextArea();
 		scrollPane_1.setViewportView(txtBecchuuParameter);
 
-      //txtBecchuuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-      txtBecchuuParameter.setLineWrap(true);
+		//txtBecchuuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+		txtBecchuuParameter.setLineWrap(true);
 		txtBecchuuParameter.setRows(4);
 
 		JLabel lblUserName = new JLabel("別注内容（＊）：");
@@ -204,7 +296,7 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_lblUserName.gridx = 0;
 		gbc_lblUserName.gridy = 2;
 		becchuuPanel.add(lblUserName, gbc_lblUserName);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -214,8 +306,8 @@ public class BecchuuIraiForm extends JFrame {
 
 		txtBecchuuNaiyou = new JTextArea();
 		scrollPane.setViewportView(txtBecchuuNaiyou);
-      // txtBecchuuNaiyou.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-      txtBecchuuNaiyou.setRows(4);
+		// txtBecchuuNaiyou.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+		txtBecchuuNaiyou.setRows(4);
 
 		JLabel lblPassword = new JLabel("元図記号：");
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
@@ -241,7 +333,7 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_lblRepeat.gridx = 0;
 		gbc_lblRepeat.gridy = 4;
 		becchuuPanel.add(lblRepeat, gbc_lblRepeat);
-		
+
 		JScrollPane scrollPane_2 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
 		gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
@@ -251,8 +343,8 @@ public class BecchuuIraiForm extends JFrame {
 
 		txtMotozuParameter = new JTextArea();
 		scrollPane_2.setViewportView(txtMotozuParameter);
-      // txtMotozuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
-      txtMotozuParameter.setRows(4);
+		// txtMotozuParameter.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+		txtMotozuParameter.setRows(4);
 
 		JLabel lblNewLabel_3 = new JLabel("工事番号（＊）：");
 		lblNewLabel_3.setForeground(Color.RED);
@@ -273,7 +365,7 @@ public class BecchuuIraiForm extends JFrame {
 					return;
 				}
 				bukken = BukkenRepository.Instance().contains(txtKoujibangou.getText().trim());
-				
+
 				if (bukken != null){					
 					txtBukkenJouhou.setText(bukken.getName());
 				} else {
@@ -328,7 +420,7 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_label.gridx = 0;
 		gbc_label.gridy = 8;
 		becchuuPanel.add(label, gbc_label);
-		
+
 		txtIraibi = new JLabel("");
 		GridBagConstraints gbc_txtIraibi = new GridBagConstraints();
 		gbc_txtIraibi.insets = new Insets(5, 0, 5, 0);
@@ -336,29 +428,6 @@ public class BecchuuIraiForm extends JFrame {
 		gbc_txtIraibi.gridx = 1;
 		gbc_txtIraibi.gridy = 8;
 		becchuuPanel.add(txtIraibi, gbc_txtIraibi);
-
-		JPanel footerPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) footerPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.TRAILING);
-		footerPanel.setBorder(new EmptyBorder(5, 0, 0, 0));
-		footerPanel.setBorder(new MatteBorder(1, 0, 0, 0, Color.lightGray));
-		contentPane.add(footerPanel, BorderLayout.SOUTH);
-
-		JButton btnCancel = new JButton("キャンセル");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		footerPanel.add(btnCancel);
-
-		JButton btnOK = new JButton("依頼実行");		
-		btnOK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnOKActionPerformed(e);
-			}
-		});
-		footerPanel.add(btnOK);		
 	}
 
 
@@ -368,12 +437,81 @@ public class BecchuuIraiForm extends JFrame {
 	 */
 	public BecchuuIraiForm() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("別注依頼");	
+		setTitle("別注依頼");
+
 
 		createAndSetupGUI();
 		txtIraibi.setText(Helpers.stringFromDate(new Date()));
 		pack();
 		setBounds(100, 100, 650, (int) this.getPreferredSize().getHeight());
+		ImageIcon imageIcon = new ImageIcon(BecchuuIraiForm.class.getResource("/resources/icon/spinner.gif"));
+
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setDividerSize(0);
+		contentPane.add(splitPane, BorderLayout.SOUTH);
+
+		JPanel leftPanel = new JPanel();
+		FlowLayout fl_leftPanel = (FlowLayout) leftPanel.getLayout();
+		fl_leftPanel.setVgap(10);
+		fl_leftPanel.setAlignment(FlowLayout.LEFT);
+		splitPane.setLeftComponent(leftPanel);
+
+		JLabel lblNewLabel_6 = new JLabel("Created by: Bui Thanh Chung");
+		leftPanel.add(lblNewLabel_6);
+
+		JPanel footerPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) footerPanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		splitPane.setRightComponent(footerPanel);
+
+		lblSendingMail = new JLabel("依頼中、この画面閉じないでください");
+		lblSendingMail.setVisible(false);
+		lblSendingMail.setForeground(Color.RED);
+		footerPanel.add(lblSendingMail);
+		
+				iconLabel = new JLabel("");
+				footerPanel.add(iconLabel);
+				iconLabel.setIcon(imageIcon);
+				iconLabel.setOpaque(false);
+				
+						imageIcon.setImageObserver(iconLabel);
+						iconLabel.setVisible(false);
+		
+		btnKanriGamen = new JButton("管理画面");
+		btnKanriGamen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (bukkenKanriForm == null)
+					bukkenKanriForm = new BukkenKanriForm();				
+				bukkenKanriForm.setVisible(true);
+			}
+		});
+		footerPanel.add(btnKanriGamen);
+
+		btnCancel = new JButton("キャンセル");
+		footerPanel.add(btnCancel);
+
+		btnOK = new JButton("依頼実行");		
+		footerPanel.add(btnOK);
+		btnOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnOKActionPerformed(e);
+			}
+		});
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				if (swingWorker != null) {
+					swingWorker.cancel(true);
+				}
+				super.windowClosed(e);
+			}
+		});
 	}
 
 }

@@ -24,9 +24,17 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "btnBecchuuIrai"
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/resources/icon/toolbars/icon-toolbar-becchuukanri.png" )
+					"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/resources/icon/toolbars/icon-toolbar-becchuukanri.png" )
 					"borderPainted": false
 					"focusPainted": false
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "fileMenuActionPerformed", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnBukkenKanri"
+					"icon": #SwingIcon0
+					"borderPainted": false
+					"focusPainted": false
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "fileMenuActionPerformed", true ) )
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "fileMenuActionPerformed", true ) )
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
@@ -46,6 +54,11 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "mnBecchuuKanriForm"
 						"text": "別注管理"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "fileMenuActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "mnBukkenKanri"
+						"text": "物件管理"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "fileMenuActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {

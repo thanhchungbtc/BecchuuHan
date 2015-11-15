@@ -1,8 +1,9 @@
-package com.btc.controllers;
+package com.btc.controllers.BukkenKanriForm;
 
 import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsDelegate;
 import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsForm;
-import com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm;
+import com.btc.controllers.BukkenDetailsForm.BukkenDetailsForm;
+import com.btc.controllers.BukkenDetailsForm.BukkenDetailsFormDelegate;
 import com.btc.model.Becchuu;
 import com.btc.model.BecchuuType;
 import com.btc.model.Bukken;
@@ -25,8 +26,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
-public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, BecchuuDetailsDelegate {
+public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate, BecchuuDetailsDelegate {
 
 	private JPanel contentPane;
 	private JTable bukkenTable;
@@ -41,56 +48,34 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 	private JComboBox cbType;
 	
 	private void createAndSetupGUI(){
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-
-		JMenu mnFile = new JMenu("ファイル");
-		menuBar.add(mnFile);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("更新");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				((BecchuuTableModel)becchuuTable.getModel()).refresh();
-				((BukkenTableModel)bukkenTable.getModel()).refresh();
-			}
-		});
-		
-		JMenuItem menuItem = new JMenuItem("別注依頼ツール");
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BecchuuIraiForm becchuuIraiForm = new BecchuuIraiForm();
-				becchuuIraiForm.setVisible(true);
-			}
-		});
-		mnFile.add(menuItem);
-		mnFile.add(mntmNewMenuItem);
-
-		JMenuItem mntmExit = new JMenuItem("\u7D42\u4E86");
-		mnFile.add(mntmExit);
-
-		JMenu mnHelp = new JMenu("\u30D8\u30EB\u30D7");
-		menuBar.add(mnHelp);
-
-		JMenuItem mntmAbout = new JMenuItem("\u30BD\u30D5\u30C8\u30A6\u30A7\u30A2\u306B\u3064\u3044\u3066");
-		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
 		mainSplitPane = new JSplitPane();
+		mainSplitPane.setBorder(new EmptyBorder(5, 0, 0, 0));
 		mainSplitPane.setContinuousLayout(true);
 		mainSplitPane.setDividerSize(2);
-		
-		
+
 		contentPane.add(mainSplitPane, BorderLayout.CENTER);
 		
 		JPanel leftPanel = new JPanel();
+		leftPanel.setBorder(new EmptyBorder(0, 0, 0, 2));
 		mainSplitPane.setLeftComponent(leftPanel);
 
 		bukkenTable = new JTable();		
 		bukkenTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+		bukkenTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting()) {
+					bukkenTableSelectionChange(e);
+				}
+				
+			}
+		});
 		leftPanel.setLayout(new BorderLayout(0, 0));
 
 
@@ -103,6 +88,9 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		leftButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
 		
 				JButton btnAddGroup = new JButton();
+				btnAddGroup.setContentAreaFilled(false);
+				btnAddGroup.setBorderPainted(false);
+				btnAddGroup.setFocusPainted(false);
 				leftButtonPanel.add(btnAddGroup);
 				btnAddGroup.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
@@ -110,13 +98,10 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 					}
 				});
 				
-					btnAddGroup.setIcon(new ImageIcon(BukkenKanri.class.getResource("/resources/icon/icon_plus.png")));
-					
-							JButton btnDeleteGroup = new JButton("");
-							leftButtonPanel.add(btnDeleteGroup);
-							btnDeleteGroup.setIcon(new ImageIcon(BukkenKanri.class.getResource("/resources/icon/icon_trash.png")));
+					btnAddGroup.setIcon(new ImageIcon(BukkenKanriForm.class.getResource("/resources/icon/icon_plus.png")));
 		
 		JPanel searchBukkenPanel = new JPanel();
+		searchBukkenPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
 		leftPanel.add(searchBukkenPanel, BorderLayout.NORTH);
 		
 		txtBukkenSearch = new JTextField();
@@ -126,7 +111,7 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 				txtBukkenSearchKeyReleased(e);
 			}
 		});
-		searchBukkenPanel.setLayout(new BorderLayout(0, 0));
+		searchBukkenPanel.setLayout(new BorderLayout(5, 0));
 		searchBukkenPanel.add(txtBukkenSearch);
 		txtBukkenSearch.setColumns(10);
 		
@@ -140,6 +125,7 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 
 
 		JPanel rightPanel = new JPanel();
+		rightPanel.setBorder(new EmptyBorder(0, 2, 0, 0));
 		mainSplitPane.setRightComponent(rightPanel);
 
 		becchuuTable = new JTable();
@@ -149,6 +135,7 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		rightPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel becchuuSearchPanel = new JPanel();
+		becchuuSearchPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
 		rightPanel.add(becchuuSearchPanel, BorderLayout.NORTH);
 		GridBagLayout gbl_becchuuSearchPanel = new GridBagLayout();
 		gbl_becchuuSearchPanel.columnWidths = new int[]{103, 42, 28, 42, 28, 30, 28, 97, 73, 91, 0};
@@ -249,19 +236,17 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		rightPanel.add(rightButtonPanel, BorderLayout.SOUTH);
 		rightButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
 		
-		JButton btnAddBecchuu = new JButton();
-		btnAddBecchuu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				btnAddBecchuuMouseClicked(e);
+		JButton btnRefresh = new JButton();
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((BecchuuTableModel)becchuuTable.getModel()).refresh();
 			}
 		});
-		btnAddBecchuu.setIcon(new ImageIcon(BukkenKanri.class.getResource("/resources/icon/icon_plus.png")));
-		rightButtonPanel.add(btnAddBecchuu);
-		
-		JButton btnDeleteBecchuu = new JButton("");
-		btnDeleteBecchuu.setIcon(new ImageIcon(BukkenKanri.class.getResource("/resources/icon/icon_trash.png")));
-		rightButtonPanel.add(btnDeleteBecchuu);
+		btnRefresh.setIcon(new ImageIcon(BukkenKanriForm.class.getResource("/resources/icon/icon-refresh.png")));
+		btnRefresh.setFocusPainted(false);
+		btnRefresh.setContentAreaFilled(false);
+		btnRefresh.setBorderPainted(false);
+		rightButtonPanel.add(btnRefresh);
 
 		JPanel statusPanel = new JPanel();
 		statusPanel.setBorder(null);
@@ -270,6 +255,16 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 
 		lblWelcome = new JLabel("Welcome");
 		statusPanel.add(lblWelcome);
+		
+		JPanel headePanel = new JPanel();
+		headePanel.setBorder(new CompoundBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)), new EmptyBorder(0, 0, 0, 0)));
+		FlowLayout fl_headePanel = (FlowLayout) headePanel.getLayout();
+		fl_headePanel.setAlignment(FlowLayout.LEFT);
+		contentPane.add(headePanel, BorderLayout.NORTH);
+		
+		JLabel label = new JLabel("物件管理");
+		label.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		headePanel.add(label);
 	}
 
 	private void initializeData() {
@@ -307,7 +302,7 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		});
 		
 		becchuuTable.setRowHeight(25);	
-		BecchuuTableModel becchuuTableModel = new BecchuuTableModel(this.becchuuRepository);
+		BecchuuTableModel becchuuTableModel = new BecchuuTableModel();
 		becchuuTable.setModel(becchuuTableModel);
 	}
 
@@ -351,24 +346,16 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		form.setLocationRelativeTo(this);
 		form.showDialog(this);
 	}
-		
-	private void btnAddBecchuuMouseClicked(MouseEvent event){
-		BecchuuDetailsForm form = new BecchuuDetailsForm(new Becchuu());
-		form.setLocationRelativeTo(this);
-		form.showDialog(this);
-	}
 	
 	private void bukkenTableClicked(MouseEvent event)  {
 		if (bukkenTable.getSelectedRow() == -1) return;
 		int col = bukkenTable.getSelectedColumn();
-		if (col != bukkenTable.getColumnCount() - 1) return;		
+		if (col != bukkenTable.getColumnCount() - 1) return;
 		
 		int row = bukkenTable.getSelectedRow();
 		String id = bukkenTable.getValueAt(row, 1).toString();
 		Bukken bukken = bukkenRepository.getBukkenWithID(id);
-		String depsf = bukken.getDepsf().replaceAll("-", "");
-		String link = "http://sv04plemia.osaka.daiwahouse.co.jp/BzkWeb/search.aspx?zwid=" + depsf + "&user=" + Config.UserID;
-		System.out.println(link);
+      String link = bukken.getBecchuuDBURL();
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null) {
 			try {
@@ -383,6 +370,13 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		}
 	}
 
+	private void bukkenTableSelectionChange(ListSelectionEvent e) {
+		int row = bukkenTable.getSelectedRow();
+		String id = bukkenTable.getValueAt(row, 1).toString();
+		Bukken bukken = bukkenRepository.getBukkenWithID(id);
+		loadBecchuuTableWithSelectedBukken(bukken);
+	}
+	
 	private void bukkenTableDoubleClicked(MouseEvent event) {		
 		if (bukkenTable.getSelectedRow() == -1) return;
 		int row = bukkenTable.getSelectedRow();
@@ -395,6 +389,11 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 			form.showDialog(this);
 		}
 	}
+	
+	private void loadBecchuuTableWithSelectedBukken(Bukken bukken) {
+		((BecchuuTableModel)becchuuTable.getModel()).setBukken(bukken);
+	}
+	
 	// begin: search on bukkenTable
 	RowFilter typeFilter;
 	RowFilter textFilter;	
@@ -447,7 +446,7 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BukkenKanri frame = new BukkenKanri();
+					BukkenKanriForm frame = new BukkenKanriForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -463,13 +462,13 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 	/**
 	 * Create the frame.
 	 */
-	public BukkenKanri() {
+	public BukkenKanriForm() {
 		
 		setTitle("別注管理  ― ハノイ支店");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		setMinimumSize(new Dimension(1000, 700));
-//		setExtendedState(JFrame.MAXIMIZED_BOTH); ; 
+	
+		setMinimumSize(new Dimension(850, 700));
+//]]		setExtendedState(JFrame.MAXIMIZED_BOTH); ;
 		
 		
 		createAndSetupGUI();
@@ -477,19 +476,9 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 		loadShouhinTypeCombobox();
 		loadBecchuuTypeCombobox();
 		loadBecchuuEmployeesCombobox();
+		mainSplitPane.setDividerLocation(this.getWidth() / 2);
+		pack();
 		
-		
-		
-		//pack();
-		setBounds(100, 100, 1280, 800);
-		
-	}
-	
-	@Override
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		super.setVisible(b);
-		mainSplitPane.setDividerLocation(0.4);
 	}
 	
 	// BEGIN implements BukkenDetailFormsDelegate--------------------------------------------
@@ -503,14 +492,25 @@ public class BukkenKanri extends JFrame implements BukkenDetailsFormDelegate, Be
 			bukkenTableModel.updateBukken(bukken, bukkenTable.getSelectedRow());
 			
 		}
-		
-	}
-	// END implements BukkenDetailFormsDelegate--------------------------------------------
 
-	@Override
-	public void submitData(BecchuuDetailsForm becchuuDetailsForm, Becchuu becchuu) {
-		// TODO Auto-generated method stub
-		
+
 	}
-	
+
+   @Override
+   public void submitData(BecchuuDetailsForm becchuuDetailsForm, Becchuu becchuu) {
+
+   }
+
+   @Override
+   public void movePrevious(BecchuuDetailsForm becchuuDetailsForm) {
+
+   }
+
+   @Override
+   public void moveNext(BecchuuDetailsForm becchuuDetailsForm) {
+
+   }
+
+   // END implements BukkenDetailFormsDelegate--------------------------------------------
+
 }
