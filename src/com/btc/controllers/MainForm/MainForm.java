@@ -7,6 +7,7 @@ package com.btc.controllers.MainForm;
 import com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm;
 import com.btc.controllers.BecchuuKanriForm.BecchuuKanriForm;
 import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
+import com.btc.controllers.ChangePasswordForm.ChangePasswordForm;
 import com.btc.supports.Config;
 
 import javax.swing.*;
@@ -15,7 +16,8 @@ import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
-import java.util.*;
+import java.util.LinkedList;
+import java.awt.event.ActionListener;
 
 /**
  * @author Thanh Chung
@@ -27,6 +29,7 @@ public class MainForm extends JFrame {
    private JInternalFrame bukkenKanriForm;
 
    private java.util.List<JInternalFrame> internalFrames = new LinkedList<>();
+
    public MainForm() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       initComponents();
@@ -53,7 +56,7 @@ public class MainForm extends JFrame {
             super.internalFrameClosed(e);
          }
       });
-      return  jInternalFrame;
+      return jInternalFrame;
    }
 
    private void openNewWinDow(JInternalFrame jInternalFrame) {
@@ -149,6 +152,15 @@ public class MainForm extends JFrame {
             menuItem4.setText("\u30a8\u30c3\u30af\u30b9\u30dd\u30fc\u30c8");
             menu1.add(menuItem4);
             menu1.addSeparator();
+            
+            JMenuItem menuItem = new JMenuItem("パスワード変更変更");
+            menuItem.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		ChangePasswordForm changePasswordForm = new ChangePasswordForm();
+            		changePasswordForm.setVisible(true);
+            	}
+            });
+            menu1.add(menuItem);
 
             //---- menuItem1 ----
             menuItem1.setText("\u7d42\u4e86");
@@ -189,9 +201,9 @@ public class MainForm extends JFrame {
          btnBukkenKanri.setBorderPainted(false);
          btnBukkenKanri.setFocusPainted(false);
          btnBukkenKanri.addActionListener(e -> {
-			fileMenuActionPerformed(e);
-			fileMenuActionPerformed(e);
-		});
+            fileMenuActionPerformed(e);
+            fileMenuActionPerformed(e);
+         });
          toolBar1.add(btnBukkenKanri);
       }
       contentPane.add(toolBar1, BorderLayout.NORTH);
@@ -201,7 +213,7 @@ public class MainForm extends JFrame {
          desktopPane.setDoubleBuffered(true);
       }
       contentPane.add(desktopPane, BorderLayout.CENTER);
-      pack();
+      //pack();
       setLocationRelativeTo(getOwner());
       // JFormDesigner - End of component initialization  //GEN-END:initComponents
    }

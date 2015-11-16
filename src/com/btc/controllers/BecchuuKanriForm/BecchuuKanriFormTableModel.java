@@ -73,6 +73,7 @@ public class BecchuuKanriFormTableModel extends AbstractTableModel {
    @Override
    public Object getValueAt(int row, int col) {
       Becchuu becchuu = data.get(row);
+
       try {
          switch (col) {
             case 0: // 別注記号

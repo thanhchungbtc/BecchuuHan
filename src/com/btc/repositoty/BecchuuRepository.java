@@ -42,14 +42,13 @@ public class BecchuuRepository {
 
    public List<Becchuu> getBecchuuOfBukken(String koujibangou) {
       List<Becchuu> becchuus = new LinkedList<>();
-      for (Becchuu becchuu: getListWithRefresh(true)) {
+      for (Becchuu becchuu : getListWithRefresh(true)) {
          if (becchuu.getKoujibangou().equals(koujibangou)) {
             becchuus.add(becchuu);
          }
       }
       return becchuus;
    }
-
 
    public List<Becchuu> getListWithRefresh(boolean refresh) {
       if (data != null) {
@@ -119,7 +118,7 @@ public class BecchuuRepository {
 
          connection.close();
          connection = null;
-        // data.add(becchuu);
+         // data.add(becchuu);
          return becchuu;
       } catch (ClassNotFoundException ex) {
          Logger.getLogger(BukkenRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,7 +127,7 @@ public class BecchuuRepository {
    }
 
    public Becchuu update(Becchuu becchuu) throws SQLException, BecchuuExistsException {
-      if (!checkBeforeUpdate(becchuu)) throw new BecchuuExistsException("This becchuu is already exists!");
+//      if (!checkBeforeUpdate(becchuu)) throw new BecchuuExistsException("This becchuu is already exists!");
 
       String sql = "UPDATE Becchuu SET becchuu_kigou = ?, becchuu_parameter = ?, becchuu_naiyou = ?, motozu_kigou = ?, motozu_parameter = ?, "
             + " sakuseibi = ?, sakusei_sha_id = ?, kenshuu_sha_id = ?, misu = ?, becchuu_maisu = ?, "

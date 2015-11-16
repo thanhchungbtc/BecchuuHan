@@ -2,15 +2,11 @@ package com.btc.controllers.BecchuuKanriForm;
 
 import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsDelegate;
 import com.btc.controllers.BecchuuDetailsForm.BecchuuDetailsForm;
-import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
 import com.btc.model.Becchuu;
 import com.btc.model.BecchuuType;
-import com.btc.model.Bukken;
 import com.btc.repositoty.BecchuuRepository;
-import com.btc.repositoty.BukkenRepository;
 import com.btc.repositoty.CommonRepository;
 import com.btc.supports.Config;
-import com.btc.supports.DateLabelFormatter;
 import com.btc.supports.Helpers;
 
 import javax.swing.*;
@@ -19,20 +15,13 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
@@ -90,21 +79,15 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
             if (e.getClickCount() == 2) {
                becchuuTableDoubleClicked(e);
             } else if (e.getClickCount() == 1) {
-            	becchuuTableSingleClicked(e);
+               becchuuTableSingleClicked(e);
             }
          }
       });
 
       rowSorter = new TableRowSorter<TableModel>(becchuuTable.getModel());
       becchuuTable.setRowSorter(rowSorter);
-
-      rowSorter.setComparator(6, new Comparator<String>() {
-         @Override
-         public int compare(String s1, String s2) {
-            return s1.compareTo(s2);
-         }
-      });
-
+      rowSorter.toggleSortOrder(4);
+      rowSorter.toggleSortOrder(4);
    }
 
    private void initializeData() {
@@ -143,7 +126,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
             textFilter = null;
             sakuseiBiFilter = null;
             rowSorter.setRowFilter(null);
-            
+
          }
       });
       ActionListener comboBoxActionListener = new ActionListener() {
@@ -168,7 +151,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       ActionListener checkBoxActionLister = new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-        	 checkBoxActionPerformed(e);
+            checkBoxActionPerformed(e);
          }
       };
       chkSakuseiZumi.addActionListener(checkBoxActionLister);
@@ -190,14 +173,14 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
          form.showDialog(this);
       }
    }
-   
-   private void becchuuTableSingleClicked(MouseEvent event)  {
-		if (becchuuTable.getSelectedRow() == -1) return;
-		int col = becchuuTable.getSelectedColumn();
-		if (col != becchuuTable.getColumnCount() - 1) return;		
-		
-		int row = becchuuTable.getSelectedRow();
-		String koujibangou = becchuuTable.getValueAt(row, 2).toString();
+
+   private void becchuuTableSingleClicked(MouseEvent event) {
+      if (becchuuTable.getSelectedRow() == -1) return;
+      int col = becchuuTable.getSelectedColumn();
+      if (col != becchuuTable.getColumnCount() - 1) return;
+
+      int row = becchuuTable.getSelectedRow();
+      String koujibangou = becchuuTable.getValueAt(row, 2).toString();
       String becchuuKigou = becchuuTable.getValueAt(row, 0).toString();
       Becchuu becchuu = becchuuRepository.getBecchuuByID(koujibangou, becchuuKigou);
 
@@ -205,20 +188,20 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
          return;
       }
 
-		String link = becchuu.getBecchuuDBURL();
-		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		if (desktop != null) {
-			try {
-				desktop.browse(new URI(link));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+      String link = becchuu.getBecchuuDBURL();
+      Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+      if (desktop != null) {
+         try {
+            desktop.browse(new URI(link));
+         } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
+      }
+   }
 
    // BEGIN: search on becchuu
    LinkedList<RowFilter<TableModel, Object>> rowFilters = new LinkedList<>();
@@ -229,6 +212,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
    RowFilter sakuseiStatusFilter;
    RowFilter kenshuuStatusFilter;
    RowFilter sakuseiBiFilter;
+
    private void filterBecchuuTable() {
       rowFilters.clear();
       if (textFilter != null) {
@@ -249,8 +233,8 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       if (kenshuuStatusFilter != null) {
          rowFilters.add(kenshuuStatusFilter);
       }
-      if (sakuseiBiFilter != null) 
-    	  rowFilters.add(sakuseiBiFilter);
+      if (sakuseiBiFilter != null)
+         rowFilters.add(sakuseiBiFilter);
       rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
       // remake status label
       int maisu = 0;
@@ -263,28 +247,29 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
             continue;
          }
       }
-      lblStatus.setText("別注枚数：" + maisu + " - " + "ミス：" + misu);
+      float percentage = (float)(maisu - misu) * 100 / maisu;
+      lblStatus.setText("別注枚数：" + maisu + " - " + "ミス：" + misu + "良質：" + percentage + "％");
    }
 
    private void searchTextBoxKeyReleased(KeyEvent e) {
-	   
-	   if (!(e.getSource() instanceof JTextField)) return;
-	   JTextField source = (JTextField)e.getSource();
-	   if (source == txtBecchuuSearch) {
-		   if (source.getText().trim().length() == 0) {
-			   textFilter = null;
-		   } else {
-			   String regex = Helpers.convertGlobToRegExCaseInsensitive(source.getText());
-			   textFilter = RowFilter.regexFilter(regex, 0, 2, 3, 4, becchuuTable.getColumnCount() - 1);
-		   }
-	   } else if (source == txtSakuseiBI) {
-		   if (source.getText().trim().length() == 0) {
-			   sakuseiBiFilter = null;
-		   } else {
-			   String regex = Helpers.convertGlobToRegExCaseInsensitive(source.getText());
-			   sakuseiBiFilter = RowFilter.regexFilter(regex, becchuuTable.getColumnCount() - 2);
-		   }
-	   } 
+
+      if (!(e.getSource() instanceof JTextField)) return;
+      JTextField source = (JTextField) e.getSource();
+      if (source == txtBecchuuSearch) {
+         if (source.getText().trim().length() == 0) {
+            textFilter = null;
+         } else {
+            String regex = Helpers.convertGlobToRegExCaseInsensitive(source.getText());
+            textFilter = RowFilter.regexFilter(regex, 0, 2, 3, 4, becchuuTable.getColumnCount() - 1);
+         }
+      } else if (source == txtSakuseiBI) {
+         if (source.getText().trim().length() == 0) {
+            sakuseiBiFilter = null;
+         } else {
+            String regex = Helpers.convertGlobToRegExCaseInsensitive(source.getText());
+            sakuseiBiFilter = RowFilter.regexFilter(regex, becchuuTable.getColumnCount() - 2);
+         }
+      }
       filterBecchuuTable();
    }
 
@@ -302,7 +287,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
          }
 
          kenshuuStatusFilter = source.isSelected() ? null : RowFilter.regexFilter(shoriZumi, 10);
-      } 
+      }
       filterBecchuuTable();
    }
 
@@ -457,7 +442,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       gbc_chkKenshuZumi.gridx = 9;
       gbc_chkKenshuZumi.gridy = 0;
       becchuuSearchPanel.add(chkKenshuZumi, gbc_chkKenshuZumi);
-      
+
       lblNewLabel_4 = new JLabel("作成日");
       GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
       gbc_lblNewLabel_4.insets = new Insets(0, 0, 0, 5);
@@ -465,13 +450,13 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       gbc_lblNewLabel_4.gridx = 10;
       gbc_lblNewLabel_4.gridy = 0;
       becchuuSearchPanel.add(lblNewLabel_4, gbc_lblNewLabel_4);
-      
+
       txtSakuseiBI = new JTextField();
       txtSakuseiBI.addKeyListener(new KeyAdapter() {
-      	@Override
-      	public void keyReleased(KeyEvent e) {
-      		searchTextBoxKeyReleased(e);
-      	}
+         @Override
+         public void keyReleased(KeyEvent e) {
+            searchTextBoxKeyReleased(e);
+         }
       });
       GridBagConstraints gbc_txtSakuseiBI = new GridBagConstraints();
       gbc_txtSakuseiBI.fill = GridBagConstraints.HORIZONTAL;
@@ -480,7 +465,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       becchuuSearchPanel.add(txtSakuseiBI, gbc_txtSakuseiBI);
       txtSakuseiBI.setColumns(10);
 
-      
+
       becchuuTable = new JTable();
       becchuuTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       becchuuTable.setModel(new DefaultTableModel(null, columnNames1));

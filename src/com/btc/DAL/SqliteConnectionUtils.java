@@ -7,24 +7,24 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SqliteConnectionUtils {
-	public static Connection getConnection() throws SQLException, ClassNotFoundException {
-		String hostName = "";
+   public static Connection getConnection() throws SQLException, ClassNotFoundException {
+      String hostName = "";
 
-//		 String dbName = "//Vn130708//別注班//database//Bukken.db";
-		String dbName = "data//Bukken.db";
-		String userName = "";
-		String password = "";
+		 String dbName = "//Vn130708//別注班//database//Bukken.db";
+//      String dbName = "data//Bukken.db";
+      String userName = "";
+      String password = "";
 
-		return getConnectionWith(hostName, dbName, userName, password);
-	}
+      return getConnectionWith(hostName, dbName, userName, password);
+   }
 
-	public static Connection getConnectionWith(String hostName, String dbName, 
-			String userName, String password) throws SQLException, ClassNotFoundException {
-		Class.forName("org.sqlite.JDBC");
-		String url = "jdbc:sqlite:" + dbName;
-		SQLiteConfig config = new SQLiteConfig();
-		//config.enforceForeignKeys(true);
-		Connection connection = DriverManager.getConnection(url, config.toProperties());
-		return connection;
-	}
+   public static Connection getConnectionWith(String hostName, String dbName,
+                                              String userName, String password) throws SQLException, ClassNotFoundException {
+      Class.forName("org.sqlite.JDBC");
+      String url = "jdbc:sqlite:" + dbName;
+      SQLiteConfig config = new SQLiteConfig();
+      //config.enforceForeignKeys(true);
+      Connection connection = DriverManager.getConnection(url, config.toProperties());
+      return connection;
+   }
 }

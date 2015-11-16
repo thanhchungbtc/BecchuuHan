@@ -39,7 +39,6 @@ public class BecchuuDetailsForm extends JDialog {
    private JLabel txtIraisha;
    private JLabel ltxtIraiBi;
    private JLabel txtNouki;
-   private JLabel txtKoujibangou;
    private JLabel txtBukkenMei;
    private JLabel txtShiten;
    private JLabel txtShouhinType;
@@ -53,6 +52,7 @@ public class BecchuuDetailsForm extends JDialog {
    private JComboBox cbsakuSeiSha;
    private JComboBox cbBunrui;
    private JTextField txtHinCode;
+   private JTextField txtKoujibangou;
 
    private void loadBecchuuEmployeesCombobox() {
       DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
@@ -82,12 +82,12 @@ public class BecchuuDetailsForm extends JDialog {
       txtBecchuuNaiyou.setText(becchuuToEdit.getBecchuuNaiyou());
       txtMotozuKigou.setText(becchuuToEdit.getMotozuKigou());
       txtMotozuParameter.setText(becchuuToEdit.getMotozuParameter());
-      txtIraisha.setText(becchuuToEdit.getIraiShaID());
+      txtIraisha.setText(becchuuToEdit.getIraiSha().getName());
       ltxtIraiBi.setText(Helpers.stringFromDate(becchuuToEdit.getIraibi()));
-
+      txtKoujibangou.setText(becchuuToEdit.getKoujibangou());
       Bukken bukken = becchuuToEdit.getBukken();
+
       txtNouki.setText(Helpers.stringFromDate(bukken.getNouki()));
-      txtKoujibangou.setText(bukken.getId());
 
       String bukkenMei = bukken.getName();
       if (bukken.getYobikata() != null) {
@@ -416,14 +416,18 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_5.gridx = 0;
       gbc_lblNewLabel_5.gridy = 1;
       bukkenPanel.add(lblNewLabel_5, gbc_lblNewLabel_5);
-
-      txtKoujibangou = new JLabel("New label");
+      
+      txtKoujibangou = new JTextField();
+      txtKoujibangou.setBackground(new Color(0, 0, 0, 0));
+      txtKoujibangou.setBorder(null);
+      txtKoujibangou.setEditable(false);
       GridBagConstraints gbc_txtKoujibangou = new GridBagConstraints();
-      gbc_txtKoujibangou.fill = GridBagConstraints.HORIZONTAL;
       gbc_txtKoujibangou.insets = new Insets(0, 0, 5, 0);
+      gbc_txtKoujibangou.fill = GridBagConstraints.HORIZONTAL;
       gbc_txtKoujibangou.gridx = 1;
       gbc_txtKoujibangou.gridy = 1;
       bukkenPanel.add(txtKoujibangou, gbc_txtKoujibangou);
+      txtKoujibangou.setColumns(10);
 
       JLabel lblNewLabel_6 = new JLabel("施主名：");
       GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
@@ -620,7 +624,7 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_cbBunrui.gridx = 1;
       gbc_cbBunrui.gridy = 13;
       bukkenPanel.add(cbBunrui, gbc_cbBunrui);
-      
+
       JLabel lblNewLabel_18 = new JLabel("品コード");
       GridBagConstraints gbc_lblNewLabel_18 = new GridBagConstraints();
       gbc_lblNewLabel_18.anchor = GridBagConstraints.WEST;
@@ -628,7 +632,7 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_18.gridx = 0;
       gbc_lblNewLabel_18.gridy = 14;
       bukkenPanel.add(lblNewLabel_18, gbc_lblNewLabel_18);
-      
+
       txtHinCode = new JTextField();
       GridBagConstraints gbc_txtHinCode = new GridBagConstraints();
       gbc_txtHinCode.insets = new Insets(0, 0, 5, 0);
@@ -691,9 +695,9 @@ public class BecchuuDetailsForm extends JDialog {
 
       JButton btnNewButton = new JButton("");
       btnNewButton.addActionListener(new ActionListener() {
-      	public void actionPerformed(ActionEvent e) {
-      		delegate.movePrevious(BecchuuDetailsForm.this);
-      	}
+         public void actionPerformed(ActionEvent e) {
+            delegate.movePrevious(BecchuuDetailsForm.this);
+         }
       });
       btnNewButton.setFocusPainted(false);
       btnNewButton.setContentAreaFilled(false);
@@ -703,9 +707,9 @@ public class BecchuuDetailsForm extends JDialog {
 
       JButton button = new JButton("");
       button.addActionListener(new ActionListener() {
-      	public void actionPerformed(ActionEvent e) {
-      		delegate.moveNext(BecchuuDetailsForm.this);
-      	}
+         public void actionPerformed(ActionEvent e) {
+            delegate.moveNext(BecchuuDetailsForm.this);
+         }
       });
       button.setIcon(new ImageIcon(BecchuuDetailsForm.class.getResource("/resources/icon/icon-forward.png")));
       button.setFocusPainted(false);
