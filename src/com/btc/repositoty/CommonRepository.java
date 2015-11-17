@@ -108,6 +108,16 @@ public class CommonRepository {
       }
       return null;
    }
+   
+   public static Employee getEmployeeByID(String employeeID) {
+	   List<Employee> employees = CommonRepository.getEmployees();
+	      for (Employee employee : employees) {
+	         if (employee.getId().equals(employeeID)) {
+	            return employee;
+	         }
+	      }
+	      return null;
+   }
 
    public static BecchuuStatus getBecchuuStatusWithID(int statusID) {
       for (BecchuuStatus status : _status) {

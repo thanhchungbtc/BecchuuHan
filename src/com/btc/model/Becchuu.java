@@ -58,7 +58,7 @@ public class Becchuu {
    private BecchuuStatus sakuseiStatus;
 
    public Employee getIraiSha() {
-      if (iraiSha == null) this.iraiSha = CommonRepository.getBecchuuEmployeeByID(iraiShaID);
+      if (iraiSha == null) this.iraiSha = CommonRepository.getEmployeeByID(iraiShaID);
       return iraiSha;
    }
 
@@ -268,7 +268,6 @@ public class Becchuu {
    public String getBecchuuDBURL() {
       Bukken bukken = this.getBukken();
       String depsf = bukken.getDepsf().replaceAll("-", "");
-      return "http://sv04plemia.osaka.daiwahouse.co.jp/BzkWeb/search.aspx?zwid=" + depsf + "&hin_cd=" + this
-            .getHinCode();
+      return "http://172.18.171.210/BzkWeb/download/ZumenDL.aspx?type=0&item=" + depsf.trim() + "," + this.getHinCode().trim();      
    }
 }

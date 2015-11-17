@@ -55,10 +55,10 @@ public class BukkenDetailsForm extends JDialog {
          calendar.setTime(new Date());
          // XEVO
          if (cbType.getSelectedIndex() == 0) {
-            calendar.add(Calendar.DATE, 2);
+            calendar.add(Calendar.DATE, 1);
             //　Σ
          } else if (cbType.getSelectedIndex() == 1) {
-            calendar.add(Calendar.DATE, 3);
+            calendar.add(Calendar.DATE, 2);
          }
          dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
 
@@ -113,6 +113,7 @@ public class BukkenDetailsForm extends JDialog {
 
       if (bukken == null) {
          bukkenToSubmit = new Bukken();
+         txtID.setEditable(true);
          insertMode = true;
       } else {
          bukkenToSubmit = bukken;
@@ -173,10 +174,10 @@ public class BukkenDetailsForm extends JDialog {
             calendar.setTime(new Date());
             // XEVO
             if (cbType.getSelectedIndex() == 0) {
-               calendar.add(Calendar.DATE, 2);
+               calendar.add(Calendar.DATE, 1);
                //　Σ
             } else if (cbType.getSelectedIndex() == 1) {
-               calendar.add(Calendar.DATE, 3);
+               calendar.add(Calendar.DATE, 2);
             }
             dpkNouki.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
 

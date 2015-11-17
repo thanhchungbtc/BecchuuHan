@@ -8,7 +8,7 @@ public class Config {
    public static String HonShaBangou = "00357518";
    public static String UserID;
    public static String UserName;
-   public static String RoleID;
+   public static String RoleID = "IP";
    public static String Password;
    public static void setLookAndField() {
       try {

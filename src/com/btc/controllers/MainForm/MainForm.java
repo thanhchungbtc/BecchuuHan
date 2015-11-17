@@ -33,6 +33,8 @@ public class MainForm extends JFrame {
    public MainForm() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       initComponents();
+      ActionEvent event = new ActionEvent(mnBecchuuKanriForm, 1, "");
+      fileMenuActionPerformed(event);
    }
 
    private JInternalFrame createJInternalFrameFromFrame(JFrame frame) {
@@ -81,20 +83,20 @@ public class MainForm extends JFrame {
    private void fileMenuActionPerformed(ActionEvent e) {
       Object source = e.getSource();
 
-      if (source == btnBecchuuKanri || source == mnBecchuuKanriForm) {
+      if (source == mnBecchuuKanriForm) {
          if (becchuuKanriForm == null) {
             becchuuKanriForm = createJInternalFrameFromFrame(new BecchuuKanriForm());
             this.desktopPane.add(becchuuKanriForm);
          }
          openNewWinDow(becchuuKanriForm);
 
-      } else if (source == btnBecchuuIrai || source == mnBecchuuIrai) {
+      } else if (source == mnBecchuuIrai) {
          if (becchuuIraiForm == null) {
             becchuuIraiForm = createJInternalFrameFromFrame(new BecchuuIraiForm());
             this.desktopPane.add(becchuuIraiForm);
          }
          openNewWinDow(becchuuIraiForm);
-      } else if (source == btnBukkenKanri || source == mnBukkenKanri) {
+      } else if (source == mnBukkenKanri) {
          if (bukkenKanriForm == null) {
             bukkenKanriForm = createJInternalFrameFromFrame(new BukkenKanriForm());
             this.desktopPane.add(bukkenKanriForm);
@@ -105,7 +107,7 @@ public class MainForm extends JFrame {
 
    private void initComponents() {
       // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-      // Generated using JFormDesigner Evaluation license - Thanh Chung
+      // Generated using JFormDesigner Evaluation license - thanh chung
       menuBar1 = new JMenuBar();
       menu1 = new JMenu();
       mnBecchuuKanriForm = new JMenuItem();
@@ -114,10 +116,6 @@ public class MainForm extends JFrame {
       menuItem4 = new JMenuItem();
       menuItem1 = new JMenuItem();
       menu2 = new JMenu();
-      toolBar1 = new JToolBar();
-      btnBecchuuKanri = new JButton();
-      btnBecchuuIrai = new JButton();
-      btnBukkenKanri = new JButton();
       desktopPane = new JDesktopPane();
 
       //======== this ========
@@ -152,15 +150,6 @@ public class MainForm extends JFrame {
             menuItem4.setText("\u30a8\u30c3\u30af\u30b9\u30dd\u30fc\u30c8");
             menu1.add(menuItem4);
             menu1.addSeparator();
-            
-            JMenuItem menuItem = new JMenuItem("パスワード変更変更");
-            menuItem.addActionListener(new ActionListener() {
-            	public void actionPerformed(ActionEvent e) {
-            		ChangePasswordForm changePasswordForm = new ChangePasswordForm();
-            		changePasswordForm.setVisible(true);
-            	}
-            });
-            menu1.add(menuItem);
 
             //---- menuItem1 ----
             menuItem1.setText("\u7d42\u4e86");
@@ -176,50 +165,18 @@ public class MainForm extends JFrame {
       }
       setJMenuBar(menuBar1);
 
-      //======== toolBar1 ========
-      {
-         toolBar1.setFloatable(false);
-         toolBar1.setMaximumSize(new Dimension(68, 18));
-         toolBar1.setMinimumSize(new Dimension(68, 18));
-
-         //---- btnBecchuuKanri ----
-         btnBecchuuKanri.setIcon(new ImageIcon(getClass().getResource("/resources/icon/toolbars/icon-toolbar-becchuukanri.png")));
-         btnBecchuuKanri.setBorderPainted(false);
-         btnBecchuuKanri.setFocusPainted(false);
-         btnBecchuuKanri.addActionListener(e -> fileMenuActionPerformed(e));
-         toolBar1.add(btnBecchuuKanri);
-
-         //---- btnBecchuuIrai ----
-         btnBecchuuIrai.setIcon(new ImageIcon(getClass().getResource("/resources/icon/toolbars/icon-toolbar-becchuukanri.png")));
-         btnBecchuuIrai.setBorderPainted(false);
-         btnBecchuuIrai.setFocusPainted(false);
-         btnBecchuuIrai.addActionListener(e -> fileMenuActionPerformed(e));
-         toolBar1.add(btnBecchuuIrai);
-
-         //---- btnBukkenKanri ----
-         btnBukkenKanri.setIcon(new ImageIcon(getClass().getResource("/resources/icon/toolbars/icon-toolbar-becchuukanri.png")));
-         btnBukkenKanri.setBorderPainted(false);
-         btnBukkenKanri.setFocusPainted(false);
-         btnBukkenKanri.addActionListener(e -> {
-            fileMenuActionPerformed(e);
-            fileMenuActionPerformed(e);
-         });
-         toolBar1.add(btnBukkenKanri);
-      }
-      contentPane.add(toolBar1, BorderLayout.NORTH);
-
       //======== desktopPane ========
       {
          desktopPane.setDoubleBuffered(true);
       }
       contentPane.add(desktopPane, BorderLayout.CENTER);
-      //pack();
+      pack();
       setLocationRelativeTo(getOwner());
       // JFormDesigner - End of component initialization  //GEN-END:initComponents
    }
 
    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-   // Generated using JFormDesigner Evaluation license - Thanh Chung
+   // Generated using JFormDesigner Evaluation license - thanh chung
    private JMenuBar menuBar1;
    private JMenu menu1;
    private JMenuItem mnBecchuuKanriForm;
@@ -228,10 +185,6 @@ public class MainForm extends JFrame {
    private JMenuItem menuItem4;
    private JMenuItem menuItem1;
    private JMenu menu2;
-   private JToolBar toolBar1;
-   private JButton btnBecchuuKanri;
-   private JButton btnBecchuuIrai;
-   private JButton btnBukkenKanri;
    private JDesktopPane desktopPane;
    // JFormDesigner - End of variables declaration  //GEN-END:variables
 

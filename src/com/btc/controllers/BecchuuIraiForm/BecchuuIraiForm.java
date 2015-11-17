@@ -135,14 +135,12 @@ public class BecchuuIraiForm extends JFrame {
    // END handle Events
 
    private void sendMail() throws MessagingException {
-      //      String toAddress = "kimhongngoc@daiwahouse.vn; phonguyetanh@daiwahouse.vn;buithanhchung@daiwahouse.vn";
-      String toAddress = "thanhchungbtc@gmail.com";
       String subject = "別注依頼：" + txtKoujibangou.getText() + " - " + txtBukkenJouhou.getText();
-      String message = "別注依頼を入力しました。" +
-            "<br />別注記号：" + txtBecchuuKigou.getText() + "" +
-            "<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
-            "<br />依頼者：" + txtIraiSha.getText() + "" +
-            "<br />依頼日： " + txtIraibi.getText();
+      String message = "別注依頼しました。" +
+          "<br />別注記号：" + txtBecchuuKigou.getText() + "" +
+          "<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
+          "<br />依頼者：" + txtIraiSha.getText() + "" +
+          "<br />依頼日： " + txtIraibi.getText();
       Properties defaultProps = new Properties();
       defaultProps.setProperty("mail.smtp.host", "smtp.gmail.com");
       defaultProps.setProperty("mail.smtp.port", "587");
@@ -168,30 +166,26 @@ public class BecchuuIraiForm extends JFrame {
       Message msg = new MimeMessage(session);
 
       msg.setFrom(new InternetAddress(userName));
-      InternetAddress[] toAddresses = {
-            new InternetAddress("buithanhchung@daiwahouse.vn"),
-            new InternetAddress("phonguyetanh@daiwahouse.vn"),
-            new InternetAddress("kimhongngoc@daiwahouse.vn")
-      };
-      msg.setRecipients(Message.RecipientType.TO, toAddresses);
+//		 InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
+//		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toAddress));
+      msg.addRecipients(Message.RecipientType.CC, InternetAddress.parse("kimhongngoc@daiwahouse.vn, phonguyetanh@daiwahouse.vn,buithanhchung@daiwahouse.vn"));
       msg.setSubject(subject);
       msg.setSentDate(new Date());
 
       // creates message part
       MimeBodyPart messageBodyPart = new MimeBodyPart();
-      messageBodyPart.setContent(message, "text/html; charset=utf-8");
+      messageBodyPart.setContent(message, "text/html; charset=Shift_JIS");
 
       // creates multi-part
       Multipart multipart = new MimeMultipart();
       multipart.addBodyPart(messageBodyPart);
 
       // sets the multi-part as e-mail's content
-      msg.setContent(multipart, "text/html; charset=utf-8");
+      msg.setContent(multipart, "text/html; charset=Shift_JIS");
 
       // sends the e-mail
 
       Transport.send(msg);
-
    }
 
 
