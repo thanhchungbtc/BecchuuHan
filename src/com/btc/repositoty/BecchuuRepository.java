@@ -58,7 +58,7 @@ public class BecchuuRepository {
 
       data = new ArrayList<Becchuu>();
       try {
-         ResultSet rs = ConnectionUtils.executeQuery("SELECT * FROM Becchuu");
+         ResultSet rs = ConnectionUtils.executeQuery("SELECT * FROM Becchuu ORDER BY id DESC");
          while (rs.next()) {
             Becchuu becchuu = new Becchuu();
             int varNumber = 1;

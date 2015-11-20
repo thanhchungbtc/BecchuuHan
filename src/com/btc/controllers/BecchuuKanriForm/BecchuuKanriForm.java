@@ -85,9 +85,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       });
 
       rowSorter = new TableRowSorter<TableModel>(becchuuTable.getModel());
-      becchuuTable.setRowSorter(rowSorter);
-      rowSorter.toggleSortOrder(4);
-      rowSorter.toggleSortOrder(4);
+      becchuuTable.setRowSorter(rowSorter);      
    }
 
    private void initializeData() {
@@ -191,7 +189,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       String link = becchuu.getBecchuuDBURL();
       Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
       if (desktop != null) {
-         try {
+         try {        	 
             desktop.browse(new URI(link));
          } catch (IOException e) {
             // TODO Auto-generated catch block

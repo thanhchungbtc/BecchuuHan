@@ -8,6 +8,7 @@ import com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm;
 import com.btc.controllers.BecchuuKanriForm.BecchuuKanriForm;
 import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
 import com.btc.controllers.ChangePasswordForm.ChangePasswordForm;
+import com.btc.controllers.EmployeeManagementForm.EmployeeViewForm;
 import com.btc.supports.Config;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class MainForm extends JFrame {
    private JInternalFrame becchuuKanriForm;
    private JInternalFrame becchuuIraiForm;
    private JInternalFrame bukkenKanriForm;
+   private JInternalFrame shainKanriForm;
 
    private java.util.List<JInternalFrame> internalFrames = new LinkedList<>();
 
@@ -100,8 +102,14 @@ public class MainForm extends JFrame {
          if (bukkenKanriForm == null) {
             bukkenKanriForm = createJInternalFrameFromFrame(new BukkenKanriForm());
             this.desktopPane.add(bukkenKanriForm);
-         }
+         } 
          openNewWinDow(bukkenKanriForm);
+      } else if (source == mnShain) {
+    	  if (shainKanriForm == null) {
+    		  shainKanriForm = createJInternalFrameFromFrame(new EmployeeViewForm());
+              this.desktopPane.add(shainKanriForm);
+           } 
+           openNewWinDow(shainKanriForm);
       }
    }
 
@@ -149,6 +157,14 @@ public class MainForm extends JFrame {
             //---- menuItem4 ----
             menuItem4.setText("\u30a8\u30c3\u30af\u30b9\u30dd\u30fc\u30c8");
             menu1.add(menuItem4);
+            
+            mnShain = new JMenuItem("社員");
+            mnShain.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent arg0) {
+            		fileMenuActionPerformed(arg0);
+            	}
+            });
+            menu1.add(mnShain);
             menu1.addSeparator();
 
             //---- menuItem1 ----
@@ -161,6 +177,9 @@ public class MainForm extends JFrame {
          {
             menu2.setText("\u30d8\u30eb\u30d7");
          }
+         
+         JMenu mnNewMenu = new JMenu("統計");
+         menuBar1.add(mnNewMenu);
          menuBar1.add(menu2);
       }
       setJMenuBar(menuBar1);
@@ -186,6 +205,7 @@ public class MainForm extends JFrame {
    private JMenuItem menuItem1;
    private JMenu menu2;
    private JDesktopPane desktopPane;
+   private JMenuItem mnShain;
    // JFormDesigner - End of variables declaration  //GEN-END:variables
 
    public static void main(String[] args) {
