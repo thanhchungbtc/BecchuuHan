@@ -7,12 +7,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1717f555-2c33-441a-bfba-ece333b160c7" name="Default" comment="1. Update MDI Main Form&#10;2. All functions on search becchuu complete">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/Bukken.db" afterPath="$PROJECT_DIR$/data/Bukken.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BecchuuHan.iml" afterPath="$PROJECT_DIR$/BecchuuHan.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/DAL/SqliteConnectionUtils.java" afterPath="$PROJECT_DIR$/src/com/btc/DAL/SqliteConnectionUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsForm.java" afterPath="$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsForm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java" afterPath="$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java" afterPath="$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java" afterPath="$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java" afterPath="$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.java" afterPath="$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.jfd" afterPath="$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.jfd" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/model/Becchuu.java" afterPath="$PROJECT_DIR$/src/com/btc/model/Becchuu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/model/Bukken.java" afterPath="$PROJECT_DIR$/src/com/btc/model/Bukken.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/repositoty/BecchuuRepository.java" afterPath="$PROJECT_DIR$/src/com/btc/repositoty/BecchuuRepository.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java" afterPath="$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/supports/Config.java" afterPath="$PROJECT_DIR$/src/com/btc/supports/Config.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/btc/viewModel/BecchuuTableModel.java" afterPath="$PROJECT_DIR$/src/com/btc/viewModel/BecchuuTableModel.java" />
     </list>
     <ignored path="BecchuuHan.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,71 +45,100 @@
     <favorites_list name="BecchuuHan" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="LoginForm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="60" column="7" selection-start-line="60" selection-start-column="7" selection-end-line="60" selection-end-column="7" />
-              <folding>
-                <marker date="1447723016527" expanded="false" signature="2247:5290" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1447723016527" expanded="false" signature="5300:5777" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BecchuuIraiForm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="187" column="26" selection-start-line="187" selection-start-column="26" selection-end-line="187" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainForm.jfd" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.jfd">
-          <provider selected="true" editor-type-id="JFormDesigner">
-            <state />
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="MainForm.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="96" column="17" selection-start-line="96" selection-start-column="17" selection-end-line="96" selection-end-column="17" />
+            <state vertical-scroll-proportion="1.292">
+              <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
               <folding>
-                <element signature="docComment;class#MainForm#0" expanded="false" />
-                <element signature="method#createJInternalFrameFromFrame#0;class#MainForm#0" expanded="false" />
-                <element signature="class#1425:1898" expanded="false" />
-                <element signature="method#internalFrameClosed#0;class#1425:1898" expanded="false" />
-                <element signature="e#3446#3533#0" expanded="false" />
-                <marker date="1447725454203" expanded="false" signature="3446:5775" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1447725454203" expanded="false" signature="5785:6297" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+                <marker date="1448044779000" expanded="false" signature="3319:6624" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+                <marker date="1448044779000" expanded="false" signature="6634:7207" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BukkenDetailsForm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java">
+      <file leaf-file-name="BukkenKanriForm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.586206">
-              <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+            <state vertical-scroll-proportion="-11.444445">
+              <caret line="471" column="37" selection-start-line="471" selection-start-column="37" selection-end-line="471" selection-end-column="37" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3961#3962#0" expanded="true" />
+                <element signature="e#4020#4021#0" expanded="true" />
+                <element signature="e#4478#4479#0" expanded="true" />
+                <element signature="e#4532#4533#0" expanded="true" />
+                <element signature="e#4821#4822#0" expanded="true" />
+                <element signature="e#4871#4872#0" expanded="true" />
+                <element signature="e#10089#10090#0" expanded="true" />
+                <element signature="e#10169#10170#0" expanded="true" />
+                <element signature="e#11839#11847#0" expanded="true" />
+                <element signature="e#12098#12106#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BukkenTableModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/btc/viewModel/BukkenTableModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Config.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/btc/supports/Config.java">
+      <file leaf-file-name="BukkenRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
-              <folding />
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding>
+                <marker date="1448041345000" expanded="true" signature="2506:2601" placeholder="INSERT INTO Bukken..." />
+                <marker date="1448041345000" expanded="true" signature="3619:3742" placeholder="UPDATE Bukke..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BecchuuKanriForm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
+              <folding>
+                <element signature="docComment;method#BecchuuKanriForm#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#loadBecchuuTypeCombobox#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#loadBecchuuEmployeesCombobox#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="class#2553:2903" expanded="false" />
+                <element signature="method#mouseClicked#0;class#2553:2903" expanded="false" />
+                <element signature="method#regisEventHandler#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="class#3214:3664" expanded="false" />
+                <element signature="method#mouseMoved#0;class#3214:3664" expanded="false" />
+                <element signature="class#3709:3849" expanded="false" />
+                <element signature="class#3890:4420" expanded="false" />
+                <element signature="method#actionPerformed#0;class#3890:4420" expanded="false" />
+                <element signature="class#4473:4621" expanded="false" />
+                <element signature="class#4971:5143" expanded="false" />
+                <element signature="method#actionPerformed#0;class#4971:5143" expanded="false" />
+                <element signature="class#5195:5345" expanded="false" />
+                <element signature="class#6263:6479" expanded="false" />
+                <element signature="method#windowClosed#0;class#6263:6479" expanded="false" />
+                <element signature="class#6612:6811" expanded="false" />
+                <element signature="method#run#0;class#6612:6811" expanded="false" />
+                <element signature="method#filterBecchuuTable#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#searchTextBoxKeyReleased#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#checkBoxActionPerformed#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#comboboxActionListner#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="class#18126:18266" expanded="false" />
+                <element signature="docComment;method#main#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#submitData#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#movePrevious#0;class#BecchuuKanriForm#0" expanded="false" />
+                <element signature="method#moveNext#0;class#BecchuuKanriForm#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,35 +179,37 @@
         <option value="$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm1/BukkenKanriForm.jfd" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm.java" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsDelegate.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/viewModel/BecchuuTableModel.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.jfd" />
-        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriFormTableModel.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/repositoty/BecchuuRepository.java" />
         <option value="$PROJECT_DIR$/src/com/btc/viewModel/BukkenTableModel.java" />
         <option value="$PROJECT_DIR$/src/com/btc/model/Employee.java" />
         <option value="$PROJECT_DIR$/src/com/btc/repositoty/CommonRepository.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/model/Bukken.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/model/Becchuu.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsForm.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.java" />
         <option value="$PROJECT_DIR$/src/com/btc/repositoty/EmployeeRepository.java" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/ChangePasswordForm/ChangePasswordForm.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/DAL/SqliteConnectionUtils.java" />
         <option value="$PROJECT_DIR$/src/com/btc/supports/Config.java" />
-        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsForm.java" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.jfd" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/MainForm/TestTabPane.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriFormTableModel.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/repositoty/BecchuuRepository.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/viewModel/BecchuuTableModel.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/model/Bukken.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/model/Becchuu.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java" />
+        <option value="$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java" />
         <option value="$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-4" />
-    <option name="y" value="-4" />
-    <option name="width" value="1928" />
-    <option name="height" value="1058" />
+    <option name="x" value="20" />
+    <option name="y" value="21" />
+    <option name="width" value="1280" />
+    <option name="height" value="727" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -210,6 +252,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -373,6 +418,64 @@
         </subPane>
         <option name="show-excluded-files" value="false" />
       </pane>
+      <pane id="Scope">
+        <subPane subId="Production">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BecchuuHan">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BecchuuHan">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BecchuuHan">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="btc">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -438,10 +541,6 @@
               <option name="myItemId" value="btc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="supports" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -462,46 +561,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="repositoty" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuHan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuHan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="btc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuHan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuHan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="btc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -575,32 +634,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="LoginForm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuHan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuHan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="btc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="BukkenKanriForm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
@@ -627,7 +660,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="BukkenDetailsForm" />
+              <option name="myItemId" value="BecchuuKanriForm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -653,72 +686,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="BecchuuIraiForm" />
+              <option name="myItemId" value="BecchuuDetailsForm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Production">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BecchuuHan">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BecchuuHan">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BecchuuHan">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="btc">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches">
-        <subPane />
       </pane>
     </panes>
   </component>
@@ -734,7 +706,7 @@
     <property name="project.structure.proportion" value="0.15527344" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="220" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/syntheticaBlueMoon.jar!/" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -750,7 +722,7 @@
       <recent name="$PROJECT_DIR$/libs" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoginForm">
+  <component name="RunManager" selected="Application.MainForm">
     <configuration default="false" name="BecchuuKanriForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.btc.controllers.BecchuuKanriForm.BecchuuKanriForm" />
       <option name="VM_PARAMETERS" />
@@ -779,8 +751,22 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="BecchuuIraiForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm" />
+    <configuration default="false" name="LoginForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.btc.controllers.LoginForm.LoginForm" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="BecchuuHan" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestTabPane" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.btc.controllers.MainForm.TestTabPane" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -794,21 +780,7 @@
       <method />
     </configuration>
     <configuration default="false" name="BukkenKanriForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.btc.controllers.BukkenKanriForm1.BukkenKanriForm" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="BecchuuHan" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="LoginForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.btc.controllers.LoginForm.LoginForm" />
+      <option name="MAIN_CLASS_NAME" value="com.btc.controllers.BukkenKanriForm.BukkenKanriForm" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -897,17 +869,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.BecchuuKanriForm" />
       <item index="1" class="java.lang.String" itemvalue="Application.MainForm" />
-      <item index="2" class="java.lang.String" itemvalue="Application.BecchuuIraiForm" />
-      <item index="3" class="java.lang.String" itemvalue="Application.BukkenKanriForm" />
-      <item index="4" class="java.lang.String" itemvalue="Application.LoginForm" />
+      <item index="2" class="java.lang.String" itemvalue="Application.LoginForm" />
+      <item index="3" class="java.lang.String" itemvalue="Application.TestTabPane" />
+      <item index="4" class="java.lang.String" itemvalue="Application.BukkenKanriForm" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.LoginForm" />
-        <item index="1" class="java.lang.String" itemvalue="Application.MainForm" />
-        <item index="2" class="java.lang.String" itemvalue="Application.BecchuuKanriForm" />
-        <item index="3" class="java.lang.String" itemvalue="Application.BecchuuIraiForm" />
-        <item index="4" class="java.lang.String" itemvalue="Application.BukkenKanriForm" />
+        <item index="0" class="java.lang.String" itemvalue="Application.MainForm" />
+        <item index="1" class="java.lang.String" itemvalue="Application.BecchuuKanriForm" />
+        <item index="2" class="java.lang.String" itemvalue="Application.BukkenKanriForm" />
+        <item index="3" class="java.lang.String" itemvalue="Application.TestTabPane" />
+        <item index="4" class="java.lang.String" itemvalue="Application.LoginForm" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
@@ -939,7 +911,8 @@
       <workItem from="1447430504018" duration="2382000" />
       <workItem from="1447432944613" duration="33000" />
       <workItem from="1447432990372" duration="58916000" />
-      <workItem from="1447723354766" duration="2410000" />
+      <workItem from="1448019506001" duration="1685000" />
+      <workItem from="1448026937988" duration="12577000" />
     </task>
     <task id="LOCAL-00001" summary="1. Update MDI Main Form&#10;2. All functions on search becchuu complete">
       <created>1447516619781</created>
@@ -951,7 +924,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63741000" />
+    <option name="totallyTimeSpent" value="75593000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -963,27 +936,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1928" height="1058" extended-state="7" />
-    <editor active="false" />
+    <frame x="20" y="21" width="1280" height="727" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24293785" sideWeight="0.5" order="9" side_tool="false" content_ui="combo" x="0" y="311" width="1236" height="201" />
-      <window_info id="JFormDesigner Error Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32845187" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32740587" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="JFormDesigner Error Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32522798" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17450495" sideWeight="0.5028653" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32909605" sideWeight="0.49676377" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19874477" sideWeight="0.49713466" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19756839" sideWeight="0.49713466" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32909605" sideWeight="0.50323623" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24583334" sideWeight="0.48825064" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2375" sideWeight="0.4715909" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24583334" sideWeight="0.5117493" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2375" sideWeight="0.52840906" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3983051" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29483283" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1012,7 +985,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="21" />
+      <option name="time" value="35" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1021,7 +994,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java">
+    <entry file="file://$PROJECT_DIR$/src/com/btc/DAL/SqliteConnectionUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1033,7 +1006,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1052,6 +1031,13 @@
             <element signature="e#3183#3184#0" expanded="false" />
             <element signature="e#3236#3237#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/src.zip!/java/awt/event/ActionListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29890454">
+          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -1077,50 +1063,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java">
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriFormTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="249" column="61" selection-start-line="249" selection-start-column="61" selection-end-line="249" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/BecchuuRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
-          <folding>
-            <element signature="method#BecchuuRepository#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#Instance#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#getBecchuuByID#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#getBecchuuOfBukken#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#getListWithRefresh#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#insert#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#update#0;class#BecchuuRepository#0" expanded="false" />
-            <element signature="method#checkBeforeUpdate#0;class#BecchuuRepository#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/viewModel/BecchuuTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7755102">
-          <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
+          <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1128,97 +1074,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42300555">
           <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/CommonRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="57" selection-start-line="77" selection-start-column="57" selection-end-line="77" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/model/Bukken.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="100" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5992579">
-          <caret line="93" column="55" selection-start-line="93" selection-start-column="55" selection-end-line="93" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/model/Becchuu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5658627">
-          <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
           <folding>
-            <element signature="method#getKenshuuStatus#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getUploadStatus#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getBukken#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getMisu#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getBecchuuMaisu#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setSakuseiStatusID#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setKenshuuStatusID#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setUploadStatusID#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setKoujibangou#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setSakuseiShaID#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setKenshuShaID#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#setBecchuuTypeID#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getSakuseiSha#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getKenshuuSha#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#getBecchuuType#0;class#Becchuu#0" expanded="false" />
-            <element signature="method#toString#0;class#Becchuu#0" expanded="false" />
+            <element signature="e#99#100#0" expanded="false" />
+            <element signature="e#124#125#0" expanded="false" />
+            <element signature="e#311#312#0" expanded="false" />
+            <element signature="e#354#355#0" expanded="false" />
+            <element signature="e#387#388#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3320965">
-          <caret line="102" column="33" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
-          <folding>
-            <element signature="class#2426:2653" expanded="false" />
-            <element signature="method#valueChanged#0;class#2426:2653" expanded="false" />
-            <element signature="e#3341#3342#0" expanded="true" />
-            <element signature="e#3400#3401#0" expanded="true" />
-            <element signature="e#3858#3859#0" expanded="true" />
-            <element signature="e#3912#3913#0" expanded="true" />
-            <element signature="e#4201#4202#0" expanded="true" />
-            <element signature="e#4251#4252#0" expanded="true" />
-            <element signature="e#9645#9646#0" expanded="true" />
-            <element signature="e#9725#9726#0" expanded="true" />
-            <element signature="e#12356#12364#0" expanded="true" />
-            <element signature="e#12643#12651#0" expanded="true" />
-            <element signature="method#filterBukkenTable#0;class#BukkenKanriForm#0" expanded="false" />
-            <element signature="method#txtBukkenSearchKeyReleased#0;class#BukkenKanriForm#0" expanded="false" />
-            <element signature="method#cbTypeitemStateChanged#0;class#BukkenKanriForm#0" expanded="false" />
-            <element signature="e#16899#16928#0" expanded="false" />
-            <element signature="docComment;method#main#0;class#BukkenKanriForm#0" expanded="false" />
-            <element signature="method#main#0;class#BukkenKanriForm#0" expanded="false" />
-            <element signature="class#17193:17458" expanded="false" />
-            <element signature="method#run#0;class#17193:17458" expanded="false" />
-            <element signature="method#loadFromDataBase#0;class#BukkenKanriForm#0" expanded="false" />
-            <element signature="docComment;method#BukkenKanriForm#0;class#BukkenKanriForm#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/viewModel/BukkenTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42300555">
-          <caret line="101" column="31" selection-start-line="101" selection-start-column="31" selection-end-line="101" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1227,7 +1089,8 @@
         <state vertical-scroll-proportion="0.54359925">
           <caret line="47" column="38" selection-start-line="47" selection-start-column="38" selection-end-line="47" selection-end-column="38" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <marker date="1448019524000" expanded="true" signature="1108:1139" placeholder="UPDATE Emplo..." />
+            <marker date="1448019524000" expanded="true" signature="1108:1153" placeholder="UPDATE Emplo..." />
           </folding>
         </state>
       </provider>
@@ -1236,70 +1099,248 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37109375">
           <caret line="45" column="63" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/DAL/SqliteConnectionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7702703">
+          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BukkenDetailsForm/BukkenDetailsForm.java">
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.586206">
-          <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="17" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+          <folding>
+            <marker date="1447685998000" expanded="true" signature="2247:5290" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1447685998000" expanded="false" signature="5300:5777" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/EmployeeManagementForm/EmployeeViewForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="34" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/CommonRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.503861">
+          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
+          <folding>
+            <element signature="method#getBecchuuStatusWithID#0;class#CommonRepository#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/src.zip!/java/awt/Container.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33204633">
+          <caret line="416" column="0" selection-start-line="416" selection-start-column="0" selection-end-line="416" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/btc/supports/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/LoginForm/LoginForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="7" selection-start-line="60" selection-start-column="7" selection-end-line="60" selection-end-column="7" />
-          <folding>
-            <marker date="1447723016527" expanded="false" signature="2247:5290" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1447723016527" expanded="false" signature="5300:5777" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/mail-1.4.7.jar!/javax/mail/Message.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34599155">
-          <caret line="103" column="24" selection-start-line="103" selection-start-column="24" selection-end-line="103" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="187" column="26" selection-start-line="187" selection-start-column="26" selection-end-line="187" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.42277992">
+          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.jfd">
       <provider selected="true" editor-type-id="JFormDesigner">
-        <state />
+        <state propertiesWidth="263" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriFormTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="11" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="11" />
+          <folding>
+            <element signature="e#1943#1944#0" expanded="true" />
+            <element signature="e#1974#1975#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuDetailsForm/BecchuuDetailsForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+          <folding>
+            <element signature="method#loadBecchuuEmployeesCombobox#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#loadBecchuuStatusCombobox#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#loadBunruiCombobox#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#setField#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#setCombobox#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#populateData#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#btnOKActionPerformed#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#createAndSetupGUI#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="class#30963:31089" expanded="false" />
+            <element signature="class#31614:31742" expanded="false" />
+            <element signature="class#31783:31897" expanded="false" />
+            <element signature="class#32214:32365" expanded="false" />
+            <element signature="class#32734:32881" expanded="false" />
+            <element signature="method#showDialog#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#setBecchuuToEdit#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="docComment;method#BecchuuDetailsForm#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#BecchuuDetailsForm#0;class#BecchuuDetailsForm#0" expanded="false" />
+            <element signature="method#setFormEditable#0;class#BecchuuDetailsForm#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/viewModel/BecchuuTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/BecchuuRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38">
+          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+          <folding>
+            <marker date="1448041340000" expanded="false" signature="3525:3740" placeholder="INSERT INTO Becchuu..." />
+            <marker date="1448041340000" expanded="false" signature="5031:5437" placeholder="UPDATE Becch..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/model/Bukken.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="65" selection-start-line="31" selection-start-column="65" selection-end-line="31" selection-end-column="65" />
+          <folding>
+            <element signature="e#2051#2052#0" expanded="true" />
+            <element signature="e#2127#2128#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuIraiForm/BecchuuIraiForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.010570824">
+          <caret line="423" column="10" selection-start-line="423" selection-start-column="10" selection-end-line="423" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/model/Becchuu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.988">
+          <caret line="87" column="67" selection-start-line="87" selection-start-column="67" selection-end-line="87" selection-end-column="67" />
+          <folding>
+            <element signature="method#getKenshuuStatus#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#getUploadStatus#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#getMisu#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#getBecchuuMaisu#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#setSakuseiStatusID#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#setKenshuuStatusID#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#setUploadStatusID#0;class#Becchuu#0" expanded="false" />
+            <element signature="method#setKoujibangou#0;class#Becchuu#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/repositoty/BukkenRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <marker date="1448041345000" expanded="true" signature="2506:2601" placeholder="INSERT INTO Bukken..." />
+            <marker date="1448041345000" expanded="true" signature="3619:3742" placeholder="UPDATE Bukke..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/viewModel/BukkenTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BukkenKanriForm/BukkenKanriForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.444445">
+          <caret line="471" column="37" selection-start-line="471" selection-start-column="37" selection-end-line="471" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3961#3962#0" expanded="true" />
+            <element signature="e#4020#4021#0" expanded="true" />
+            <element signature="e#4478#4479#0" expanded="true" />
+            <element signature="e#4532#4533#0" expanded="true" />
+            <element signature="e#4821#4822#0" expanded="true" />
+            <element signature="e#4871#4872#0" expanded="true" />
+            <element signature="e#10089#10090#0" expanded="true" />
+            <element signature="e#10169#10170#0" expanded="true" />
+            <element signature="e#11839#11847#0" expanded="true" />
+            <element signature="e#12098#12106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/BecchuuKanriForm/BecchuuKanriForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
+          <folding>
+            <element signature="docComment;method#BecchuuKanriForm#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#loadBecchuuTypeCombobox#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#loadBecchuuEmployeesCombobox#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="class#2553:2903" expanded="false" />
+            <element signature="method#mouseClicked#0;class#2553:2903" expanded="false" />
+            <element signature="method#regisEventHandler#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="class#3214:3664" expanded="false" />
+            <element signature="method#mouseMoved#0;class#3214:3664" expanded="false" />
+            <element signature="class#3709:3849" expanded="false" />
+            <element signature="class#3890:4420" expanded="false" />
+            <element signature="method#actionPerformed#0;class#3890:4420" expanded="false" />
+            <element signature="class#4473:4621" expanded="false" />
+            <element signature="class#4971:5143" expanded="false" />
+            <element signature="method#actionPerformed#0;class#4971:5143" expanded="false" />
+            <element signature="class#5195:5345" expanded="false" />
+            <element signature="class#6263:6479" expanded="false" />
+            <element signature="method#windowClosed#0;class#6263:6479" expanded="false" />
+            <element signature="class#6612:6811" expanded="false" />
+            <element signature="method#run#0;class#6612:6811" expanded="false" />
+            <element signature="method#filterBecchuuTable#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#searchTextBoxKeyReleased#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#checkBoxActionPerformed#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#comboboxActionListner#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="class#18126:18266" expanded="false" />
+            <element signature="docComment;method#main#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#submitData#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#movePrevious#0;class#BecchuuKanriForm#0" expanded="false" />
+            <element signature="method#moveNext#0;class#BecchuuKanriForm#0" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/btc/controllers/MainForm/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="96" column="17" selection-start-line="96" selection-start-column="17" selection-end-line="96" selection-end-column="17" />
+        <state vertical-scroll-proportion="1.292">
+          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
           <folding>
-            <element signature="docComment;class#MainForm#0" expanded="false" />
-            <element signature="method#createJInternalFrameFromFrame#0;class#MainForm#0" expanded="false" />
-            <element signature="class#1425:1898" expanded="false" />
-            <element signature="method#internalFrameClosed#0;class#1425:1898" expanded="false" />
-            <element signature="e#3446#3533#0" expanded="false" />
-            <marker date="1447725454203" expanded="false" signature="3446:5775" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1447725454203" expanded="false" signature="5785:6297" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <marker date="1448044779000" expanded="false" signature="3319:6624" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1448044779000" expanded="false" signature="6634:7207" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>

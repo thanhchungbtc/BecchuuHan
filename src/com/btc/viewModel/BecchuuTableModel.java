@@ -20,12 +20,11 @@ public class BecchuuTableModel extends AbstractTableModel {
       this.bukken = bukken;
       this.data = bukken.getListBecchuu();
       fireTableDataChanged();
-      System.out.println(data.size());
    }
 
-   public BecchuuTableModel() {
-      this.repository = BecchuuRepository.Instance();
-
+   public BecchuuTableModel(BecchuuRepository repository) {
+//      this.repository = BecchuuRepository.Instance();
+      this.repository = repository;
    }
 
    public void refresh() {

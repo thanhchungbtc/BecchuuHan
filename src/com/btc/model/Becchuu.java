@@ -85,7 +85,7 @@ public class Becchuu {
    }
 
    public Bukken getBukken() {
-      if (this.bukken == null) this.bukken = BukkenRepository.Instance().getBukkenWithID(this.getKoujibangou());
+      if (this.bukken == null) this.bukken = new BukkenRepository().getBukkenWithID(this.getKoujibangou());
       return bukken;
    }
 

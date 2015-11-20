@@ -29,7 +29,7 @@ public class Bukken {
    private String bukkenType;
 
    public String getBukkenType() {
-      if (bukkenType == null) bukkenType = BukkenRepository.Instance().geBukkenTypeWithID(type);
+      if (bukkenType == null) bukkenType = new BukkenRepository().geBukkenTypeWithID(type);
       return bukkenType;
    }
 
@@ -101,6 +101,6 @@ public class Bukken {
    }
 
    public List<Becchuu> getListBecchuu() {
-      return BecchuuRepository.Instance().getBecchuuOfBukken(this.getId());
+      return new BecchuuRepository().getBecchuuOfBukken(this.getId());
    }
 }

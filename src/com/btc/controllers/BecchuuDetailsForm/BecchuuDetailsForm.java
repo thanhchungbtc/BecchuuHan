@@ -34,7 +34,6 @@ public class BecchuuDetailsForm extends JDialog {
    private JTextArea txtBecchuuNaiyou;
    private JTextArea txtMotozuParameter;
 
-
    private Becchuu becchuuToEdit;
    private JLabel txtIraisha;
    private JLabel ltxtIraiBi;
@@ -43,10 +42,10 @@ public class BecchuuDetailsForm extends JDialog {
    private JTextField txtShiten;
    private JLabel txtShouhinType;
    private JTextField txtDEPSF;
-   private JCheckBox cbSakuseiJoukyou;
+   private JComboBox cbSakuseiJoukyou;
    private JSpinner spMaisuu;
    private JComboBox cbKenshuuSha;
-   private JCheckBox cbKenshuuJoukyou;
+   private JComboBox cbKenshuuJoukyou;
    private JSpinner spMisu;
    private JTextArea txtBikou;
    private JComboBox cbsakuSeiSha;
@@ -65,6 +64,14 @@ public class BecchuuDetailsForm extends JDialog {
       model2.addElement("");
       cbKenshuuSha.setModel(model2);
 
+   }
+
+   private void loadBecchuuStatusCombobox() {
+      DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuStatus());
+      cbSakuseiJoukyou.setModel(model);
+
+      DefaultComboBoxModel<Object> model1 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuStatus());
+      cbKenshuuJoukyou.setModel(model1);
    }
 
    private void loadBunruiCombobox() {
@@ -148,12 +155,11 @@ public class BecchuuDetailsForm extends JDialog {
       Employee kenshuuSha = becchuuToEdit.getKenshuuSha();
       setCombobox(cbKenshuuSha, kenshuuSha);
 
-      int sakuseiJoukyou = becchuuToEdit.getSakuseiStatusID();
-      
-      cbSakuseiJoukyou.setSelected(sakuseiJoukyou == 2);
-            
-      int kenshuuJoukyouID = becchuuToEdit.getKenshuuStatusID();
-      cbKenshuuJoukyou.setSelected(kenshuuJoukyouID == 2);
+      BecchuuStatus sakuseiJoukyou = becchuuToEdit.getSakuseiStatus();
+      setCombobox(cbSakuseiJoukyou, sakuseiJoukyou);
+
+      BecchuuStatus kenshuuJoukyou = becchuuToEdit.getKenshuuStatus();
+      setCombobox(cbKenshuuJoukyou, kenshuuJoukyou);
 //		
       int misu = becchuuToEdit.getMisu();
       spMisu.getModel().setValue(misu < 0 ? 0 : misu);
@@ -187,11 +193,13 @@ public class BecchuuDetailsForm extends JDialog {
       if (kenshuuSha != null)
          becchuuToEdit.setKenshuShaID(kenshuuSha.getId());
 
-      int sakuseiStatusID = cbSakuseiJoukyou.isSelected() ? 2 : 1;     
-        becchuuToEdit.setSakuseiStatusID(sakuseiStatusID);
+      BecchuuStatus sakuseiStatus = (BecchuuStatus)cbSakuseiJoukyou.getModel().getSelectedItem();
+      if (sakuseiStatus != null)
+         becchuuToEdit.setSakuseiStatusID(sakuseiStatus.getId());
 
-      int kenshuuStatusID = cbKenshuuJoukyou.isSelected() ? 2 : 1;     
-        becchuuToEdit.setKenshuuStatusID(kenshuuStatusID);
+      BecchuuStatus kenshuuStatus = (BecchuuStatus)cbKenshuuJoukyou.getModel().getSelectedItem();
+      if (kenshuuStatus != null)
+         becchuuToEdit.setKenshuuStatusID(kenshuuStatus.getId());
 
       BecchuuType becchuuType = (BecchuuType) cbBunrui.getModel().getSelectedItem();
       if (becchuuType != null)
@@ -561,8 +569,7 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_10.gridy = 7;
       bukkenPanel.add(lblNewLabel_10, gbc_lblNewLabel_10);
 
-      cbSakuseiJoukyou = new JCheckBox();
-      cbSakuseiJoukyou.setText("作成済み");
+      cbSakuseiJoukyou = new JComboBox();
       GridBagConstraints gbc_cbSakuseiJoukyou = new GridBagConstraints();
       gbc_cbSakuseiJoukyou.fill = GridBagConstraints.HORIZONTAL;
       gbc_cbSakuseiJoukyou.insets = new Insets(0, 0, 5, 0);
@@ -627,8 +634,7 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_13.gridy = 11;
       bukkenPanel.add(lblNewLabel_13, gbc_lblNewLabel_13);
 
-      cbKenshuuJoukyou = new JCheckBox();
-      cbKenshuuJoukyou.setText("検収済み");
+      cbKenshuuJoukyou = new JComboBox();
       GridBagConstraints gbc_cbKenshuuJoukyou = new GridBagConstraints();
       gbc_cbKenshuuJoukyou.fill = GridBagConstraints.HORIZONTAL;
       gbc_cbKenshuuJoukyou.insets = new Insets(0, 0, 5, 0);
@@ -800,11 +806,12 @@ public class BecchuuDetailsForm extends JDialog {
    public BecchuuDetailsForm(Becchuu becchuu) {
       setTitle("別注修正");
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      setModalityType(ModalityType.APPLICATION_MODAL);
+      //setModalityType(ModalityType.APPLICATION_MODAL);
       this.becchuuToEdit = becchuu;
       createAndSetupGUI();
       loadBecchuuEmployeesCombobox();    
       loadBunruiCombobox();
+      loadBecchuuStatusCombobox();
       populateData();
 
       pack();

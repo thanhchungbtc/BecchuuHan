@@ -12,12 +12,14 @@ import com.btc.controllers.EmployeeManagementForm.EmployeeViewForm;
 import com.btc.supports.Config;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
-import java.util.LinkedList;
+import java.util.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -25,97 +27,81 @@ import java.awt.event.ActionListener;
  */
 public class MainForm extends JFrame {
 
-   private JInternalFrame becchuuKanriForm;
-   private JInternalFrame becchuuIraiForm;
-   private JInternalFrame bukkenKanriForm;
-   private JInternalFrame shainKanriForm;
+   private JPanel[] tabs;
 
-   private java.util.List<JInternalFrame> internalFrames = new LinkedList<>();
+   int maxWinDowWidth;
+   int maxWindowHeight;
+   JPanel createPanel(JFrame frame) {
+     // frame.pack();
+      JPanel p = (JPanel)frame.getContentPane();
+      int w = frame.getPreferredSize().width;
+      int h = frame.getPreferredSize().height;
+
+      p.setPreferredSize(new Dimension(w, h));
+      maxWinDowWidth = Math.max(w, maxWinDowWidth);
+      maxWindowHeight = Math.max(h, maxWindowHeight);
+      return p;
+   }
+   void initTabs() {
+      tabs = new JPanel[3];
+      tabs[1] = createPanel(new BecchuuKanriForm());
+      tabs[0] = createPanel(new BecchuuIraiForm());
+      tabs[2] = createPanel(new BukkenKanriForm());
+
+      mainTabPane.addTab("別注管理", tabs[0]);
+      mainTabPane.addTab("別注依頼", tabs[1]);
+      mainTabPane.addTab("物件管理", tabs[2]);
+
+      Dimension tabDim = mainTabPane.getPreferredSize();
+      mainTabPane.addChangeListener(new ChangeListener() {
+         @Override
+         public void stateChanged(ChangeEvent e) {
+            Dimension panelDim = mainTabPane.getSelectedComponent().getPreferredSize();
+            Dimension nd = new Dimension(
+               tabDim.width - (maxWinDowWidth - panelDim.width),
+                  tabDim.height - (maxWindowHeight - panelDim.height));
+            mainTabPane.setPreferredSize(nd);
+            pack();
+         }
+      });
+      setContentPane(mainTabPane);
+   }
 
    public MainForm() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
       initComponents();
-      ActionEvent event = new ActionEvent(mnBecchuuKanriForm, 1, "");
-      fileMenuActionPerformed(event);
+      initTabs();
+      mainTabPane.setSelectedIndex(1);
+//      ActionEvent event = new ActionEvent(mnBecchuuKanriForm, 1, "");
+//      fileMenuActionPerformed(event);
    }
 
-   private JInternalFrame createJInternalFrameFromFrame(JFrame frame) {
-      JInternalFrame jInternalFrame = new JInternalFrame(frame.getTitle(), true, true, true, true);
-
-      jInternalFrame.setContentPane(frame.getContentPane());
-      jInternalFrame.setSize(frame.getSize());
-      jInternalFrame.setVisible(true);
-
-      jInternalFrame.addInternalFrameListener(new InternalFrameAdapter() {
-
-         @Override
-         public void internalFrameClosed(InternalFrameEvent e) {
-            if (e.getSource() == becchuuIraiForm) {
-               becchuuIraiForm = null;
-            } else if (e.getSource() == becchuuKanriForm) {
-               becchuuKanriForm = null;
-            } else if (e.getSource() == bukkenKanriForm) {
-               bukkenKanriForm = null;
-            }
-            super.internalFrameClosed(e);
-         }
-      });
-      return jInternalFrame;
-   }
-
-   private void openNewWinDow(JInternalFrame jInternalFrame) {
-      JInternalFrame[] allInternalFrames = this.desktopPane.getAllFrames();
-      for (JInternalFrame jInternalFrame1 : allInternalFrames) {
-         if (jInternalFrame1 == jInternalFrame) {
-
-            continue;
-         }
-         jInternalFrame1.dispose();
-      }
-
-      if (jInternalFrame != becchuuIraiForm) {
-         try {
-            jInternalFrame.setMaximum(true);
-         } catch (PropertyVetoException e) {
-            e.printStackTrace();
-         }
-      }
+   private void openNewWinDow(JPanel jPanel) {
+      getContentPane().removeAll();
+      getContentPane().add(jPanel);
+      pack();
    }
 
    private void fileMenuActionPerformed(ActionEvent e) {
-      Object source = e.getSource();
-
-      if (source == mnBecchuuKanriForm) {
-         if (becchuuKanriForm == null) {
-            becchuuKanriForm = createJInternalFrameFromFrame(new BecchuuKanriForm());
-            this.desktopPane.add(becchuuKanriForm);
-         }
-         openNewWinDow(becchuuKanriForm);
-
-      } else if (source == mnBecchuuIrai) {
-         if (becchuuIraiForm == null) {
-            becchuuIraiForm = createJInternalFrameFromFrame(new BecchuuIraiForm());
-            this.desktopPane.add(becchuuIraiForm);
-         }
-         openNewWinDow(becchuuIraiForm);
-      } else if (source == mnBukkenKanri) {
-         if (bukkenKanriForm == null) {
-            bukkenKanriForm = createJInternalFrameFromFrame(new BukkenKanriForm());
-            this.desktopPane.add(bukkenKanriForm);
-         } 
-         openNewWinDow(bukkenKanriForm);
-      } else if (source == mnShain) {
-    	  if (shainKanriForm == null) {
-    		  shainKanriForm = createJInternalFrameFromFrame(new EmployeeViewForm());
-              this.desktopPane.add(shainKanriForm);
-           } 
-           openNewWinDow(shainKanriForm);
-      }
+//      Object source = e.getSource();
+//
+//      if (source == mnBecchuuKanriForm) {
+//         becchuuKanriForm = (JPanel)(new BecchuuKanriForm().getContentPane());
+//         openNewWinDow(becchuuKanriForm);
+//
+//      } else if (source == mnBecchuuIrai) {
+//         becchuuIraiForm = (JPanel)new BecchuuIraiForm().getContentPane();
+//         openNewWinDow(becchuuIraiForm);
+//      } else if (source == mnBukkenKanri) {
+//         bukkenKanriForm = (JPanel)new BukkenKanriForm().getContentPane();
+//         openNewWinDow(bukkenKanriForm);
+//      }
    }
 
    private void initComponents() {
       // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-      // Generated using JFormDesigner Evaluation license - thanh chung
+      // Generated using JFormDesigner Evaluation license - Thanh Chung
       menuBar1 = new JMenuBar();
       menu1 = new JMenu();
       mnBecchuuKanriForm = new JMenuItem();
@@ -124,13 +110,15 @@ public class MainForm extends JFrame {
       menuItem4 = new JMenuItem();
       menuItem1 = new JMenuItem();
       menu2 = new JMenu();
-      desktopPane = new JDesktopPane();
+      contentPane = new JPanel();
+      mainContent = new JPanel();
+      mainTabPane = new JTabbedPane();
 
       //======== this ========
       setBackground(null);
       setTitle("\u5225\u6ce8\u7ba1\u7406\u30b7\u30b9\u30c6\u30e0");
-      Container contentPane = getContentPane();
-      contentPane.setLayout(new BorderLayout());
+      Container contentPane2 = getContentPane();
+      contentPane2.setLayout(new BorderLayout());
 
       //======== menuBar1 ========
       {
@@ -157,14 +145,6 @@ public class MainForm extends JFrame {
             //---- menuItem4 ----
             menuItem4.setText("\u30a8\u30c3\u30af\u30b9\u30dd\u30fc\u30c8");
             menu1.add(menuItem4);
-            
-            mnShain = new JMenuItem("社員");
-            mnShain.addActionListener(new ActionListener() {
-            	public void actionPerformed(ActionEvent arg0) {
-            		fileMenuActionPerformed(arg0);
-            	}
-            });
-            menu1.add(mnShain);
             menu1.addSeparator();
 
             //---- menuItem1 ----
@@ -177,25 +157,37 @@ public class MainForm extends JFrame {
          {
             menu2.setText("\u30d8\u30eb\u30d7");
          }
-         
-         JMenu mnNewMenu = new JMenu("統計");
-         menuBar1.add(mnNewMenu);
          menuBar1.add(menu2);
       }
       setJMenuBar(menuBar1);
 
-      //======== desktopPane ========
+      //======== contentPane ========
       {
-         desktopPane.setDoubleBuffered(true);
+
+         // JFormDesigner evaluation mark
+         contentPane.setBorder(new javax.swing.border.CompoundBorder(
+            new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+               "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+               javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+               java.awt.Color.red), contentPane.getBorder())); contentPane.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+
+         contentPane.setLayout(new BorderLayout());
+
+         //======== mainContent ========
+         {
+            mainContent.setLayout(new GridLayout(1, 1));
+            mainContent.add(mainTabPane);
+         }
+         contentPane.add(mainContent, BorderLayout.CENTER);
       }
-      contentPane.add(desktopPane, BorderLayout.CENTER);
+      contentPane2.add(contentPane, BorderLayout.CENTER);
       pack();
       setLocationRelativeTo(getOwner());
       // JFormDesigner - End of component initialization  //GEN-END:initComponents
    }
 
    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-   // Generated using JFormDesigner Evaluation license - thanh chung
+   // Generated using JFormDesigner Evaluation license - Thanh Chung
    private JMenuBar menuBar1;
    private JMenu menu1;
    private JMenuItem mnBecchuuKanriForm;
@@ -204,16 +196,16 @@ public class MainForm extends JFrame {
    private JMenuItem menuItem4;
    private JMenuItem menuItem1;
    private JMenu menu2;
-   private JDesktopPane desktopPane;
-   private JMenuItem mnShain;
+   private JPanel contentPane;
+   private JPanel mainContent;
+   private JTabbedPane mainTabPane;
    // JFormDesigner - End of variables declaration  //GEN-END:variables
 
    public static void main(String[] args) {
       Config.setLookAndField();
       MainForm frame = new MainForm();
       // frame.setSize(new Dimension(1000, 700));
-      frame.setSize(new Dimension(1000, 700));
-      frame.setExtendedState(MAXIMIZED_BOTH);
+      frame.pack();
       frame.setLocationRelativeTo(null);
       frame.setVisible(true);
    }

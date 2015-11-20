@@ -33,34 +33,50 @@ import java.util.List;
 
 public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate, BecchuuDetailsDelegate {
 
-   private JPanel contentPane;
-   private JTable bukkenTable;
-   private JTable becchuuTable;
-   private JLabel lblWelcome;
+	private JPanel contentPane;
+	private JTable bukkenTable;
+	private JTable becchuuTable;
+	private JLabel lblWelcome;
 
-   private BukkenRepository bukkenRepository;
-   private BecchuuRepository becchuuRepository;
+	private BukkenRepository bukkenRepository;
+	private BecchuuRepository becchuuRepository;
 
-   private JTextField txtBukkenSearch;
-   TableRowSorter<TableModel> rowSorter;
-   private JComboBox cbType;
+	private JTextField txtBukkenSearch;
+	TableRowSorter<TableModel> rowSorter;
+	private JComboBox cbType;
 
-   private void createAndSetupGUI() {
-      contentPane = new JPanel();
-      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-      contentPane.setLayout(new BorderLayout(0, 0));
-      setContentPane(contentPane);
+	private void createAndSetupGUI() {
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		String[] columnNames1 = {"Title", "User Name", "Password", "URL", "Notes"};
 
-      mainSplitPane = new JSplitPane();
-      mainSplitPane.setBorder(new EmptyBorder(5, 0, 0, 0));
-      mainSplitPane.setContinuousLayout(true);
-      mainSplitPane.setDividerSize(2);
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBorder(null);
+		contentPane.add(statusPanel, BorderLayout.SOUTH);
+		statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-      contentPane.add(mainSplitPane, BorderLayout.CENTER);
+		lblWelcome = new JLabel("Welcome");
+		statusPanel.add(lblWelcome);
+
+		JPanel headePanel = new JPanel();
+		headePanel.setBorder(new CompoundBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)), new EmptyBorder(0, 0, 0, 0)));
+		FlowLayout fl_headePanel = (FlowLayout) headePanel.getLayout();
+		fl_headePanel.setAlignment(FlowLayout.LEFT);
+		contentPane.add(headePanel, BorderLayout.NORTH);
+
+		JLabel label = new JLabel("物件管理");
+		label.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		headePanel.add(label);
+
+      JPanel panel = new JPanel();
+      contentPane.add(panel, BorderLayout.CENTER);
+      panel.setLayout(new GridLayout(0, 2, 0, 0));
 
       JPanel leftPanel = new JPanel();
+      panel.add(leftPanel);
       leftPanel.setBorder(new EmptyBorder(0, 0, 0, 2));
-      mainSplitPane.setLeftComponent(leftPanel);
 
       bukkenTable = new JTable();
       bukkenTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -123,13 +139,12 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
 
 
       JPanel rightPanel = new JPanel();
+      panel.add(rightPanel);
       rightPanel.setBorder(new EmptyBorder(0, 2, 0, 0));
-      mainSplitPane.setRightComponent(rightPanel);
 
       becchuuTable = new JTable();
 
       becchuuTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      String[] columnNames1 = {"Title", "User Name", "Password", "URL", "Notes"};
       rightPanel.setLayout(new BorderLayout(0, 0));
 
       JPanel becchuuSearchPanel = new JPanel();
@@ -223,7 +238,6 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
       gbc_chkUploadZumi.gridy = 0;
       becchuuSearchPanel.add(chkUploadZumi, gbc_chkUploadZumi);
 
-      becchuuTable.setModel(new DefaultTableModel(null, columnNames1));
 
       JScrollPane scrollPane_1 = new JScrollPane();
       scrollPane_1.setViewportView(becchuuTable);
@@ -245,276 +259,256 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
       btnRefresh.setContentAreaFilled(false);
       btnRefresh.setBorderPainted(false);
       rightButtonPanel.add(btnRefresh);
+	}
 
-      JPanel statusPanel = new JPanel();
-      statusPanel.setBorder(null);
-      contentPane.add(statusPanel, BorderLayout.SOUTH);
-      statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+	private void initializeData() {
+		bukkenRepository = new BukkenRepository();
+		becchuuRepository = new BecchuuRepository();
+	}
 
-      lblWelcome = new JLabel("Welcome");
-      statusPanel.add(lblWelcome);
+	private void setupTable() {
 
-      JPanel headePanel = new JPanel();
-      headePanel.setBorder(new CompoundBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)), new EmptyBorder(0, 0, 0, 0)));
-      FlowLayout fl_headePanel = (FlowLayout) headePanel.getLayout();
-      fl_headePanel.setAlignment(FlowLayout.LEFT);
-      contentPane.add(headePanel, BorderLayout.NORTH);
+		BukkenTableModel bukkenTableModel = new BukkenTableModel(this.bukkenRepository);
+		bukkenTable.setModel(bukkenTableModel);
+		rowSorter = new TableRowSorter<TableModel>(bukkenTable.getModel());
+		bukkenTable.setRowSorter(rowSorter);
+		bukkenTable.setRowHeight(25);
+		bukkenTable.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Point point = e.getPoint();
+				if (bukkenTable.columnAtPoint(point) == bukkenTable.getColumnCount() - 1) {
+					bukkenTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				} else {
+					bukkenTable.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+			}
+		});
+		bukkenTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					bukkenTableClicked(e);
+				} else if (e.getClickCount() == 2) {
+					bukkenTableDoubleClicked(e);
+				}
+			}
+		});
 
-      JLabel label = new JLabel("物件管理");
-      label.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-      headePanel.add(label);
-   }
+		becchuuTable.setRowHeight(25);
+		BecchuuTableModel becchuuTableModel = new BecchuuTableModel(becchuuRepository);
+		becchuuTable.setModel(becchuuTableModel);
+	}
 
-   private void initializeData() {
-      bukkenRepository = BukkenRepository.Instance();
-      becchuuRepository = BecchuuRepository.Instance();
-   }
+	private void loadShouhinTypeCombobox() {
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("商品タイプ");
+		model.addElement("XEVO");
+		model.addElement("Σ");
+		cbType.setModel(model);
+		cbType.setSelectedIndex(0);
+	}
 
-   private void setupTable() {
+	private void loadBecchuuTypeCombobox() {
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		List<BecchuuType> becchuuTypes = CommonRepository.getBecchuuTypes();
+		model.addElement("全て");
+		for (BecchuuType becchuuType : becchuuTypes) {
+			model.addElement(becchuuType.getName());
+		}
+		cbBecchuuType.setModel(model);
+		cbBecchuuType.setSelectedIndex(0);
+	}
 
-      BukkenTableModel bukkenTableModel = new BukkenTableModel(this.bukkenRepository);
-      bukkenTable.setModel(bukkenTableModel);
-      rowSorter = new TableRowSorter<TableModel>(bukkenTable.getModel());
-      bukkenTable.setRowSorter(rowSorter);
-      bukkenTable.setRowHeight(25);
-      bukkenTable.addMouseMotionListener(new MouseMotionAdapter() {
-         @Override
-         public void mouseMoved(MouseEvent e) {
-            Point point = e.getPoint();
-            if (bukkenTable.columnAtPoint(point) == bukkenTable.getColumnCount() - 1) {
-               bukkenTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            } else {
-               bukkenTable.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            }
-         }
-      });
-      bukkenTable.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 1) {
-               bukkenTableClicked(e);
-            } else if (e.getClickCount() == 2) {
-               bukkenTableDoubleClicked(e);
-            }
-         }
-      });
+	private void loadBecchuuEmployeesCombobox() {
+		DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
+		model.insertElementAt("全て", 0);
+		cbSakuseiSha.setModel(model);
 
-      becchuuTable.setRowHeight(25);
-      BecchuuTableModel becchuuTableModel = new BecchuuTableModel();
-      becchuuTable.setModel(becchuuTableModel);
-   }
+		cbSakuseiSha.setSelectedIndex(0);
 
-   private void loadShouhinTypeCombobox() {
-      DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-      model.addElement("商品タイプ");
-      model.addElement("XEVO");
-      model.addElement("Σ");
-      cbType.setModel(model);
-      cbType.setSelectedIndex(0);
-   }
+		DefaultComboBoxModel<Object> model2 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
+		model2.insertElementAt("全て", 0);
+		cbKenshuusha.setModel(model2);
+		cbKenshuusha.setSelectedIndex(0);
 
-   private void loadBecchuuTypeCombobox() {
-      DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-      List<BecchuuType> becchuuTypes = CommonRepository.getBecchuuTypes();
-      model.addElement("全て");
-      for (BecchuuType becchuuType : becchuuTypes) {
-         model.addElement(becchuuType.getName());
-      }
-      cbBecchuuType.setModel(model);
-      cbBecchuuType.setSelectedIndex(0);
-   }
+	}
 
-   private void loadBecchuuEmployeesCombobox() {
-      DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
-      model.insertElementAt("全て", 0);
-      cbSakuseiSha.setModel(model);
+	// handle events--------------------------------------------------------------------------------------
+	private void btnAddBukkenActionPerformed(ActionEvent event) {
+		BukkenDetailsForm form = new BukkenDetailsForm(null);
+		form.setLocationRelativeTo(this);
+		form.showDialog(this);
+	}
 
-      cbSakuseiSha.setSelectedIndex(0);
+	private void bukkenTableClicked(MouseEvent event) {
+		if (bukkenTable.getSelectedRow() == -1) return;
+		int col = bukkenTable.getSelectedColumn();
+		if (col != bukkenTable.getColumnCount() - 1) return;
 
-      DefaultComboBoxModel<Object> model2 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
-      model2.insertElementAt("全て", 0);
-      cbKenshuusha.setModel(model2);
-      cbKenshuusha.setSelectedIndex(0);
+		int row = bukkenTable.getSelectedRow();
+		String id = bukkenTable.getValueAt(row, 1).toString();
+		Bukken bukken = bukkenRepository.getBukkenWithID(id);
+		String link = bukken.getBecchuuDBURL();
+		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+		if (desktop != null) {
+			try {
+				desktop.browse(new URI(link));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
-   }
+	private void bukkenTableSelectionChange(ListSelectionEvent e) {
+		int row = bukkenTable.getSelectedRow();
+		String id = bukkenTable.getValueAt(row, 1).toString();
+		Bukken bukken = bukkenRepository.getBukkenWithID(id);
+		loadBecchuuTableWithSelectedBukken(bukken);
+	}
 
-   // handle events--------------------------------------------------------------------------------------
-   private void btnAddBukkenActionPerformed(ActionEvent event) {
-      BukkenDetailsForm form = new BukkenDetailsForm(null);
-      form.setLocationRelativeTo(this);
-      form.showDialog(this);
-   }
+	private void bukkenTableDoubleClicked(MouseEvent event) {
+		if (Config.RoleID.equals("IP")) return;
+		if (bukkenTable.getSelectedRow() == -1) return;
+		int row = bukkenTable.getSelectedRow();
+		String id = bukkenTable.getValueAt(row, 1).toString();
+		Bukken bukkenToEdit = bukkenRepository.getBukkenWithID(id);
+		// if found bukken at selectedRow
+		if (bukkenToEdit != null) {
+			BukkenDetailsForm form = new BukkenDetailsForm(bukkenToEdit);
+			form.setLocationRelativeTo(this);
+			form.showDialog(this);
+		}
+	}
 
-   private void bukkenTableClicked(MouseEvent event) {
-      if (bukkenTable.getSelectedRow() == -1) return;
-      int col = bukkenTable.getSelectedColumn();
-      if (col != bukkenTable.getColumnCount() - 1) return;
+	private void loadBecchuuTableWithSelectedBukken(Bukken bukken) {
+		((BecchuuTableModel) becchuuTable.getModel()).setBukken(bukken);
+	}
 
-      int row = bukkenTable.getSelectedRow();
-      String id = bukkenTable.getValueAt(row, 1).toString();
-      Bukken bukken = bukkenRepository.getBukkenWithID(id);
-      String link = bukken.getBecchuuDBURL();
-      Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-      if (desktop != null) {
-         try {
-            desktop.browse(new URI(link));
-         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-      }
-   }
+	// begin: search on bukkenTable
+	RowFilter typeFilter;
+	RowFilter textFilter;
+	LinkedList<RowFilter<TableModel, Object>> rowFilters = new LinkedList<>();
+	private JComboBox cbBecchuuType;
+	private JTextField txtBecchuuSearch;
+	private JComboBox cbSakuseiSha;
+	private JComboBox cbKenshuusha;
+	private JButton btnAddGroup;
 
-   private void bukkenTableSelectionChange(ListSelectionEvent e) {
-      int row = bukkenTable.getSelectedRow();
-      String id = bukkenTable.getValueAt(row, 1).toString();
-      Bukken bukken = bukkenRepository.getBukkenWithID(id);
-      loadBecchuuTableWithSelectedBukken(bukken);
-   }
+	private void filterBukkenTable() {
+		rowFilters.clear();
+		if (textFilter != null) {
+			rowFilters.add(textFilter);
+		}
+		if (typeFilter != null) {
+			rowFilters.add(typeFilter);
+		}
+		rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
+	}
 
-   private void bukkenTableDoubleClicked(MouseEvent event) {
-      if (Config.RoleID.equals("IP")) return;
-      if (bukkenTable.getSelectedRow() == -1) return;
-      int row = bukkenTable.getSelectedRow();
-      String id = bukkenTable.getValueAt(row, 1).toString();
-      Bukken bukkenToEdit = bukkenRepository.getBukkenWithID(id);
-      // if found bukken at selectedRow
-      if (bukkenToEdit != null) {
-         BukkenDetailsForm form = new BukkenDetailsForm(bukkenToEdit);
-         form.setLocationRelativeTo(this);
-         form.showDialog(this);
-      }
-   }
+	private void txtBukkenSearchKeyReleased(KeyEvent event) {
+		if (txtBukkenSearch.getText().trim().length() == 0) {
+			textFilter = null;
+		} else {
+			textFilter = RowFilter.regexFilter("(?i)" + txtBukkenSearch.getText());
+		}
+		filterBukkenTable();
+	}
 
-   private void loadBecchuuTableWithSelectedBukken(Bukken bukken) {
-      ((BecchuuTableModel) becchuuTable.getModel()).setBukken(bukken);
-   }
+	private void cbTypeitemStateChanged(ItemEvent event) {
+		if (cbType.getSelectedIndex() == 0) {
+			typeFilter = null;
+		} else {
+			typeFilter = RowFilter.regexFilter("(?i)" + cbType.getSelectedItem().toString());
+		}
+		filterBukkenTable();
+	}
 
-   // begin: search on bukkenTable
-   RowFilter typeFilter;
-   RowFilter textFilter;
-   LinkedList<RowFilter<TableModel, Object>> rowFilters = new LinkedList<>();
-   private JComboBox cbBecchuuType;
-   private JTextField txtBecchuuSearch;
-   private JComboBox cbSakuseiSha;
-   private JComboBox cbKenshuusha;
-   private JSplitPane mainSplitPane;
-   private JButton btnAddGroup;
+	// end: search on bukkenTable
 
-   private void filterBukkenTable() {
-      rowFilters.clear();
-      if (textFilter != null) {
-         rowFilters.add(textFilter);
-      }
-      if (typeFilter != null) {
-         rowFilters.add(typeFilter);
-      }
-      rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
-   }
+	// end handle events------------------------------------------------------------------------------------
 
-   private void txtBukkenSearchKeyReleased(KeyEvent event) {
-      if (txtBukkenSearch.getText().trim().length() == 0) {
-         textFilter = null;
-      } else {
-         textFilter = RowFilter.regexFilter("(?i)" + txtBukkenSearch.getText());
-      }
-      filterBukkenTable();
-   }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		Config.setLookAndField();
 
-   private void cbTypeitemStateChanged(ItemEvent event) {
-      if (cbType.getSelectedIndex() == 0) {
-         typeFilter = null;
-      } else {
-         typeFilter = RowFilter.regexFilter("(?i)" + cbType.getSelectedItem().toString());
-      }
-      filterBukkenTable();
-   }
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					BukkenKanriForm frame = new BukkenKanriForm();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-   // end: search on bukkenTable
+	private void loadFromDataBase() {
+		initializeData();
+		setupTable();
+	}
+	
+	/**
+	 * Create the frame.
+	 */
+	public BukkenKanriForm() {
 
-   // end handle events------------------------------------------------------------------------------------
+		setTitle("別注管理  ― ハノイ支店");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-   /**
-    * Launch the application.
-    */
-   public static void main(String[] args) {
-      Config.setLookAndField();
+		// setMinimumSize(new Dimension(850, 700));
 
-      EventQueue.invokeLater(new Runnable() {
-         public void run() {
-            try {
-               BukkenKanriForm frame = new BukkenKanriForm();
-               frame.setVisible(true);
-            } catch (Exception e) {
-               e.printStackTrace();
-            }
-         }
-      });
-   }
+		createAndSetupGUI();
+		loadFromDataBase();
+		loadShouhinTypeCombobox();
+		loadBecchuuTypeCombobox();
+		loadBecchuuEmployeesCombobox();
+		pack();
 
-   private void loadFromDataBase() {
-      initializeData();
-      setupTable();
-   }
-
-   /**
-    * Create the frame.
-    */
-   public BukkenKanriForm() {
-
-      setTitle("別注管理  ― ハノイ支店");
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-      setMinimumSize(new Dimension(850, 700));
-//]]		setExtendedState(JFrame.MAXIMIZED_BOTH); ;
+		// set up role
+		if (Config.RoleID.equals("IP")) {
+			btnAddGroup.setEnabled(false);
+		}
+		lblWelcome.setText("Welcome " + Config.UserName);
 
 
-      createAndSetupGUI();
-      loadFromDataBase();
-      loadShouhinTypeCombobox();
-      loadBecchuuTypeCombobox();
-      loadBecchuuEmployeesCombobox();
-      mainSplitPane.setDividerLocation(this.getWidth() / 2);
-      pack();
+	}
 
-      // set up role
-      if (Config.RoleID.equals("IP")) {
-         btnAddGroup.setEnabled(false);
-      }
-      lblWelcome.setText("Welcome " + Config.UserName);
-   }
+	// BEGIN implements BukkenDetailFormsDelegate--------------------------------------------
+	@Override
+	public void submitData(Bukken bukken, boolean insert) {
+		BukkenTableModel bukkenTableModel = (BukkenTableModel) bukkenTable.getModel();
+		if (insert) {
+			bukkenTableModel.insertBukken(bukken);
 
-   // BEGIN implements BukkenDetailFormsDelegate--------------------------------------------
-   @Override
-   public void submitData(Bukken bukken, boolean insert) {
-      BukkenTableModel bukkenTableModel = (BukkenTableModel) bukkenTable.getModel();
-      if (insert) {
-         bukkenTableModel.insertBukken(bukken);
+		} else {
+			bukkenTableModel.updateBukken(bukken, bukkenTable.getSelectedRow());
 
-      } else {
-         bukkenTableModel.updateBukken(bukken, bukkenTable.getSelectedRow());
+		}
+	}
 
-      }
-   }
+	@Override
+	public void submitData(BecchuuDetailsForm becchuuDetailsForm, Becchuu becchuu) {
 
-   @Override
-   public void submitData(BecchuuDetailsForm becchuuDetailsForm, Becchuu becchuu) {
+	}
 
-   }
+	@Override
+	public void movePrevious(BecchuuDetailsForm becchuuDetailsForm) {
 
-   @Override
-   public void movePrevious(BecchuuDetailsForm becchuuDetailsForm) {
+	}
 
-   }
+	@Override
+	public void moveNext(BecchuuDetailsForm becchuuDetailsForm) {
 
-   @Override
-   public void moveNext(BecchuuDetailsForm becchuuDetailsForm) {
+	}
 
-   }
-
-   // END implements BukkenDetailFormsDelegate--------------------------------------------
+	// END implements BukkenDetailFormsDelegate--------------------------------------------
 
 }

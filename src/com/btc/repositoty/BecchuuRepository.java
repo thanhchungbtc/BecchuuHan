@@ -19,16 +19,16 @@ public class BecchuuRepository {
    private List<Becchuu> data;
    private Connection connection;
 
-   private static BecchuuRepository _instance;
+//   private static BecchuuRepository _instance;
 
-   private BecchuuRepository() {
+   public BecchuuRepository() {
 
    }
 
-   public static BecchuuRepository Instance() {
-      if (_instance == null) _instance = new BecchuuRepository();
-      return _instance;
-   }
+//   public static BecchuuRepository Instance() {
+//      if (_instance == null) _instance = new BecchuuRepository();
+//      return _instance;
+//   }
 
    public Becchuu getBecchuuByID(String koujibangou, String becchuuKigou) {
       List<Becchuu> becchuus = getListWithRefresh(false);

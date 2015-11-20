@@ -1,6 +1,6 @@
 package com.btc.supports;
 
-import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
+import de.javasoft.plaf.synthetica.*;
 
 import javax.swing.*;
 
@@ -14,8 +14,11 @@ public class Config {
       try {
          //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //			 UIManager.setLookAndFeel(SyntheticaBlackEyeLookAndFeel.class.getName());
+//         UIManager.setLookAndFeel(SyntheticaWhiteVisionLookAndFeel.class.getName());
+         UIManager.setLookAndFeel(SyntheticaBlueMoonLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaAluOxideLookAndFeel.class.getName());
-         UIManager.setLookAndFeel(SyntheticaBlackStarLookAndFeel.class.getName());
+//         UIManager.setLookAndFeel(SyntheticaBlackStarLookAndFeel.class.getName());
+//         UIManager.setLookAndFeel(SyntheticaBlueIceLookAndFeel.class.getName());
          SyntheticaBlackStarLookAndFeel.setFont("Dialog", 12);
          //UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 //		} catch (ClassNotFoundException e1) {

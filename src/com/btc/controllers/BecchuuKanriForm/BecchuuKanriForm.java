@@ -27,14 +27,14 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
    private BecchuuRepository becchuuRepository;
    TableRowSorter<TableModel> rowSorter;
-
+   BecchuuDetailsForm becchuuDetailsForm;
    /**
     * Create the frame.
     */
    public BecchuuKanriForm() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setTitle("別注管理");
-      setBounds(100, 100, 800, 600);
+//      setBounds(100, 100, 800, 600);
       createAndSetUpGUI();
       initializeData();
       loadBecchuuEmployeesCombobox();
@@ -43,7 +43,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
       regisEventHandler();
       filterBecchuuTable();
-      // pack();
+      pack();
    }
 
    private void loadBecchuuTypeCombobox() {
@@ -76,6 +76,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       becchuuTable.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
+            System.out.println(e.getClickCount());
             if (e.getClickCount() == 2) {
                becchuuTableDoubleClicked(e);
             } else if (e.getClickCount() == 1) {
@@ -89,7 +90,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
    }
 
    private void initializeData() {
-      becchuuRepository = BecchuuRepository.Instance();
+      becchuuRepository = new BecchuuRepository();
    }
 
    private void regisEventHandler() {
@@ -165,18 +166,37 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       Becchuu becchuuToEdit = becchuuRepository.getBecchuuByID(koujibangou, becchuuKigou);
 
       if (becchuuToEdit != null) {
-         BecchuuDetailsForm form = new BecchuuDetailsForm(becchuuToEdit);
-         form.setLocationRelativeTo(this);
-         form.delegate = this;
-         form.showDialog(this);
+         if (becchuuDetailsForm == null) {
+            becchuuDetailsForm = new BecchuuDetailsForm(becchuuToEdit);
+            becchuuDetailsForm.setLocationRelativeTo(this);
+            becchuuDetailsForm.delegate = this;
+            becchuuDetailsForm.showDialog(this);
+            becchuuDetailsForm.addWindowListener(new WindowAdapter() {
+               @Override
+               public void windowClosed(WindowEvent e) {
+                  becchuuDetailsForm = null;
+                  super.windowClosed(e);
+               }
+            });
+         } else {
+            becchuuDetailsForm.setBecchuuToEdit(becchuuToEdit);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+               @Override
+               public void run() {
+                  becchuuDetailsForm.toFront();
+                  becchuuDetailsForm.repaint();
+               }
+            });
+         }
+
       }
    }
 
    private void becchuuTableSingleClicked(MouseEvent event) {
       if (becchuuTable.getSelectedRow() == -1) return;
+
       int col = becchuuTable.getSelectedColumn();
       if (col != becchuuTable.getColumnCount() - 1) return;
-
       int row = becchuuTable.getSelectedRow();
       String koujibangou = becchuuTable.getValueAt(row, 2).toString();
       String becchuuKigou = becchuuTable.getValueAt(row, 0).toString();

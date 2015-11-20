@@ -103,7 +103,7 @@ public class BecchuuIraiForm extends JFrame {
 
 
       try {
-         BecchuuRepository.Instance().insert(becchuu);
+         new BecchuuRepository().insert(becchuu);
          lblSendingMail.setVisible(true);
          iconLabel.setVisible(true);
          getContentPane().setEnabled(false);
@@ -351,7 +351,7 @@ public class BecchuuIraiForm extends JFrame {
                txtBukkenJouhou.setText("");
                return;
             }
-            bukken = BukkenRepository.Instance().contains(txtKoujibangou.getText().trim());
+            bukken = new BukkenRepository().contains(txtKoujibangou.getText().trim());
 
             if (bukken != null) {
                txtBukkenJouhou.setText(bukken.getName());

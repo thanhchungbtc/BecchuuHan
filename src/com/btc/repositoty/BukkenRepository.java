@@ -18,16 +18,16 @@ public class BukkenRepository {
 
    private List<Bukken> data;
    private Connection connection;
-   private static BukkenRepository _instance;
+   //private static BukkenRepository _instance;
 
-   private BukkenRepository() {
+   public BukkenRepository() {
 
    }
 
-   public static BukkenRepository Instance() {
-      if (_instance == null) _instance = new BukkenRepository();
-      return _instance;
-   }
+//   public static BukkenRepository Instance() {
+//      if (_instance == null) _instance = new BukkenRepository();
+//      return _instance;
+//   }
 
    public List<Bukken> getListWithRefresh(boolean refresh) {
       if (data != null) {
