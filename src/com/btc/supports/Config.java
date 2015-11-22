@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Config {
    public static String HonShaBangou = "00357518";
-   public static String UserID;
+   public static String UserID = "130708";
    public static String UserName;
    public static String RoleID = "IP";
    public static String Password;

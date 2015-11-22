@@ -6,6 +6,7 @@ package com.btc.model;
 public class KujouType {
    int id;
    String name;
+   int point;
 
    public KujouType(int id, String name) {
       this.id = id;
@@ -26,6 +27,14 @@ public class KujouType {
 
    public void setName(String name) {
       this.name = name;
+   }
+
+   public int getPoint() {
+      return point;
+   }
+
+   public void setPoint(int point) {
+      this.point = point;
    }
 
    @Override

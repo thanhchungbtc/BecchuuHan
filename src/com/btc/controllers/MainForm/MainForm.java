@@ -10,6 +10,7 @@ import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
 import com.btc.controllers.DialogHelpers;
 import com.btc.controllers.EmployeeKanriForm.EmployeeKanriForm;
 import com.btc.controllers.KujouKanriForm.KujouKanriForm;
+import com.btc.controllers.SeisekiHoukokuForm.SeisekiHoukokuForm;
 import com.btc.supports.Config;
 
 import javax.swing.*;
@@ -104,6 +105,11 @@ public class MainForm extends JFrame {
                "\nパワー：Java ver 1.8, GUI: Swing, データベース：SQLite" +
                "\nソフトウェアバーション：1.0");
       }
+      // 成績報告
+      else if (source == mnSeisekiHoukoku) {
+         SeisekiHoukokuForm form = new SeisekiHoukokuForm();
+         form.showDialog();
+      }
    }
 
    private void initComponents() {
@@ -116,6 +122,7 @@ public class MainForm extends JFrame {
       menuItem4 = new JMenuItem();
       menuItem1 = new JMenuItem();
       menu3 = new JMenu();
+      mnSeisekiHoukoku = new JMenuItem();
       mnHelp = new JMenu();
       mnHelpAbout = new JMenuItem();
       contentPane = new JPanel();
@@ -159,6 +166,11 @@ public class MainForm extends JFrame {
          //======== menu3 ========
          {
             menu3.setText("\u5831\u544a");
+
+            //---- mnSeisekiHoukoku ----
+            mnSeisekiHoukoku.setText("\u6210\u7e3e\u5831\u544a");
+            mnSeisekiHoukoku.addActionListener(e -> fileMenuActionPerformed(e));
+            menu3.add(mnSeisekiHoukoku);
          }
          menuBar1.add(menu3);
 
@@ -213,6 +225,7 @@ public class MainForm extends JFrame {
    private JMenuItem menuItem4;
    private JMenuItem menuItem1;
    private JMenu menu3;
+   private JMenuItem mnSeisekiHoukoku;
    private JMenu mnHelp;
    private JMenuItem mnHelpAbout;
    private JPanel contentPane;

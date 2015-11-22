@@ -52,6 +52,11 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu3"
 					"text": "報告"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "mnSeisekiHoukoku"
+						"text": "成績報告"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "fileMenuActionPerformed", true ) )
+					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "mnHelp"

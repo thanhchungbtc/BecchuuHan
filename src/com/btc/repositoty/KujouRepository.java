@@ -146,6 +146,7 @@ public class KujouRepository extends GenericRepository<Kujou>{
          while (rs.next()) {
             int valIndex = 1;
             kujou = new KujouType(rs.getInt(valIndex++), rs.getString(valIndex++));
+            kujou.setPoint(rs.getInt(valIndex++));
          }
       } catch (ClassNotFoundException e) {
          e.printStackTrace();
