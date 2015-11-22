@@ -137,10 +137,10 @@ public class BecchuuIraiForm extends JFrame {
    private void sendMail() throws MessagingException {
       String subject = "別注依頼：" + txtKoujibangou.getText() + " - " + txtBukkenJouhou.getText();
       String message = "別注依頼しました。" +
-          "<br />別注記号：" + txtBecchuuKigou.getText() + "" +
-          "<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
-          "<br />依頼者：" + txtIraiSha.getText() + "" +
-          "<br />依頼日： " + txtIraibi.getText();
+            "<br />別注記号：" + txtBecchuuKigou.getText() + "" +
+            "<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
+            "<br />依頼者：" + txtIraiSha.getText() + "" +
+            "<br />依頼日： " + txtIraibi.getText();
       Properties defaultProps = new Properties();
       defaultProps.setProperty("mail.smtp.host", "smtp.gmail.com");
       defaultProps.setProperty("mail.smtp.port", "587");
@@ -417,14 +417,12 @@ public class BecchuuIraiForm extends JFrame {
       becchuuPanel.add(txtIraibi, gbc_txtIraibi);
    }
 
-
    /**
     * Create the frame.
     */
    public BecchuuIraiForm() {
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setTitle("別注依頼");
-
 
       createAndSetupGUI();
       txtIraibi.setText(Helpers.stringFromDate(new Date()));
@@ -482,12 +480,12 @@ public class BecchuuIraiForm extends JFrame {
 
       btnOK = new JButton("依頼実行");
       footerPanel.add(btnOK);
-      
+
       JSplitPane headerSplitPane = new JSplitPane();
       headerSplitPane.setBorder(new CompoundBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)), new EmptyBorder(5, 5, 5, 5)));
       headerSplitPane.setDividerSize(0);
       contentPane.add(headerSplitPane, BorderLayout.NORTH);
-      
+
       JPanel panel = new JPanel();
       panel.setBorder(new EmptyBorder(5, 0, 0, 0));
       FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
@@ -495,30 +493,30 @@ public class BecchuuIraiForm extends JFrame {
       flowLayout_1.setHgap(0);
       flowLayout_1.setAlignment(FlowLayout.LEFT);
       headerSplitPane.setLeftComponent(panel);
-      
-            JLabel lblNewLabel = new JLabel("別注依頼：");
-            panel.add(lblNewLabel);
-            lblNewLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 15));
-            lblNewLabel.setBackground(new Color(255, 255, 255));
-            
-            JPanel panel_1 = new JPanel();
-            FlowLayout flowLayout_2 = (FlowLayout) panel_1.getLayout();
-            flowLayout_2.setHgap(0);
-            flowLayout_2.setVgap(0);
-            flowLayout_2.setAlignment(FlowLayout.RIGHT);
-            headerSplitPane.setRightComponent(panel_1);
-            
-            JButton btnChangePass = new JButton("<html><font color=\"#0000FF\">パスワード変更</html>");
-            btnChangePass.addActionListener(new ActionListener() {
-            	public void actionPerformed(ActionEvent e) {
-            		ChangePasswordForm changePasswordForm = new ChangePasswordForm();
-            		changePasswordForm.setVisible(true);
-            	}
-            });
-            btnChangePass.setFocusPainted(false);
-            btnChangePass.setBorderPainted(false);
-            btnChangePass.setForeground(Color.BLUE);
-            panel_1.add(btnChangePass);
+
+      JLabel lblNewLabel = new JLabel("別注依頼：");
+      panel.add(lblNewLabel);
+      lblNewLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 15));
+      lblNewLabel.setBackground(new Color(255, 255, 255));
+
+      JPanel panel_1 = new JPanel();
+      FlowLayout flowLayout_2 = (FlowLayout) panel_1.getLayout();
+      flowLayout_2.setHgap(0);
+      flowLayout_2.setVgap(0);
+      flowLayout_2.setAlignment(FlowLayout.RIGHT);
+      headerSplitPane.setRightComponent(panel_1);
+
+      JButton btnChangePass = new JButton("<html><font color=\"#0000FF\">パスワード変更</html>");
+      btnChangePass.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            ChangePasswordForm changePasswordForm = new ChangePasswordForm();
+            changePasswordForm.setVisible(true);
+         }
+      });
+      btnChangePass.setFocusPainted(false);
+      btnChangePass.setBorderPainted(false);
+      btnChangePass.setForeground(Color.BLUE);
+      panel_1.add(btnChangePass);
       btnOK.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             btnOKActionPerformed(e);
@@ -541,7 +539,6 @@ public class BecchuuIraiForm extends JFrame {
       });
 
       pack();
-      setBounds(100, 100, 650, (int) this.getPreferredSize().getHeight());
    }
 
 }

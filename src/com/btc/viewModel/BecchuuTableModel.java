@@ -16,7 +16,10 @@ public class BecchuuTableModel extends AbstractTableModel {
    private Bukken bukken;
 
    public void setBukken(Bukken bukken) {
-      if (bukken == null) return;
+      if (bukken == null) {
+         this.data.clear();
+         return;
+      }
       this.bukken = bukken;
       this.data = bukken.getListBecchuu();
       fireTableDataChanged();

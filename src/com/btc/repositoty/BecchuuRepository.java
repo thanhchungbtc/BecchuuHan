@@ -5,6 +5,7 @@ import com.btc.DAL.ConnectionUtils;
 import com.btc.model.Becchuu;
 import com.btc.supports.Helpers;
 
+import java.beans.beancontext.BeanContextChild;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,21 +20,24 @@ public class BecchuuRepository {
    private List<Becchuu> data;
    private Connection connection;
 
-//   private static BecchuuRepository _instance;
-
    public BecchuuRepository() {
 
    }
-
-//   public static BecchuuRepository Instance() {
-//      if (_instance == null) _instance = new BecchuuRepository();
-//      return _instance;
-//   }
 
    public Becchuu getBecchuuByID(String koujibangou, String becchuuKigou) {
       List<Becchuu> becchuus = getListWithRefresh(false);
       for (Becchuu becchuu : becchuus) {
          if (becchuu.getKoujibangou().equals(koujibangou) && becchuu.getBecchuuKigou().equals(becchuuKigou)) {
+            return becchuu;
+         }
+      }
+      return null;
+   }
+
+   public Becchuu getBecchuuByID(int id) {
+      List<Becchuu> becchuus = getListWithRefresh(false);
+      for (Becchuu becchuu : becchuus) {
+         if (becchuu.getId() == id) {
             return becchuu;
          }
       }
@@ -184,7 +188,5 @@ public class BecchuuRepository {
          }
       }
       return true;
-
    }
-
 }

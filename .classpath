@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/syntheticaBlackStar.jar"/>
 	<classpathentry kind="lib" path="libs/mail-1.4.7.jar"/>
 	<classpathentry kind="lib" path="libs/syntheticaBlueMoon.jar"/>
+	<classpathentry kind="lib" path="libs/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

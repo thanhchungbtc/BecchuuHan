@@ -38,15 +38,13 @@ public class BecchuuDetailsForm extends JDialog {
    private JLabel txtIraisha;
    private JLabel ltxtIraiBi;
    private JLabel txtNouki;
-   private JTextField txtBukkenMei;
+   private JTextArea txtBukkenMei;
    private JTextField txtShiten;
    private JLabel txtShouhinType;
    private JTextField txtDEPSF;
    private JComboBox cbSakuseiJoukyou;
-   private JSpinner spMaisuu;
    private JComboBox cbKenshuuSha;
    private JComboBox cbKenshuuJoukyou;
-   private JSpinner spMisu;
    private JTextArea txtBikou;
    private JComboBox cbsakuSeiSha;
    private JComboBox cbBunrui;
@@ -55,6 +53,9 @@ public class BecchuuDetailsForm extends JDialog {
    private JButton btnLock;
 
    private boolean editable = false;
+   private JTextField spMisu;
+   private JTextField spMaisuu;
+
    private void loadBecchuuEmployeesCombobox() {
       DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
       model.addElement("");
@@ -63,7 +64,6 @@ public class BecchuuDetailsForm extends JDialog {
       DefaultComboBoxModel<Object> model2 = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees().toArray());
       model2.addElement("");
       cbKenshuuSha.setModel(model2);
-
    }
 
    private void loadBecchuuStatusCombobox() {
@@ -78,55 +78,56 @@ public class BecchuuDetailsForm extends JDialog {
       DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuTypes().toArray());
       cbBunrui.setModel(model);
    }
-   
+
    private void setField(JComponent component, String value) {
-	   if (component instanceof JTextArea) {
-		   JTextArea textArea = (JTextArea)component;
-		   try {
-			   textArea.setText(value);
-		   } catch (Exception exception) {
-			   textArea.setText("");
-		   }
-	   } else if (component instanceof JTextField) {
-		   JTextField textArea = (JTextField)component;
-		   try {
-			   textArea.setText(value);
-		   } catch (Exception exception) {
-			   textArea.setText("");
-		   }
-	   } else if (component instanceof JLabel) {
-		   JLabel textArea = (JLabel)component;
-		   try {
-			   textArea.setText(value);
-		   } catch (Exception exception) {
-			   textArea.setText("");
-		   }
-	   }
+      if (component instanceof JTextArea) {
+         JTextArea textArea = (JTextArea) component;
+         try {
+            textArea.setText(value);
+
+         } catch (Exception exception) {
+            textArea.setText("");
+         }
+      } else if (component instanceof JTextField) {
+         JTextField textArea = (JTextField) component;
+         try {
+            textArea.setText(value);
+         } catch (Exception exception) {
+            textArea.setText("");
+         }
+      } else if (component instanceof JLabel) {
+         JLabel textArea = (JLabel) component;
+         try {
+            textArea.setText(value);
+         } catch (Exception exception) {
+            textArea.setText("");
+         }
+      }
    }
-   
+
    private void setCombobox(JComboBox comboBox, Object value) {
-	   try {
-		   comboBox.getModel().setSelectedItem(value);
-	   } catch (Exception exception) {
-		   comboBox.getModel().setSelectedItem(comboBox.getModel().getSize() - 1);
-	   }
+      try {
+         comboBox.getModel().setSelectedItem(value);
+      } catch (Exception exception) {
+         comboBox.getModel().setSelectedItem(comboBox.getModel().getSize() - 1);
+      }
    }
 
    private void populateData() {
-	  
-	   setField(txtBecchuuKigou, becchuuToEdit.getBecchuuKigou());
-	   setField(txtBecchuuParameter, becchuuToEdit.getBecchuuParameter());
-	   setField(txtBecchuuNaiyou, becchuuToEdit.getBecchuuNaiyou());
-	  
-	   setField(txtMotozuKigou, becchuuToEdit.getMotozuKigou());
-	   setField(txtMotozuParameter, becchuuToEdit.getMotozuParameter());
-      
-	   if (becchuuToEdit.getIraiSha() != null)
-		   setField(txtIraisha, becchuuToEdit.getIraiSha().getName());
-	   
-	   setField(ltxtIraiBi, Helpers.stringFromDate(becchuuToEdit.getIraibi()));
-      setField(txtKoujibangou, becchuuToEdit.getKoujibangou());	   
-     
+
+      setField(txtBecchuuKigou, becchuuToEdit.getBecchuuKigou());
+      setField(txtBecchuuParameter, becchuuToEdit.getBecchuuParameter());
+      setField(txtBecchuuNaiyou, becchuuToEdit.getBecchuuNaiyou());
+
+      setField(txtMotozuKigou, becchuuToEdit.getMotozuKigou());
+      setField(txtMotozuParameter, becchuuToEdit.getMotozuParameter());
+
+      if (becchuuToEdit.getIraiSha() != null)
+         setField(txtIraisha, becchuuToEdit.getIraiSha().getName());
+
+      setField(ltxtIraiBi, Helpers.stringFromDate(becchuuToEdit.getIraibi()));
+      setField(txtKoujibangou, becchuuToEdit.getKoujibangou());
+
       Bukken bukken = becchuuToEdit.getBukken();
       setField(txtNouki, Helpers.stringFromDate(bukken.getNouki()));
 
@@ -148,10 +149,10 @@ public class BecchuuDetailsForm extends JDialog {
       dpkSakuseBi.getModel().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONDAY), calendar.get(Calendar.DATE));
       dpkSakuseBi.getModel().setSelected(true);
 
-      
+
       Employee sakuseiSha = becchuuToEdit.getSakuseiSha();
       setCombobox(cbsakuSeiSha, sakuseiSha);
-      
+
       Employee kenshuuSha = becchuuToEdit.getKenshuuSha();
       setCombobox(cbKenshuuSha, kenshuuSha);
 
@@ -162,9 +163,10 @@ public class BecchuuDetailsForm extends JDialog {
       setCombobox(cbKenshuuJoukyou, kenshuuJoukyou);
 //		
       int misu = becchuuToEdit.getMisu();
-      spMisu.getModel().setValue(misu < 0 ? 0 : misu);
+      spMisu.setText(misu < 0 ? "" : String.valueOf(misu));
+
       int maisu = becchuuToEdit.getBecchuuMaisu();
-      spMaisuu.getModel().setValue(maisu < 0 ? 0 : maisu);
+      spMaisuu.setText(maisu < 0 ? "" : String.valueOf(maisu));
 
       BecchuuType becchuuType = becchuuToEdit.getBecchuuType();
       setCombobox(cbBunrui, becchuuType);
@@ -193,11 +195,11 @@ public class BecchuuDetailsForm extends JDialog {
       if (kenshuuSha != null)
          becchuuToEdit.setKenshuShaID(kenshuuSha.getId());
 
-      BecchuuStatus sakuseiStatus = (BecchuuStatus)cbSakuseiJoukyou.getModel().getSelectedItem();
+      BecchuuStatus sakuseiStatus = (BecchuuStatus) cbSakuseiJoukyou.getModel().getSelectedItem();
       if (sakuseiStatus != null)
          becchuuToEdit.setSakuseiStatusID(sakuseiStatus.getId());
 
-      BecchuuStatus kenshuuStatus = (BecchuuStatus)cbKenshuuJoukyou.getModel().getSelectedItem();
+      BecchuuStatus kenshuuStatus = (BecchuuStatus) cbKenshuuJoukyou.getModel().getSelectedItem();
       if (kenshuuStatus != null)
          becchuuToEdit.setKenshuuStatusID(kenshuuStatus.getId());
 
@@ -206,8 +208,25 @@ public class BecchuuDetailsForm extends JDialog {
          becchuuToEdit.setBecchuuTypeID(becchuuType.getId());
 
       becchuuToEdit.setSakuseiBi(((Date) dpkSakuseBi.getModel().getValue()));
-      becchuuToEdit.setBecchuuMaisu(Integer.parseInt(spMaisuu.getModel().getValue().toString()));
-      becchuuToEdit.setMisu(Integer.parseInt(spMisu.getModel().getValue().toString()));
+
+
+      try {
+         int maisuu = -1;
+         if (!spMaisuu.getText().trim().equals("")) {
+            maisuu = Integer.parseInt(spMaisuu.getText());
+         }
+         becchuuToEdit.setBecchuuMaisu(maisuu);
+
+         int misu = -1;
+         if (!spMisu.getText().trim().equals("")) {
+            misu = Integer.parseInt(spMisu.getText());
+         }
+         becchuuToEdit.setMisu(misu);
+      } catch (NumberFormatException e) {
+         DialogHelpers.showError("エラー", "数字を入力してください。");
+         return;
+      }
+
       becchuuToEdit.setHinCode(txtHinCode.getText().trim());
       becchuuToEdit.setBikou(txtBikou.getText().trim());
 
@@ -459,7 +478,7 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_5.gridx = 0;
       gbc_lblNewLabel_5.gridy = 1;
       bukkenPanel.add(lblNewLabel_5, gbc_lblNewLabel_5);
-      
+
       txtKoujibangou = new JTextField();
       txtKoujibangou.setBackground(new Color(0, 0, 0, 0));
       txtKoujibangou.setBorder(null);
@@ -480,8 +499,9 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_6.gridy = 2;
       bukkenPanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 
-      txtBukkenMei = new JTextField("New label");
+      txtBukkenMei = new JTextArea("New label");
       txtBukkenMei.setBackground(new Color(0, 0, 0, 0));
+      txtBukkenMei.setLineWrap(true);
       txtBukkenMei.setBorder(null);
       txtBukkenMei.setEditable(false);
       GridBagConstraints gbc_txtBukkenMei = new GridBagConstraints();
@@ -587,7 +607,8 @@ public class BecchuuDetailsForm extends JDialog {
 
       dpkSakuseBi = new JDatePickerImpl(datePanel, new DateLabelFormatter());
       GridBagConstraints gbc_dpkSakuseBi = new GridBagConstraints();
-      gbc_dpkSakuseBi.fill = GridBagConstraints.HORIZONTAL;
+      // gbc_dpkSakuseBi.fill = GridBagConstraints.HORIZONTAL;
+      gbc_dpkSakuseBi.anchor = GridBagConstraints.WEST;
       gbc_dpkSakuseBi.insets = new Insets(0, 0, 5, 0);
       gbc_dpkSakuseBi.gridx = 1;
       gbc_dpkSakuseBi.gridy = 8;
@@ -601,14 +622,14 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_14.gridy = 9;
       bukkenPanel.add(lblNewLabel_14, gbc_lblNewLabel_14);
 
-      spMaisuu = new JSpinner();
-      spMaisuu.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+      spMaisuu = new JTextField();
       GridBagConstraints gbc_spMaisuu = new GridBagConstraints();
-      gbc_spMaisuu.fill = GridBagConstraints.HORIZONTAL;
       gbc_spMaisuu.insets = new Insets(0, 0, 5, 0);
+      gbc_spMaisuu.fill = GridBagConstraints.HORIZONTAL;
       gbc_spMaisuu.gridx = 1;
       gbc_spMaisuu.gridy = 9;
       bukkenPanel.add(spMaisuu, gbc_spMaisuu);
+      spMaisuu.setColumns(10);
 
       JLabel lblNewLabel_12 = new JLabel("研修者：");
       GridBagConstraints gbc_lblNewLabel_12 = new GridBagConstraints();
@@ -650,16 +671,14 @@ public class BecchuuDetailsForm extends JDialog {
       gbc_lblNewLabel_15.gridy = 12;
       bukkenPanel.add(lblNewLabel_15, gbc_lblNewLabel_15);
 
-      spMisu = new JSpinner();
-      spMisu.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-      spMisu.getEditor().getComponent(0).setForeground(Color.RED);
-
+      spMisu = new JTextField();
       GridBagConstraints gbc_spMisu = new GridBagConstraints();
-      gbc_spMisu.fill = GridBagConstraints.HORIZONTAL;
       gbc_spMisu.insets = new Insets(0, 0, 5, 0);
+      gbc_spMisu.fill = GridBagConstraints.HORIZONTAL;
       gbc_spMisu.gridx = 1;
       gbc_spMisu.gridy = 12;
       bukkenPanel.add(spMisu, gbc_spMisu);
+      spMisu.setColumns(10);
 
       JLabel lblNewLabel_17 = new JLabel("分類：");
       GridBagConstraints gbc_lblNewLabel_17 = new GridBagConstraints();
@@ -723,12 +742,12 @@ public class BecchuuDetailsForm extends JDialog {
       FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
       flowLayout_1.setAlignment(FlowLayout.TRAILING);
       footerPanel.setRightComponent(buttonPanel);
-      
+
       btnLock = new JButton("");
       btnLock.addActionListener(new ActionListener() {
-      	public void actionPerformed(ActionEvent arg0) {
-      		setFormEditable(!editable);
-      	}
+         public void actionPerformed(ActionEvent arg0) {
+            setFormEditable(!editable);
+         }
       });
       btnLock.setFocusPainted(false);
       btnLock.setContentAreaFilled(false);
@@ -788,9 +807,7 @@ public class BecchuuDetailsForm extends JDialog {
    public void showDialog(BecchuuDetailsDelegate delegate) {
       this.delegate = delegate;
       this.getRootPane().registerKeyboardAction(e -> {
-         if (DialogHelpers.showConfirmMessage("確認", "この画面閉じてよろしいですか。", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            this.dispose();
-         }
+         this.dispose();
       }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
       this.setVisible(true);
    }
@@ -806,10 +823,9 @@ public class BecchuuDetailsForm extends JDialog {
    public BecchuuDetailsForm(Becchuu becchuu) {
       setTitle("別注修正");
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      //setModalityType(ModalityType.APPLICATION_MODAL);
       this.becchuuToEdit = becchuu;
       createAndSetupGUI();
-      loadBecchuuEmployeesCombobox();    
+      loadBecchuuEmployeesCombobox();
       loadBunruiCombobox();
       loadBecchuuStatusCombobox();
       populateData();
@@ -817,23 +833,23 @@ public class BecchuuDetailsForm extends JDialog {
       pack();
       setBounds(100, 100, 950, (int) this.getPreferredSize().getHeight());
    }
-   
+
    private void setFormEditable(boolean editable) {
-	   this.editable = editable;
-	   txtBecchuuKigou.setEditable(editable);
-	   txtBecchuuParameter.setEditable(editable);
-	   txtMotozuKigou.setEditable(editable);	   
-	   txtMotozuParameter.setEditable(editable);
-	   txtBecchuuNaiyou.setEditable(editable);
-	   
-	   cbsakuSeiSha.setEnabled(editable);
-	   cbKenshuuSha.setEnabled(editable);
-	  
-	   
-	   if (!editable) {
-		   btnLock.setIcon(new ImageIcon(BecchuuDetailsForm.class.getResource("/resources/icon/Lock.png")));
-	   } else {
-		   btnLock.setIcon(new ImageIcon(BecchuuDetailsForm.class.getResource("/resources/icon/unlock.png")));
-	   }
+      this.editable = editable;
+      txtBecchuuKigou.setEditable(editable);
+      txtBecchuuParameter.setEditable(editable);
+      txtMotozuKigou.setEditable(editable);
+      txtMotozuParameter.setEditable(editable);
+      txtBecchuuNaiyou.setEditable(editable);
+
+      cbsakuSeiSha.setEnabled(editable);
+      cbKenshuuSha.setEnabled(editable);
+
+
+      if (!editable) {
+         btnLock.setIcon(new ImageIcon(BecchuuDetailsForm.class.getResource("/resources/icon/Lock.png")));
+      } else {
+         btnLock.setIcon(new ImageIcon(BecchuuDetailsForm.class.getResource("/resources/icon/unlock.png")));
+      }
    }
 }

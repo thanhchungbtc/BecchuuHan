@@ -12,14 +12,14 @@ public class Config {
    public static String Password;
    public static void setLookAndField() {
       try {
-         //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //			 UIManager.setLookAndFeel(SyntheticaBlackEyeLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaWhiteVisionLookAndFeel.class.getName());
          UIManager.setLookAndFeel(SyntheticaBlueMoonLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaAluOxideLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaBlackStarLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaBlueIceLookAndFeel.class.getName());
-         SyntheticaBlackStarLookAndFeel.setFont("Dialog", 12);
+//         SyntheticaBlackStarLookAndFeel.setFont("Dialog", 12);
          //UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 //		} catch (ClassNotFoundException e1) {
 //			// TODO Auto-generated catch block

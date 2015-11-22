@@ -49,6 +49,8 @@ public class Employee {
       this.departmentID = departmentID;
    }
 
+   public Employee() { }
+
    public String getId() {
       return id;
    }
@@ -76,7 +78,6 @@ public class Employee {
    @Override
    public String toString() {
       return this.getName();
-
    }
 
    @Override

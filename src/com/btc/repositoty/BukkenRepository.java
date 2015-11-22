@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,16 +19,10 @@ public class BukkenRepository {
 
    private List<Bukken> data;
    private Connection connection;
-   //private static BukkenRepository _instance;
 
    public BukkenRepository() {
 
    }
-
-//   public static BukkenRepository Instance() {
-//      if (_instance == null) _instance = new BukkenRepository();
-//      return _instance;
-//   }
 
    public List<Bukken> getListWithRefresh(boolean refresh) {
       if (data != null) {
@@ -141,6 +136,13 @@ public class BukkenRepository {
       connection = null;
 
       return bukken;
+   }
+
+   public List<BukkenType> getBukkenTypes() {
+      List<BukkenType> bukkenTypes = new LinkedList<>();
+      bukkenTypes.add(new BukkenType(0, "XEVO"));
+      bukkenTypes.add(new BukkenType(1, "Σ"));
+      return bukkenTypes;
    }
 
 //	public boolean delete(Bukken group) throws SQLException {

@@ -7,20 +7,16 @@ package com.btc.controllers.MainForm;
 import com.btc.controllers.BecchuuIraiForm.BecchuuIraiForm;
 import com.btc.controllers.BecchuuKanriForm.BecchuuKanriForm;
 import com.btc.controllers.BukkenKanriForm.BukkenKanriForm;
-import com.btc.controllers.ChangePasswordForm.ChangePasswordForm;
-import com.btc.controllers.EmployeeManagementForm.EmployeeViewForm;
+import com.btc.controllers.DialogHelpers;
+import com.btc.controllers.EmployeeKanriForm.EmployeeKanriForm;
+import com.btc.controllers.KujouKanriForm.KujouKanriForm;
 import com.btc.supports.Config;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyVetoException;
-import java.util.*;
-import java.awt.event.ActionListener;
 
 /**
  * @author Thanh Chung
@@ -31,9 +27,10 @@ public class MainForm extends JFrame {
 
    int maxWinDowWidth;
    int maxWindowHeight;
+
    JPanel createPanel(JFrame frame) {
-     // frame.pack();
-      JPanel p = (JPanel)frame.getContentPane();
+      // frame.pack();
+      JPanel p = (JPanel) frame.getContentPane();
       int w = frame.getPreferredSize().width;
       int h = frame.getPreferredSize().height;
 
@@ -42,23 +39,22 @@ public class MainForm extends JFrame {
       maxWindowHeight = Math.max(h, maxWindowHeight);
       return p;
    }
+
    void initTabs() {
       tabs = new JPanel[3];
-      tabs[1] = createPanel(new BecchuuKanriForm());
       tabs[0] = createPanel(new BecchuuIraiForm());
+      tabs[1] = createPanel(new BecchuuKanriForm());
       tabs[2] = createPanel(new BukkenKanriForm());
-
       mainTabPane.addTab("別注管理", tabs[0]);
       mainTabPane.addTab("別注依頼", tabs[1]);
       mainTabPane.addTab("物件管理", tabs[2]);
-
       Dimension tabDim = mainTabPane.getPreferredSize();
       mainTabPane.addChangeListener(new ChangeListener() {
          @Override
          public void stateChanged(ChangeEvent e) {
             Dimension panelDim = mainTabPane.getSelectedComponent().getPreferredSize();
             Dimension nd = new Dimension(
-               tabDim.width - (maxWinDowWidth - panelDim.width),
+                  tabDim.width - (maxWinDowWidth - panelDim.width),
                   tabDim.height - (maxWindowHeight - panelDim.height));
             mainTabPane.setPreferredSize(nd);
             pack();
@@ -84,19 +80,30 @@ public class MainForm extends JFrame {
    }
 
    private void fileMenuActionPerformed(ActionEvent e) {
-//      Object source = e.getSource();
-//
-//      if (source == mnBecchuuKanriForm) {
-//         becchuuKanriForm = (JPanel)(new BecchuuKanriForm().getContentPane());
-//         openNewWinDow(becchuuKanriForm);
-//
-//      } else if (source == mnBecchuuIrai) {
-//         becchuuIraiForm = (JPanel)new BecchuuIraiForm().getContentPane();
-//         openNewWinDow(becchuuIraiForm);
-//      } else if (source == mnBukkenKanri) {
-//         bukkenKanriForm = (JPanel)new BukkenKanriForm().getContentPane();
-//         openNewWinDow(bukkenKanriForm);
-//      }
+      Object source = e.getSource();
+
+      // 社員管理
+      if (source == mnEmployeeKanri) {
+         EmployeeKanriForm employeeKanriForm = new EmployeeKanriForm();
+         employeeKanriForm.showDialog();
+      }
+      // 苦情管理
+      else if (source == mnKujouKanri) {
+         KujouKanriForm kujouKanriForm = new KujouKanriForm();
+         kujouKanriForm.showDialog();
+      }
+      // ヘルプ
+      else if (source == mnHelpAbout) {
+         DialogHelpers.showAlert("コピーライター", "このツールは別注班業務関係の仕事として使用されるツールである。" +
+               "\nメイン機能：" +
+               "\n- 別注依頼管理" +
+               "\n- 別注検索システム" +
+               "\n- 苦情管理" +
+               "\n- 社員管理、報告" +
+               "\n作成者：ブイタンチュン - ©2015" +
+               "\nパワー：Java ver 1.8, GUI: Swing, データベース：SQLite" +
+               "\nソフトウェアバーション：1.0");
+      }
    }
 
    private void initComponents() {
@@ -104,12 +111,13 @@ public class MainForm extends JFrame {
       // Generated using JFormDesigner Evaluation license - Thanh Chung
       menuBar1 = new JMenuBar();
       menu1 = new JMenu();
-      mnBecchuuKanriForm = new JMenuItem();
-      mnBukkenKanri = new JMenuItem();
-      mnBecchuuIrai = new JMenuItem();
+      mnEmployeeKanri = new JMenuItem();
+      mnKujouKanri = new JMenuItem();
       menuItem4 = new JMenuItem();
       menuItem1 = new JMenuItem();
-      menu2 = new JMenu();
+      menu3 = new JMenu();
+      mnHelp = new JMenu();
+      mnHelpAbout = new JMenuItem();
       contentPane = new JPanel();
       mainContent = new JPanel();
       mainTabPane = new JTabbedPane();
@@ -127,20 +135,15 @@ public class MainForm extends JFrame {
          {
             menu1.setText("\u30d5\u30a1\u30a4\u30eb");
 
-            //---- mnBecchuuKanriForm ----
-            mnBecchuuKanriForm.setText("\u5225\u6ce8\u7ba1\u7406");
-            mnBecchuuKanriForm.addActionListener(e -> fileMenuActionPerformed(e));
-            menu1.add(mnBecchuuKanriForm);
+            //---- mnEmployeeKanri ----
+            mnEmployeeKanri.setText("\u793e\u54e1\u53f0\u5e33");
+            mnEmployeeKanri.addActionListener(e -> fileMenuActionPerformed(e));
+            menu1.add(mnEmployeeKanri);
 
-            //---- mnBukkenKanri ----
-            mnBukkenKanri.setText("\u7269\u4ef6\u7ba1\u7406");
-            mnBukkenKanri.addActionListener(e -> fileMenuActionPerformed(e));
-            menu1.add(mnBukkenKanri);
-
-            //---- mnBecchuuIrai ----
-            mnBecchuuIrai.setText("\u5225\u6ce8\u4f9d\u983c");
-            mnBecchuuIrai.addActionListener(e -> fileMenuActionPerformed(e));
-            menu1.add(mnBecchuuIrai);
+            //---- mnKujouKanri ----
+            mnKujouKanri.setText("\u82e6\u60c5\u7ba1\u7406");
+            mnKujouKanri.addActionListener(e -> fileMenuActionPerformed(e));
+            menu1.add(mnKujouKanri);
 
             //---- menuItem4 ----
             menuItem4.setText("\u30a8\u30c3\u30af\u30b9\u30dd\u30fc\u30c8");
@@ -153,11 +156,26 @@ public class MainForm extends JFrame {
          }
          menuBar1.add(menu1);
 
-         //======== menu2 ========
+         //======== menu3 ========
          {
-            menu2.setText("\u30d8\u30eb\u30d7");
+            menu3.setText("\u5831\u544a");
          }
-         menuBar1.add(menu2);
+         menuBar1.add(menu3);
+
+         //======== mnHelp ========
+         {
+            mnHelp.setText("\u30d8\u30eb\u30d7");
+            mnHelp.addActionListener(e -> {
+			fileMenuActionPerformed(e);
+			fileMenuActionPerformed(e);
+		});
+
+            //---- mnHelpAbout ----
+            mnHelpAbout.setText("\u30bd\u30d5\u30c8\u306b\u3064\u3044\u3066");
+            mnHelpAbout.addActionListener(e -> fileMenuActionPerformed(e));
+            mnHelp.add(mnHelpAbout);
+         }
+         menuBar1.add(mnHelp);
       }
       setJMenuBar(menuBar1);
 
@@ -190,12 +208,13 @@ public class MainForm extends JFrame {
    // Generated using JFormDesigner Evaluation license - Thanh Chung
    private JMenuBar menuBar1;
    private JMenu menu1;
-   private JMenuItem mnBecchuuKanriForm;
-   private JMenuItem mnBukkenKanri;
-   private JMenuItem mnBecchuuIrai;
+   private JMenuItem mnEmployeeKanri;
+   private JMenuItem mnKujouKanri;
    private JMenuItem menuItem4;
    private JMenuItem menuItem1;
-   private JMenu menu2;
+   private JMenu menu3;
+   private JMenu mnHelp;
+   private JMenuItem mnHelpAbout;
    private JPanel contentPane;
    private JPanel mainContent;
    private JTabbedPane mainTabPane;

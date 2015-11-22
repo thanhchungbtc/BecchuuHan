@@ -8,6 +8,7 @@ import com.btc.repositoty.BecchuuRepository;
 import com.btc.repositoty.CommonRepository;
 import com.btc.supports.Config;
 import com.btc.supports.Helpers;
+import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -85,8 +86,9 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
          }
       });
 
-      rowSorter = new TableRowSorter<TableModel>(becchuuTable.getModel());
-      becchuuTable.setRowSorter(rowSorter);      
+//      rowSorter = new TableRowSorter<TableModel>(becchuuTable.getModel());
+//      becchuuTable.setRowSorter(rowSorter);
+
    }
 
    private void initializeData() {
@@ -124,8 +126,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
             chkKenshuZumi.setSelected(true);
             textFilter = null;
             sakuseiBiFilter = null;
-            rowSorter.setRowFilter(null);
-
+            becchuuTable.setRowFilter(null);
          }
       });
       ActionListener comboBoxActionListener = new ActionListener() {
@@ -253,7 +254,8 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       }
       if (sakuseiBiFilter != null)
          rowFilters.add(sakuseiBiFilter);
-      rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
+     // rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
+      becchuuTable.setRowFilter(RowFilter.andFilter(rowFilters));
       // remake status label
       int maisu = 0;
       int misu = 0;
@@ -484,7 +486,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       txtSakuseiBI.setColumns(10);
 
 
-      becchuuTable = new JTable();
+      becchuuTable = new JXTable();
       becchuuTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       becchuuTable.setModel(new DefaultTableModel(null, columnNames1));
 
@@ -514,7 +516,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
    }
 
    private JPanel contentPane;
-   private JTable becchuuTable;
+   private JXTable becchuuTable;
    private JLabel lblWelcome;
    private JComboBox cbType;
    private JComboBox cbSakuseiSha;
