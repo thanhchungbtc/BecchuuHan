@@ -137,10 +137,10 @@ public class BecchuuIraiForm extends JFrame {
    private void sendMail() throws MessagingException {
       String subject = "別注依頼：" + txtKoujibangou.getText() + " - " + txtBukkenJouhou.getText();
       String message = "別注依頼しました。" +
-            "<br />別注記号：" + txtBecchuuKigou.getText() + "" +
-            "<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
-            "<br />依頼者：" + txtIraiSha.getText() + "" +
-            "<br />依頼日： " + txtIraibi.getText();
+          "<br />別注記号：" + txtBecchuuKigou.getText() + "" +
+          "<br />別注内容：" + txtBecchuuNaiyou.getText() + "" +
+          "<br />依頼者：" + txtIraiSha.getText() + "" +
+          "<br />依頼日： " + txtIraibi.getText();
       Properties defaultProps = new Properties();
       defaultProps.setProperty("mail.smtp.host", "smtp.gmail.com");
       defaultProps.setProperty("mail.smtp.port", "587");

@@ -5,7 +5,10 @@ import com.btc.model.Kujou;
 import com.btc.model.KujouType;
 import com.btc.supports.Helpers;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * Created by BTC on 11/21/15.
  */
-public class KujouRepository extends GenericRepository<Kujou>{
+public class KujouRepository extends GenericRepository<Kujou> {
 
    @Override
    protected void initData() {
@@ -93,7 +96,7 @@ public class KujouRepository extends GenericRepository<Kujou>{
    @Override
    public Kujou update(Kujou kujou) throws SQLException {
       String sql = "UPDATE Kujou SET receip_date = ?, description = ?, kujou_type_id = ?, bikou = ?, becchuu_id = ? "
-            + " WHERE id = ?";
+          + " WHERE id = ?";
       try {
          connection = ConnectionUtils.getConnection();
       } catch (ClassNotFoundException ex) {
@@ -126,7 +129,7 @@ public class KujouRepository extends GenericRepository<Kujou>{
             while (rs.next()) {
                int valIndex = 1;
                KujouType kujou = new KujouType(rs.getInt(valIndex++), rs.getString(valIndex++));
-
+               kujou.setPoint(rs.getInt(valIndex++));
                kujous.add(kujou);
             }
          } catch (ClassNotFoundException e) {
@@ -159,12 +162,14 @@ public class KujouRepository extends GenericRepository<Kujou>{
    public List<Kujou> getKujouByEmployeeID(String employeeID) {
       List<Kujou> kujous = new ArrayList<>();
       List<Kujou> d = getListWithRefresh(false);
-      for (Kujou kujou: d) {
+      for (Kujou kujou : d) {
          try {
             if (kujou.getBecchuu().getKenshuShaID().equals(employeeID)) {
                kujous.add(kujou);
             }
-         } catch (NullPointerException e) { continue; }
+         } catch (NullPointerException e) {
+            continue;
+         }
       }
       return kujous;
    }

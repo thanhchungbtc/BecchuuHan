@@ -95,8 +95,7 @@ public class KujouKanriTableModel extends AbstractTableModel {
 
       int row = data.indexOf(kujou);
       if (row == -1) return false;
-      if (DialogHelpers.showConfirmMessage("削除", "削除してよろしいですか。", 1) == JOptionPane.YES_OPTION)
-      {
+      if (DialogHelpers.showConfirmMessage("削除", "削除してよろしいですか。", 1) == JOptionPane.YES_OPTION) {
          try {
             repository.delete(kujou);
             fireTableRowsDeleted(row, row);

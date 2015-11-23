@@ -73,7 +73,8 @@ public class Kujou {
    }
 
    public Employee getKenshuuSha() {
-      if (this.kenshuuSha == null) this.kenshuuSha = CommonRepository.getBecchuuEmployeeByID(this.getBecchuu().getKenshuShaID());
+      if (this.kenshuuSha == null)
+         this.kenshuuSha = CommonRepository.getBecchuuEmployeeByID(this.getBecchuu().getKenshuShaID());
       return kenshuuSha;
    }
 

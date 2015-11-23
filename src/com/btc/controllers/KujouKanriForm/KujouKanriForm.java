@@ -7,6 +7,7 @@ import com.btc.repositoty.KujouRepository;
 import com.btc.supports.Config;
 import com.btc.supports.Helpers;
 import org.jdesktop.swingx.JXDatePicker;
+import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
@@ -17,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Date;
 
 /**
  * Created by BTC on 11/21/15.
@@ -62,6 +62,9 @@ public class KujouKanriForm extends JDialog implements BecchuuSelectForm.Becchuu
          populateBecchuuJouhou(null);
          descriptionTextArea.setText(null);
          bikouTextArea.setText(null);
+
+         saveButton.setText("追加");
+         addNewButton.setEnabled(false);
          return;
       }
       receiptDatePicker.setDate(kujou.getReceiptDate());
@@ -69,6 +72,8 @@ public class KujouKanriForm extends JDialog implements BecchuuSelectForm.Becchuu
       populateBecchuuJouhou(kujou.getBecchuu());
       descriptionTextArea.setText(kujou.getDescription());
       bikouTextArea.setText(kujou.getBikou());
+      saveButton.setText("保存");
+      addNewButton.setEnabled(true);
    }
 
    void populateBecchuuJouhou(Becchuu becchuu) {
@@ -77,13 +82,13 @@ public class KujouKanriForm extends JDialog implements BecchuuSelectForm.Becchuu
          return;
       }
       String text = "担当者：" + becchuu.getKenshuuSha().getName()
-            + "<br/>別注記号：" + becchuu.getBecchuuKigou()
-            + "<br/>工事番号：" + becchuu.getKoujibangou()
-            + "<br/>施主名：" + becchuu.getBukken().getName() + "<br/>作成日：" + Helpers.stringFromDate(becchuu
-            .getSakuseiBi());
+          + "<br/>別注記号：" + becchuu.getBecchuuKigou()
+          + "<br/>工事番号：" + becchuu.getKoujibangou()
+          + "<br/>施主名：" + becchuu.getBukken().getName() + "<br/>作成日：" + Helpers.stringFromDate(becchuu
+          .getSakuseiBi());
 
       String jouhouDescription = String.format("<html><div WIDTH=%d>%s</div><html>", becchuuSelectButton.getWidth() - 10,
-            text);
+          text);
       becchuuSelectButton.setText(jouhouDescription);
    }
 
@@ -101,9 +106,12 @@ public class KujouKanriForm extends JDialog implements BecchuuSelectForm.Becchuu
 
    void buttonActionPerformed(ActionEvent e) {
       Object object = e.getSource();
+      // キャンセル
       if (object == cancelButton) {
          tableSelectionChange(null);
-      } else if (object == saveButton) {
+      }
+      // 保存
+      else if (object == saveButton) {
          boolean isInsert = false;
          if (selectedKujou == null) {
             selectedKujou = new Kujou();
@@ -125,16 +133,22 @@ public class KujouKanriForm extends JDialog implements BecchuuSelectForm.Becchuu
          else {
             model.update(selectedKujou, kujouTable.getSelectedRow());
          }
-      } else if (object == becchuuSelectButton) {
+      }
+      // 別注選択
+      else if (object == becchuuSelectButton) {
          BecchuuSelectForm form = new BecchuuSelectForm();
          form.delegate = this;
          form.pack();
          form.setLocationRelativeTo(getOwner());
          form.setVisible(true);
-      } else if (object == addNewButton) {
+      }
+      // 追加
+      else if (object == addNewButton) {
          selectedKujou = null;
          populateField(selectedKujou);
-      } else if (object == deleteButton) {
+      }
+      // 削除
+      else if (object == deleteButton) {
          if (selectedKujou != null) {
             KujouKanriTableModel model = (KujouKanriTableModel) kujouTable.getModel();
             if (model.delete(selectedKujou)) {
@@ -156,6 +170,7 @@ public class KujouKanriForm extends JDialog implements BecchuuSelectForm.Becchuu
    }
 
    public KujouKanriForm() {
+      setTitle("苦情管理台帳");
       setContentPane(contentPane);
       initializeData();
       setupCombobox();

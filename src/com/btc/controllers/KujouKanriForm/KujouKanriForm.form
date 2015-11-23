@@ -98,14 +98,6 @@
                   <text value="内容："/>
                 </properties>
               </component>
-              <component id="6c3ef" class="javax.swing.JTextArea" binding="descriptionTextArea">
-                <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="a4853" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -113,14 +105,6 @@
                 <properties>
                   <text value="備考："/>
                 </properties>
-              </component>
-              <component id="f5df8" class="javax.swing.JTextArea" binding="bikouTextArea">
-                <constraints>
-                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties/>
               </component>
               <grid id="1175" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
@@ -146,11 +130,6 @@
                       <text value="キャンセル"/>
                     </properties>
                   </component>
-                  <hspacer id="5391f">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </hspacer>
                   <component id="8e5d8" class="javax.swing.JButton" binding="addNewButton">
                     <constraints>
                       <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -161,12 +140,17 @@
                   </component>
                   <component id="84201" class="javax.swing.JButton" binding="deleteButton">
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="削除"/>
                     </properties>
                   </component>
+                  <hspacer id="5391f">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
                 </children>
               </grid>
               <component id="33032" class="javax.swing.JComboBox" binding="kujouTypeCombobox">
@@ -175,14 +159,42 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="1eed9" class="org.jdesktop.swingx.JXHyperlink" binding="becchuuSelectButton">
+              <scrollpane id="3966a">
                 <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="6c3ef" class="javax.swing.JTextArea" binding="descriptionTextArea">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <scrollpane id="41e0b">
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="f5df8" class="javax.swing.JTextArea" binding="bikouTextArea">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="922cc" class="org.jdesktop.swingx.JXHyperlink" binding="becchuuSelectButton">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <contentAreaFilled value="false"/>
                   <focusPainted value="false"/>
+                  <horizontalAlignment value="10"/>
                   <text value="別注選択"/>
+                  <verticalAlignment value="1"/>
                 </properties>
               </component>
             </children>

@@ -26,6 +26,7 @@ public class Employee {
    private String password;
    private String email;
    private String roleID;
+
    public String getHonshaBangou() {
       return honshaBangou;
    }
@@ -49,7 +50,8 @@ public class Employee {
       this.departmentID = departmentID;
    }
 
-   public Employee() { }
+   public Employee() {
+   }
 
    public String getId() {
       return id;

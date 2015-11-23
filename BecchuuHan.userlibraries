@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="synthetica">
+    <archive path="C:/Users/130708/Desktop/BecchuuHan/BecchuuHan/libs/synthetica.jar" />
+  </library>
+  <library name="syntheticaBlackEye" />
+  <library name="syntheticaBlackStar" />
+</eclipse-userlibraries>
+

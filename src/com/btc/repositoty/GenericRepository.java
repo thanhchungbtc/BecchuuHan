@@ -1,15 +1,8 @@
 package com.btc.repositoty;
 
-import com.btc.DAL.ConnectionUtils;
-import com.btc.model.Kujou;
-import com.btc.model.KujouType;
-import com.btc.supports.Helpers;
-
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by BTC on 11/22/15.

@@ -9,22 +9,26 @@ import org.jdesktop.swingx.JXTable;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Created by BTC on 11/22/15.
  */
-public class EmployeeKanriForm  extends JDialog implements ActionListener {
+public class EmployeeKanriForm extends JDialog implements ActionListener {
 
    EmployeeRepository repository;
    Employee selectedEmployee;
 
    public EmployeeKanriForm() {
+      setTitle("社員台帳");
       setContentPane(contentPane);
       initializeData();
       setupTable();
       setupEvents();
-
       pack();
    }
 
@@ -82,6 +86,7 @@ public class EmployeeKanriForm  extends JDialog implements ActionListener {
       employee.setName(nameTextField.getText().trim());
       return employee;
    }
+
    // Events
    void tableSelectionChange(ListSelectionEvent e) {
       int row = employeeTable.getSelectedRow();
@@ -112,7 +117,7 @@ public class EmployeeKanriForm  extends JDialog implements ActionListener {
          }
          selectedEmployee = getEmployeeFromField(selectedEmployee);
 
-         EmployeeKanriTableModel model = (EmployeeKanriTableModel)employeeTable.getModel();
+         EmployeeKanriTableModel model = (EmployeeKanriTableModel) employeeTable.getModel();
          if (isInsert)
             model.insert(selectedEmployee);
          else {

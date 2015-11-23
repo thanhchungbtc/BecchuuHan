@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by BTC on 11/22/15.
  */
-public abstract class BTCAbstractTableModel<T> extends AbstractTableModel{
+public abstract class BTCAbstractTableModel<T> extends AbstractTableModel {
 
    protected String[] columnNames;
    protected List<T> data;
@@ -82,8 +82,7 @@ public abstract class BTCAbstractTableModel<T> extends AbstractTableModel{
 
       int row = data.indexOf(t);
       if (row == -1) return false;
-      if (DialogHelpers.showConfirmMessage("削除", "削除してよろしいですか。", 1) == JOptionPane.YES_OPTION)
-      {
+      if (DialogHelpers.showConfirmMessage("削除", "削除してよろしいですか。", 1) == JOptionPane.YES_OPTION) {
          try {
             repository.delete(t);
             fireTableRowsDeleted(row, row);

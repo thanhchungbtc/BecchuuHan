@@ -29,6 +29,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
    private BecchuuRepository becchuuRepository;
    TableRowSorter<TableModel> rowSorter;
    BecchuuDetailsForm becchuuDetailsForm;
+
    /**
     * Create the frame.
     */
@@ -60,7 +61,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
 
    private void loadBecchuuEmployeesCombobox() {
       DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(CommonRepository.getBecchuuHandEmployees()
-            .toArray());
+          .toArray());
       model.insertElementAt("全て", 0);
       cbSakuseiSha.setModel(model);
 
@@ -210,7 +211,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       String link = becchuu.getBecchuuDBURL();
       Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
       if (desktop != null) {
-         try {        	 
+         try {
             desktop.browse(new URI(link));
          } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -254,7 +255,6 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
       }
       if (sakuseiBiFilter != null)
          rowFilters.add(sakuseiBiFilter);
-     // rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
       becchuuTable.setRowFilter(RowFilter.andFilter(rowFilters));
       // remake status label
       int maisu = 0;
@@ -267,7 +267,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
             continue;
          }
       }
-      float percentage = (float)(maisu - misu) * 100 / maisu;
+      float percentage = (float) (maisu - misu) * 100 / maisu;
       lblStatus.setText("別注枚数：" + maisu + " - " + "ミス：" + misu + "良質：" + percentage + "％");
    }
 
@@ -328,7 +328,7 @@ public class BecchuuKanriForm extends JFrame implements BecchuuDetailsDelegate {
          }
       } else if (source == cbBecchuuType) {
          becchuuTypeFilter = cbBecchuuType.getSelectedIndex() == 0 ? null :
-               RowFilter.regexFilter(cbBecchuuType.getModel().getSelectedItem().toString(), 1);
+             RowFilter.regexFilter(cbBecchuuType.getModel().getSelectedItem().toString(), 1);
       }
 
       filterBecchuuTable();

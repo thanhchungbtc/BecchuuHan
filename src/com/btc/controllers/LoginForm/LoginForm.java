@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
  */
 public class LoginForm extends JFrame {
    public LoginForm() {
+      setTitle("別注班 - ログイン画面");
       initComponents();
       JRootPane rootPane = SwingUtilities.getRootPane(btnLogin);
       rootPane.setDefaultButton(btnLogin);
@@ -83,8 +84,8 @@ public class LoginForm extends JFrame {
       //======== panel1 ========
       {
          panel1.setBorder(new CompoundBorder(
-            new EmptyBorder(5, 5, 5, 5),
-            new MatteBorder(0, 0, 1, 0, Color.black)));
+             new EmptyBorder(5, 5, 5, 5),
+             new MatteBorder(0, 0, 1, 0, Color.black)));
 
          panel1.setLayout(new BorderLayout());
 
@@ -99,28 +100,28 @@ public class LoginForm extends JFrame {
       {
          panel2.setBorder(new EmptyBorder(5, 5, 5, 5));
          panel2.setLayout(new GridBagLayout());
-         ((GridBagLayout)panel2.getLayout()).columnWidths = new int[] {0, 0, 0};
-         ((GridBagLayout)panel2.getLayout()).rowHeights = new int[] {0, 0, 0};
-         ((GridBagLayout)panel2.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-         ((GridBagLayout)panel2.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+         ((GridBagLayout) panel2.getLayout()).columnWidths = new int[]{0, 0, 0};
+         ((GridBagLayout) panel2.getLayout()).rowHeights = new int[]{0, 0, 0};
+         ((GridBagLayout) panel2.getLayout()).columnWeights = new double[]{0.0, 1.0, 1.0E-4};
+         ((GridBagLayout) panel2.getLayout()).rowWeights = new double[]{0.0, 0.0, 1.0E-4};
 
          //---- label2 ----
          label2.setText("\u793e\u54e1\u756a\u53f7\uff1a");
          panel2.add(label2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+             new Insets(0, 0, 0, 0), 0, 0));
          panel2.add(txtUserID, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+             new Insets(0, 0, 0, 0), 0, 0));
 
          //---- label3 ----
          label3.setText("\u30d1\u30b9\u30ef\u30fc\u30c9\uff1a");
          panel2.add(label3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+             new Insets(0, 0, 0, 0), 0, 0));
          panel2.add(txtPassword, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+             new Insets(0, 0, 0, 0), 0, 0));
       }
       contentPane.add(panel2, BorderLayout.CENTER);
 

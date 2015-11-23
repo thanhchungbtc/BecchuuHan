@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="sqlite-jdbc-3.8.11.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/sqlite-jdbc-3.8.11.2.jar!/"/>
+	</lib>
+	<lib name="jdatepicker-1.3.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/jdatepicker-1.3.4.jar!/"/>
+	</lib>
+	<lib name="mail-1.4.7.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/mail-1.4.7.jar!/"/>
+	</lib>
+	<lib name="syntheticaBlueMoon.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/syntheticaBlueMoon.jar!/"/>
+	</lib>
+	<lib name="swingx-all-1.6.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/swingx-all-1.6.4.jar!/"/>
+	</lib>
+	<lib name="syntheticaAddons.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/syntheticaAddons.jar!/"/>
+	</lib>
+	<lib name="syntheticaBlueMoonAddon.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/syntheticaBlueMoonAddon.jar!/"/>
+	</lib>
+	<levels>
+		<level name="synthetica" value="project"/>
+	</levels>
+</component>

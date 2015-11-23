@@ -111,7 +111,7 @@ public class BukkenRepository {
 
    public Bukken update(Bukken bukken) throws SQLException {
       String sql = "UPDATE Bukken SET id = ?, name = ?, depsf = ?, shiten = ?, type = ?, nouki = ?, yobikata = ? "
-            + " WHERE id = ?";
+          + " WHERE id = ?";
       try {
          connection = ConnectionUtils.getConnection();
       } catch (ClassNotFoundException ex) {

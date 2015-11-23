@@ -7,6 +7,7 @@ import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class BecchuuSelectForm extends JDialog {
    public BecchuuSelectDelegate delegate;
 
    public BecchuuSelectForm() {
+      setTitle("別注選択");
       setContentPane(contentPane);
       setModal(true);
       getRootPane().setDefaultButton(buttonOK);

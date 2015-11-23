@@ -59,7 +59,9 @@
           <grid id="48dc1" binding="headerPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="North"/>
             <properties/>
-            <border type="none"/>
+            <border type="empty">
+              <size top="5" left="0" bottom="5" right="0"/>
+            </border>
             <children>
               <component id="924c0" class="javax.swing.JLabel">
                 <constraints border-constraint="West"/>

@@ -18,9 +18,9 @@ public class CommonRepository {
    private static List<Employee> _becchuuHandEmployees;
 
    private static BecchuuStatus[] _status = {
-         new BecchuuStatus(0, ""),
-         new BecchuuStatus(1, "依頼中"),
-         new BecchuuStatus(2, "処理済み")
+       new BecchuuStatus(0, ""),
+       new BecchuuStatus(1, "依頼中"),
+       new BecchuuStatus(2, "処理済み")
    };
 
 
@@ -108,15 +108,15 @@ public class CommonRepository {
       }
       return null;
    }
-   
+
    public static Employee getEmployeeByID(String employeeID) {
-	   List<Employee> employees = CommonRepository.getEmployees();
-	      for (Employee employee : employees) {
-	         if (employee.getId().equals(employeeID)) {
-	            return employee;
-	         }
-	      }
-	      return null;
+      List<Employee> employees = CommonRepository.getEmployees();
+      for (Employee employee : employees) {
+         if (employee.getId().equals(employeeID)) {
+            return employee;
+         }
+      }
+      return null;
    }
 
    public static BecchuuStatus getBecchuuStatusWithID(int statusID) {

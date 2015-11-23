@@ -12,6 +12,7 @@ import com.btc.supports.Config;
 import com.btc.supports.Helpers;
 import com.btc.viewModel.BecchuuTableModel;
 import com.btc.viewModel.BukkenTableModel;
+import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -20,7 +21,6 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -31,15 +31,14 @@ import java.util.LinkedList;
 public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate, BecchuuDetailsDelegate {
 
    private JPanel contentPane;
-   private JTable bukkenTable;
-   private JTable becchuuTable;
+   private JXTable bukkenTable;
+   private JXTable becchuuTable;
    private JLabel lblWelcome;
 
    private BukkenRepository bukkenRepository;
    private BecchuuRepository becchuuRepository;
 
    private JTextField txtBukkenSearch;
-   TableRowSorter<TableModel> rowSorter;
    private JComboBox cbType;
 
    private void createAndSetupGUI() {
@@ -75,7 +74,7 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
       mainSplitPane.setLeftComponent(leftPanel);
       leftPanel.setBorder(new EmptyBorder(0, 0, 0, 2));
 
-      bukkenTable = new JTable();
+      bukkenTable = new JXTable();
       bukkenTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       bukkenTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -140,7 +139,7 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
       mainSplitPane.setRightComponent(rightPanel);
       rightPanel.setBorder(new EmptyBorder(0, 2, 0, 0));
 
-      becchuuTable = new JTable();
+      becchuuTable = new JXTable();
 
       becchuuTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       rightPanel.setLayout(new BorderLayout(0, 0));
@@ -198,8 +197,7 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
 
       BukkenTableModel bukkenTableModel = new BukkenTableModel(this.bukkenRepository);
       bukkenTable.setModel(bukkenTableModel);
-      rowSorter = new TableRowSorter<TableModel>(bukkenTable.getModel());
-      bukkenTable.setRowSorter(rowSorter);
+
       bukkenTable.setRowHeight(25);
       bukkenTable.addMouseMotionListener(new MouseMotionAdapter() {
          @Override
@@ -222,6 +220,7 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
             }
          }
       });
+      bukkenTable.setSortable(false);
 
       becchuuTable.setRowHeight(25);
       BecchuuTableModel becchuuTableModel = new BecchuuTableModel(becchuuRepository);
@@ -230,7 +229,7 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
 
    private void loadShouhinTypeCombobox() {
       DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>(bukkenRepository.getBukkenTypes()
-            .toArray());
+          .toArray());
       model.insertElementAt("商品タイプ", 0);
       cbType.setModel(model);
       cbType.setSelectedIndex(0);
@@ -309,7 +308,7 @@ public class BukkenKanriForm extends JFrame implements BukkenDetailsFormDelegate
       if (typeFilter != null) {
          rowFilters.add(typeFilter);
       }
-      rowSorter.setRowFilter(RowFilter.andFilter(rowFilters));
+      bukkenTable.setRowFilter(RowFilter.andFilter(rowFilters));
    }
 
    private void txtBukkenSearchKeyReleased(KeyEvent e) {

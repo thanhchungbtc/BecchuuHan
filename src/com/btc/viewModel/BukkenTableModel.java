@@ -96,7 +96,7 @@ public class BukkenTableModel extends AbstractTableModel {
             return BukkenType.getType(bukken.getType());
          case 4:
             int numBecchuus = 0;
-            for (Becchuu becchuu: bukken.getListBecchuu()) {
+            for (Becchuu becchuu : bukken.getListBecchuu()) {
                numBecchuus += becchuu.getBecchuuMaisu();
             }
             return numBecchuus;

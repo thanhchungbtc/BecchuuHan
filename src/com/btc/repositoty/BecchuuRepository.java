@@ -5,7 +5,6 @@ import com.btc.DAL.ConnectionUtils;
 import com.btc.model.Becchuu;
 import com.btc.supports.Helpers;
 
-import java.beans.beancontext.BeanContextChild;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -100,9 +99,9 @@ public class BecchuuRepository {
 
    public Becchuu insert(Becchuu becchuu) throws SQLException {
       String sql = "INSERT INTO Becchuu ("
-            + "becchuu_kigou, becchuu_parameter, becchuu_naiyou,"
-            + " motozu_kigou, motozu_parameter,"
-            + " iraibi, koujibangou, irai_sha) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+          + "becchuu_kigou, becchuu_parameter, becchuu_naiyou,"
+          + " motozu_kigou, motozu_parameter,"
+          + " iraibi, koujibangou, irai_sha) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
       Connection connection = null;
       try {
          connection = ConnectionUtils.getConnection();
@@ -134,10 +133,10 @@ public class BecchuuRepository {
 //      if (!checkBeforeUpdate(becchuu)) throw new BecchuuExistsException("This becchuu is already exists!");
 
       String sql = "UPDATE Becchuu SET becchuu_kigou = ?, becchuu_parameter = ?, becchuu_naiyou = ?, motozu_kigou = ?, motozu_parameter = ?, "
-            + " sakuseibi = ?, sakusei_sha_id = ?, kenshuu_sha_id = ?, misu = ?, becchuu_maisu = ?, "
-            + " sakusei_status = ?, kenshuu_status = ?, "
-            + "upload_status = ?, becchuu_type_id = ?, irai_sha = ?, notes = ?, hin_code = ? "
-            + " WHERE id = ?";
+          + " sakuseibi = ?, sakusei_sha_id = ?, kenshuu_sha_id = ?, misu = ?, becchuu_maisu = ?, "
+          + " sakusei_status = ?, kenshuu_status = ?, "
+          + "upload_status = ?, becchuu_type_id = ?, irai_sha = ?, notes = ?, hin_code = ? "
+          + " WHERE id = ?";
       try {
          connection = ConnectionUtils.getConnection();
       } catch (ClassNotFoundException ex) {

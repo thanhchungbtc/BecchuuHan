@@ -1,6 +1,7 @@
 package com.btc.supports;
 
-import de.javasoft.plaf.synthetica.*;
+import de.javasoft.plaf.synthetica.SyntheticaBlueMoonLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
 
 import javax.swing.*;
 
@@ -10,17 +11,20 @@ public class Config {
    public static String UserName;
    public static String RoleID = "IP";
    public static String Password;
+
    public static void setLookAndField() {
       try {
 //         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //			 UIManager.setLookAndFeel(SyntheticaBlackEyeLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaWhiteVisionLookAndFeel.class.getName());
          UIManager.setLookAndFeel(SyntheticaBlueMoonLookAndFeel.class.getName());
+
 //         UIManager.setLookAndFeel(SyntheticaAluOxideLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaBlackStarLookAndFeel.class.getName());
 //         UIManager.setLookAndFeel(SyntheticaBlueIceLookAndFeel.class.getName());
 //         SyntheticaBlackStarLookAndFeel.setFont("Dialog", 12);
          //UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+         SyntheticaLookAndFeel.setFont("Dialog", 12);
 //		} catch (ClassNotFoundException e1) {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();

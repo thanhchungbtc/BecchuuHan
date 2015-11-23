@@ -1,6 +1,5 @@
 package com.btc.controllers.SeisekiHoukokuForm;
 
-import com.btc.controllers.KujouKanriForm.KujouKanriTableModel;
 import com.btc.model.Kujou;
 import com.btc.repositoty.EmployeeRepository;
 import com.btc.repositoty.GenericRepository;
@@ -12,8 +11,11 @@ import com.btc.viewModel.BTCAbstractTableModel;
 import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Calendar;
+import java.util.LinkedList;
 
 public class SeisekiHoukokuForm extends JDialog {
    private JPanel contentPane;
@@ -36,6 +38,7 @@ public class SeisekiHoukokuForm extends JDialog {
    private EmployeeRepository employeeRepository;
 
    public SeisekiHoukokuForm() {
+      setTitle("成績報告");
       setContentPane(contentPane);
       setModal(true);
       getRootPane().setDefaultButton(buttonOK);
@@ -46,9 +49,23 @@ public class SeisekiHoukokuForm extends JDialog {
       populateData();
       setupEvents();
 
+      populateDefaultData();
+      dateSearchTextField.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyReleased(KeyEvent e) {
+            dateSearchTextFieldKeyReleased(e);
+         }
+      });
+   }
+
+   private void populateDefaultData() {
       employeeCombobox.getModel().setSelectedItem(RoleHelpers.getLoginEmployee());
       setupRole();
       comboboxActionListener(new ActionEvent(employeeCombobox, 0, null));
+      Calendar calendar = Calendar.getInstance();
+      String term = calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1);
+      dateSearchTextField.setText(term);
+      dateSearchTextFieldKeyReleased(new KeyEvent(dateSearchTextField, 0, 0, 0, 0));
    }
 
    public void showDialog() {
@@ -94,7 +111,7 @@ public class SeisekiHoukokuForm extends JDialog {
 
    private void setupCombobox() {
       DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<Object>(employeeRepository.getBecchuuHandEmployees()
-            .toArray());
+          .toArray());
       employeeCombobox.setModel(model);
       employeeCombobox.addActionListener(e -> {
          comboboxActionListener(e);
@@ -121,6 +138,7 @@ public class SeisekiHoukokuForm extends JDialog {
       // show only current employee if not admin
       if (RoleHelpers.getRole() != RoleHelpers.ADMIN) {
          employeeCombobox.setVisible(false);
+         dateSearchTextField.setVisible(false);
       }
    }
 
@@ -128,13 +146,13 @@ public class SeisekiHoukokuForm extends JDialog {
 
       int point = 0;
       for (int i = 0; i < kujouTable.getRowCount(); i++) {
-         int p = Integer.parseInt(kujouTable.getModel().getValueAt(i, 6).toString());
+         int p = Integer.parseInt(kujouTable.getValueAt(i, 6).toString());
          point += p;
       }
-      String text = "- 苦情件数：" + (kujouTable.getRowCount() == 0 ? "苦情無し" :  kujouTable.getRowCount()) +
-            "<br/> - ポイント引く：" + point;
+      String text = "- 苦情件数：" + (kujouTable.getRowCount() == 0 ? "苦情無し" : kujouTable.getRowCount()) +
+          "<br/> - ポイント引く：" + point;
       String jouhouDescription = String.format("<html><div WIDTH=%d>%s</div><html>", kujouSummaryLabel.getWidth() - 10,
-            text);
+          text);
       kujouSummaryLabel.setText(jouhouDescription);
       employeeNameLabel.setText("苦情台帳 - 社員：" + employeeCombobox.getSelectedItem().toString());
    }
@@ -153,16 +171,45 @@ public class SeisekiHoukokuForm extends JDialog {
       dispose();
    }
 
+   RowFilter textFilter;
+   RowFilter typeFilter;
+   LinkedList<RowFilter<TableModel, Object>> rowFilters = new LinkedList<>();
+
+   private void filterTable() {
+      rowFilters.clear();
+      if (textFilter != null) {
+         rowFilters.add(textFilter);
+      }
+      if (typeFilter != null) {
+         rowFilters.add(typeFilter);
+      }
+      kujouTable.setRowFilter(RowFilter.andFilter(rowFilters));
+
+      populateKujouSummary();
+   }
+
    private void comboboxActionListener(ActionEvent e) {
       Object source = e.getSource();
       RowFilter employeeFilter;
       if (source == employeeCombobox) {
-         employeeFilter = RowFilter.regexFilter(employeeCombobox.getModel().getSelectedItem().toString(), 1);
-         kujouTable.setRowFilter(employeeFilter);
-
-         populateKujouSummary();
+         typeFilter = RowFilter.regexFilter(employeeCombobox.getModel().getSelectedItem().toString(), 1);
+         filterTable();
       }
    }
+
+   private void dateSearchTextFieldKeyReleased(KeyEvent e) {
+      if (!(e.getSource() instanceof JTextField)) return;
+      JTextField source = (JTextField) e.getSource();
+
+      if (source.getText().trim().length() == 0) {
+         textFilter = null;
+      } else {
+         String regex = Helpers.convertGlobToRegExCaseInsensitive(source.getText());
+         textFilter = RowFilter.regexFilter(regex);
+      }
+      filterTable();
+   }
+
 
    public static void main(String[] args) {
       Config.setLookAndField();
@@ -180,7 +227,7 @@ public class SeisekiHoukokuForm extends JDialog {
       @Override
       protected String[] initColumnNames() {
          return new String[]{
-               "id", "担当者", "工事番号", "施主名", "苦情タイプ", "発生日", "引くポイント"
+             "id", "担当者", "工事番号", "施主名", "苦情タイプ", "発生日", "引くポイント"
          };
       }
 
@@ -198,6 +245,7 @@ public class SeisekiHoukokuForm extends JDialog {
                case 3:
                   return kujou.getBecchuu().getBukken().getName();
                case 4:
+
                   return kujou.getKujouType().getName();
                case 5:
                   return Helpers.stringFromDate(kujou.getReceiptDate());

@@ -262,12 +262,12 @@ public class Becchuu {
    public String toString() {
       // TODO Auto-generated method stub
       return "becchuuKigou: " + becchuuKigou
-            + "motozuKigou: " + motozuKigou;
+          + "motozuKigou: " + motozuKigou;
    }
 
    public String getBecchuuDBURL() {
       Bukken bukken = this.getBukken();
       String depsf = bukken.getDepsf().replaceAll("-", "");
-      return "http://sv04plemia.osaka.daiwahouse.co.jp/BzkWeb/download/ZumenDL.aspx?type=0&item=" + depsf.trim() + "," + this.getHinCode().trim();      
+      return "http://sv04plemia.osaka.daiwahouse.co.jp/BzkWeb/download/ZumenDL.aspx?type=0&item=" + depsf.trim() + "," + this.getHinCode().trim();
    }
 }

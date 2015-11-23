@@ -11,8 +11,8 @@ public class EmployeeKanriTableModel extends BTCAbstractTableModel<Employee> {
 
    @Override
    protected String[] initColumnNames() {
-       return new String[]{
-        "社員番号", "名前"
+      return new String[]{
+          "社員番号", "名前"
       };
    }
 

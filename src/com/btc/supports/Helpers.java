@@ -6,12 +6,30 @@ import java.util.Date;
 
 public class Helpers {
    static public SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
+   static public SimpleDateFormat fullDateFormatter = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
    public static Date dateFromString(String string) {
       if (string == null) return null;
       try {
          return dateFormatter.parse(string);
       } catch (ParseException e) {
+         e.printStackTrace();
+         // TODO Auto-generated catch block
+         return null;
+      }
+   }
+
+   public static String stringFromFullDate(Date date) {
+      if (date == null) return null;
+      return fullDateFormatter.format(date).toString();
+   }
+
+   public static Date fullDateFromString(String string) {
+      if (string == null) return null;
+      try {
+         return fullDateFormatter.parse(string);
+      } catch (ParseException e) {
+         e.printStackTrace();
          // TODO Auto-generated catch block
          return null;
       }
@@ -21,6 +39,7 @@ public class Helpers {
       if (date == null) return null;
       return dateFormatter.format(date).toString();
    }
+
 
    public static String convertGlobToRegEx(String line) {
       line = line.trim();
